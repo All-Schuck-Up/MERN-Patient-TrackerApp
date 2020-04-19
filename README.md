@@ -5,7 +5,7 @@ Web App for Group-F
 <strong>Group Members:</strong>
 <br>
 <br>
-JOANNA GROMADZKA<br>
+Asia GROMADZKA<br>
 YERGALEM T MEKONNEN<br>
 Juno MUNKHKHUREL<br>
 RYAN W SCHUCK<br>
