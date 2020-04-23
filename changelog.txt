@@ -1,43 +1,19 @@
 Change Log
 
-Ryan- 4-19-2020
+Ryan- 4-23-2020
 
---Express Backend update--
-- created express "server.js" file for backend on port 5000 
-	--Dependencies--
-	-express
-	-express-validator: This is an api that does validation checks on req data (i.e. email is valid email)
-	-bcryptjs: api for encoding user login information into a 64bit token for security.
-	-jsonwebtoken:  pairs with brcypt to provide a secure login process
-	-mongoose: mongo db purposes
-	-gravatar: extra api that allows easy porting of profile images from linked email
+Initial Code Commit
 
-- setup default routes within server.js file for future app functionality
-
--- MongoDB server update--
-- created "config" folder
-	-"default.json": contains the connection string provided by mongo to connect app to database
-	-"db.js": creates the connectdb() function by bringing in the data stored from the default.json file
-	*note* the above function is called in the server.js file
-
-Ryan- 4-20-2020
-
--- users route update--
-- created folder "models" for app schema's
-	-"User.js": imports mongoose api and builds the fields required for user in database and exports to variable User
-- updated file "users.js" in folder "routes/api" 
-	- created route to register user, verifying that email is valid and password is min of 6 characters
-	- path to check is user is in db, if not creates user
-	*note* confirmed working via postman, able to register new user, throws msg if user exsists or criteria is not met
-
-Ryan- 4-21-2020
-
--- update to user and auth routes --
-**goal**(to sucessfully implement bcrypt and jsonwebtoken for login security)
-
--update to "users.js":
-	-created const salt to default value 10 
-	-put "jwtSecret" string into config/default.json (jsonwebtoken needs to reference this during payload transfer)
-	-implemented jsonwebtoken to pass user id into payload
-	-verifies login and provides token (good for 1 hour)
-	*note* does not cause crash but not sure on 100% functionality
+-- Express backend update
+  -- Added app.js file
+    - Init middleware (for testing purposes)
+	  - Test code with a error handler middleware
+	- Server running on port 3000
+  -- Added folder config (if working as intended should not show in git)
+    - Contains mongoDB connection string
+  -- Added routes folder
+    - Contains index.js file (This file initializes app routes and exports to router variable
+	- Router then can be used in the app.js file
+	
+*** This is just a template to serve as a jumping of point ***
+  
