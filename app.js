@@ -21,13 +21,6 @@ app.use(routes);
 
 // Middleware (Testing middleware...)
 app.use((req, res, next) => {
-    console.log('Hello');
-    const err = new Error('This is not right!');
-    err.status = 500;
-    next(err);
-});
-
-app.use((req, res, next) => {
     const err = new Error('Not Found');
     err.status = 404;
     next(err);
@@ -36,9 +29,10 @@ app.use((req, res, next) => {
 // Error handler (work in progress) (takes 4 params) (return ...)
 app.use((err, req, res, next) => {
     res.locals.error = err;
+    // const status = err.status || 500;
     res.status(err.status);
     // Render an error template (pass in template file and the err object)
-    res.render('error', err);
+    res.render('error');
 
 })
 

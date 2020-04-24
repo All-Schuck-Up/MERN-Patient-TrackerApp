@@ -16,4 +16,11 @@ Initial Code Commit
 	- Router then can be used in the app.js file
 	
 *** This is just a template to serve as a jumping of point ***
+
+Ryan- 4-24-2020
+
+-- Update to patient/provider login routes	
+	-- Updated '/landing' route 
+	-- Updated '/patient-login' route
+	-- Updated '/provider-login' route
   

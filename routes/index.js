@@ -7,11 +7,12 @@ router.get('/', (req, res) => {
         // else { res.redirect('landingPage') }
 });
 
-router.get('/landing', (req, res, ) => {
-    res.send('To do: Welcome Page (button to redirect to a register page and button to login page');
+router.get('/landing', (req, res, ) => { // TEST WITH => http://localhost:3000/landing
+    // res.send('To do: Welcome Page (button to redirect to a register page and button to login page');
     // if(onClick: register) { res.redirect('/register') }
     // if(onClick: login) { res.redirect('/login') }
     // else { res.send(err) }
+    res.render('landing');
 });
 
 router.get('/register', (req, res) => {
@@ -23,11 +24,20 @@ router.post('/register', (req, res) => {
     // --> redirect to res.redirect('/landing') route
 });
 
-router.get('/login', (req, res) => {
-    res.send('To do: render login page');
-    // res.render('login')
+router.get('/patient-login', (req, res) => { // TEST WITH: => http://localhost:3000/landing
+    //res.send('To do: render login page');
+    res.render('patient-login');
 });
-router.post('/login', (req, res) => {
+router.post('/patient-login', (req, res) => {
+    // read in user input ---> compare to mongoDB --> if(match) { start session for user } 
+    // --> redirect to res.redirect('/') route
+});
+
+router.get('/provider-login', (req, res) => { // TEST WITH: => http://localhost:3000/landing
+    //res.send('To do: render login page');
+    res.render('provider-login');
+});
+router.post('/provider-login', (req, res) => {
     // read in user input ---> compare to mongoDB --> if(match) { start session for user } 
     // --> redirect to res.redirect('/') route
 });

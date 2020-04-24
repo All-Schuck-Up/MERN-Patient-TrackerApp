@@ -1,0 +1,9 @@
+extends layout.pug
+    
+block content
+    p Please select the appropriate option
+
+    form(action= '/patient-login', method= 'get')
+        button(type='submit')  PATIENT
+    form(action= '/provider-login', method= 'get')
+        button(type='submit')  PROVIDER
