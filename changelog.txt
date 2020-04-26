@@ -23,4 +23,8 @@ Ryan- 4-24-2020
 	-- Updated '/landing' route 
 	-- Updated '/patient-login' route
 	-- Updated '/provider-login' route
+	
+Ryan- 4-26-2020
+
+-- Update to app routes to reflect changes in service contract
   

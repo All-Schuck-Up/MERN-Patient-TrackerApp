@@ -1,0 +1,19 @@
+{
+    "data": {
+        "title": "Provider Creds",
+        "providers": [{
+                "email": "steve@gmail.com",
+                "password": "1234"
+            },
+            {
+                "email": "magz@gmail.com",
+                "password": "1234"
+            },
+            {
+                "email": "nadz@gmail.com",
+                "password": "1234"
+            }
+
+        ]
+    }
+}
