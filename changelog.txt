@@ -27,4 +27,8 @@ Ryan- 4-24-2020
 Ryan- 4-26-2020
 
 -- Update to app routes to reflect changes in service contract
+
+Ryan- 5-3-2020
+
+-- Updated style to incluede backend folder for organization
   
