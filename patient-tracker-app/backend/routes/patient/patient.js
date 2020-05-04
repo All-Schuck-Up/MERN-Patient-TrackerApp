@@ -4,7 +4,7 @@ const Patient = require('../../models/Patient');
 
 router.get('/patient/login', (req, res) => { // TEST WITH: => http://localhost:3000/welcome
     //res.send('To do: render login page');
-    res.render('patient-login');
+    res.send('patient-login');
 });
 router.post('/patient/login', (req, res) => {
     var email = req.body.email;

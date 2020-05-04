@@ -1,3 +1,8 @@
 node_modules/
+<<<<<<< Updated upstream
 config/
+package-lock.json/
+=======
+config/
+>>>>>>> Stashed changes
 package-lock.json/

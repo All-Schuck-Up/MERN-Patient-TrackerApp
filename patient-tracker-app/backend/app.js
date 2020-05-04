@@ -1,7 +1,6 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
+const cors = require('cors');
 
 const app = express();
 
@@ -14,11 +13,8 @@ const provider = require('./models/Provider');
 const patientEntry = require('./models/PatientEntry');
 
 // app.use is a middleware function (middleware is carried out in sequence)
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cookieParser());
-
-app.set('view engine', 'pug');
+app.use(cors());
+app.use(express.json());
 
 // Routes (making app modular)
 const mainRoutes = require('./routes');
