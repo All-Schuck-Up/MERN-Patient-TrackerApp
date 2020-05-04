@@ -11,6 +11,7 @@ connectDB();
 // Bring in db schema
 const patient = require('./models/Patient');
 const provider = require('./models/Provider');
+const patientEntry = require('./models/PatientEntry');
 
 // app.use is a middleware function (middleware is carried out in sequence)
 app.use(bodyParser.urlencoded({ extended: false }));
