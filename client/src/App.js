@@ -3,12 +3,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 //import { Col, Button, Form, FormGroup, Label, Input } from "reactstrap";
-import Navbar from "./Components/Nbar.component";
-import createSympotom from "./Components/Create-patient-symptom.component";
-import login from "./Components/Login.component";
-import Landing from './Components/Landing';
+import Navbar from "./components/Nbar.component";
+import createSympotom from "./components/Create-patient-symptom.component";
+import login from "./components/Login.component";
+import Landing from './components/Landing.component';
 //"title" easy sample to be deleted
-import Title from './Components/Title';
+import Title from './components/Title.component';
 
 function App() {
   return (
