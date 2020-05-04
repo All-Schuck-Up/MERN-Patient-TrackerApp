@@ -1,7 +1,21 @@
-.App {
-  text-align: center;
+.loginForm{
+  widows: 100px;
+  max-width: 300px;
+  padding: 15px;
+  margin: auto;
+  height: 100%;
+
+}
+.symptomEntry{
+  widows: 100px;
+  max-width: 600px;
+  padding: 15px;
+  margin: auto;
+  height: 100%;
+
 }
 
-#div {
-  display: inline;
+.spaceInput
+{
+  margin-left:20px;
 }
