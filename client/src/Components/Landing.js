@@ -10,18 +10,19 @@ class Landing extends Component{
             
                 </div>
                 <div class="container">
-                <div>
-                    <button type="button" class="btn bg-dark btn-primary btn-lg text-white">Login as Patient
-                    </button>
-                </div>
-                <div>
-                    <button type="button" class="btn bg-dark  btn-primary btn-lg text-white">Login as Provider
-                    </button>
-                </div>
+                    
+                       <form action= "/patient/login" method="get">
+                        <button type="submit" class="btn bg-dark btn-primary btn-lg text-white">Login as Patient
+                        </button>
+                       </form>
+                
+                        <form action= "/provider/login" method="get">
+                        <button type="submit" class="btn bg-dark  btn-primary btn-lg text-white">Login as Provider
+                        </button>
+                        </form>
+                
                 </div>
             </div>
-              )
-    }
+    )}
 }                
 export default Landing;
-//<Button href="#">Link</Button> 
