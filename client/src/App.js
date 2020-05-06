@@ -7,6 +7,7 @@ import Landing from './components/Landing.component';
 import Navbar from "./components/Nbar.component";
 import CreateSymptom from "./components/Create-patient-symptom.component";
 import Login from "./components/Login.component";
+import LoginProvider from "./components/LoginProvider.component";
 import WelcomeProvider from './components/WelcomeProvider.component';
 import PatientSearch from './components/PatientSearch.component';
 import PatientAlertList from './components/PatientAlertList.component';
@@ -16,19 +17,35 @@ import PatientImmediateAttList from './components/PatientImmediateAttList.compon
 function App() {
   return (
     <Router>
+      <div>
         <div className="container">
           <br/>
-          <Landing />
-      
-          <CreateSymptom/>
-          <WelcomeProvider/>
-          <PatientSearch/>
-          <PatientAlertList/>
-          <PatientImmediateAttList/>
-      
-          
+          <Route path="/">
+              <Landing />
+          </Route>
+        </div>
+      <div className="container">
+          <Route path="/patient/login">
+              <Login />
+          </Route>
+       </div>
+          <Route path="/provider/login">
+              <LoginProvider />
+          </Route>
+         <Route path="/patient/:id">
+              <Navbar />
+              <CreateSymptom />
+          </Route>
+         <Route path="/provider/:id">
+              <Navbar />
+              <WelcomeProvider />
+              <PatientSearch />
+              <PatientAlertList />
+              <PatientImmediateAttList />
+          </Route>
             
         </div>
+     
     </Router>
   );
 }

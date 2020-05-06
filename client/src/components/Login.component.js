@@ -51,8 +51,8 @@ window.location ='/';
   
 render() {
         return (
-            <form className="loginForm" onSubmi>
-                <h3 className="text-center">WELCOME</h3>
+            <form className="loginForm" onSubmit>
+                <h3 className="text-center">WELCOME Patient</h3>
               
                 <div className="form-group">
                     <label>Email Address</label>
