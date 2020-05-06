@@ -4,10 +4,11 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 //import { Col, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import Landing from './components/Landing.component';
-import Navbar from "./components/Nbar.component";
-import CreateSymptom from "./components/Create-patient-symptom.component";
 import Login from "./components/Login.component";
 import LoginProvider from "./components/LoginProvider.component";
+import Navbar from "./components/Nbar.component";
+import CreateSymptom from "./components/Create-patient-symptom.component";
+import PatientProfile from "./components/PatientProfile.component";
 import WelcomeProvider from './components/WelcomeProvider.component';
 import PatientSearch from './components/PatientSearch.component';
 import PatientAlertList from './components/PatientAlertList.component';
@@ -35,6 +36,10 @@ function App() {
          <Route path="/patient/:id">
               <Navbar />
               <CreateSymptom />
+          </Route>
+        <Route path="/patient/:id/profile">
+              <Navbar />
+              <PatientProfile />
           </Route>
          <Route path="/provider/:id">
               <Navbar />
