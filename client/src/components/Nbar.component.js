@@ -14,7 +14,7 @@ export default class Navbar extends Component {
           <Link to="/patient/:id" className="nav-link">Create Patient Symptom</Link>
           </li>
           <li className="navbar-item">
-          <Link to="/login" className="nav-link">Login in</Link>
+          <Link to="/login" className="nav-link">Logout</Link>
           </li>
          
         </ul>
