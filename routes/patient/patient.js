@@ -1,57 +1,60 @@
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator');
+
 const Patient = require('../../models/Patient');
 
-router.get('/patient/login', (req, res) => { // TEST WITH: => http://localhost:3000/welcome
-    //res.send('To do: render login page');
-    res.render('patient-login');
+router.get('/patient/login', (req, res) => {
 });
-router.post('/patient/login', (req, res) => {
-    var email = req.body.email;
-    var password = req.body.password;
-
-    Patient.findOne({ email: email, password: password }, function(err, patient) {
-        if (err) {
-            console.log(err);
-            return res.status(500).send();
-        }
-        if (!patient) {
-            return res.status(404).send();
-        } else {
-            return res.status(200).send();
-        }
-    })
-});
+router.post('/patient/login', (req, res) => {});
 
 router.get('/patient/:_id', (req, res) => {
-    res.send(' To do: Future Patient screener form ');
 });
 router.post('/patient/:_id', (req, res) => {
-    // read in user input ---> assign to variables --> if(!err) { save to mongoDB(screen.Schema) } 
-    // --> redirect to res.redirect('/welcome') route
 });
 
-router.post('/patient/register', (req, res) => {
-    var name = req.body.name;
-    var email = req.body.email;
-    var password = req.body.password;
+// Post req, This route registers user unless already exists TEST => POSTMAN POST to http://localhost:5000/patient/
+router.post(
+  '/patient/',
+  [
+    check('name', 'Name is required').not().isEmpty(),
+    check('email', 'Enter a valid email').isEmail(),
+    check('password', 'Please enter password with atleast 4 characters').isLength({ min: 4 }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-    var newPatient = new Patient();
-    newPatient.name = name;
-    newPatient.email = email;
-    newPatient.password = password;
-    newPatient.save(function(err, savedPatient) {
-        if (err) {
-            console.log(err);
-            return res.status(500).send();
-        }
-        return res.status(200).send();
-    })
-});
+    const { name, email, password } = req.body;
+
+    try {
+      let patient = await Patient.findOne({ email });
+
+      if (patient) {
+        res.status(400).json({ errors: [{ msg: 'Patient alread in system' }] });
+      }
+
+      patient = new Patient({
+        name,
+        email,
+        password,
+      });
+
+      // TO DO: --Possible password encryption
+
+      await patient.save();
+      res.send('Patient added');
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
 
 router.get('/patient/logout', (req, res) => {
-    req.logout();
-    res.redirect('/welcome');
+  // TO DO --
 });
 
 module.exports = router;
