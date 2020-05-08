@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Navbar from './layout/Nbar.component';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -50,22 +50,25 @@ class PatientProfile extends Component {
   }
   render() {
     return (
-      <div class='container'>
-        <h1>Profile</h1>
-        <h3>History</h3>
-        <table className='table'>
-          <thead className='thead-light'>
-            <tr>
-              <th>patientName</th>
-              <th>form</th>
-              <th>additionalNote</th>
-              <th>doctorNote</th>
-              <th>entryDate</th>
-            </tr>
-          </thead>
-          <tbody>{this.patientEntryList()}</tbody>
-        </table>
-      </div>
+      <Fragment>
+        <Navbar />
+        <div class='container'>
+          <h1>Profile</h1>
+          <h3>History</h3>
+          <table className='table'>
+            <thead className='thead-light'>
+              <tr>
+                <th>patientName</th>
+                <th>form</th>
+                <th>additionalNote</th>
+                <th>doctorNote</th>
+                <th>entryDate</th>
+              </tr>
+            </thead>
+            <tbody>{this.patientEntryList()}</tbody>
+          </table>
+        </div>
+      </Fragment>
     );
   }
 }

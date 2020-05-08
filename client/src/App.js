@@ -20,7 +20,6 @@ function App() {
   return (
     <Router>
       <Fragment>
-        <Navbar />
         <div>
           <div className='container'>
             <br />
