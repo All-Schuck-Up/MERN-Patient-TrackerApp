@@ -6,6 +6,8 @@ import './App.css';
 import Landing from './components/layout/Landing.component';
 import LoginPatient from './components/auth/LoginPatient.component';
 import LoginProvider from './components/auth/LoginProvider.component';
+import RegisterPatient from './components/auth/RegisterPatient.component';
+import RegisterProvider from './components/auth/RegisterProvider.component';
 import Navbar from './components/layout/Nbar.component';
 import CreateSymptom from './components/Create-patient-symptom.component';
 import PatientProfile from './components/PatientProfile.component';
@@ -29,7 +31,17 @@ function App() {
           <section className='container'>
             <Switch>
               <Route exact path='/patient/login' component={LoginPatient} />
+              <Route
+                exact
+                path='/patient/register'
+                component={RegisterPatient}
+              />
               <Route exact path='/provider/login' component={LoginProvider} />
+              <Route
+                exact
+                path='/provider/register'
+                component={RegisterProvider}
+              />
               <Route exact path='/patient/:id' component={CreateSymptom} />
               <Route
                 exact
