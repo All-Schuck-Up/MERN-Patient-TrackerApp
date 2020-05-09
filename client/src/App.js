@@ -31,7 +31,7 @@ function App() {
           </Route>
        </div>
       <div className="container">
-          <Route exact path="/provider/login/:id">
+          <Route exact path="/provider/login">
               <LoginProvider />
           </Route>
       </div>
