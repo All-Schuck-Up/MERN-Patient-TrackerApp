@@ -3,8 +3,8 @@ import Navbar from "./Nbar.component";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-
-//symptoms delte to be change for update
+//assigned doctor
+//symptoms delete to be change for update
 const PatientEntry = props => (
   <tr>
     <td>{props.patientEntry.patientName}</td>
@@ -42,16 +42,18 @@ class PatientProfile extends Component{
        
         return(
              <div class = "container">
-            <h1>Profile</h1>
-            <h3>History</h3>
+            <h1>Profile</h1> 
+            <h3>Assigned Doctor:</h3>
+            <h2>History</h2>
             <table className="table">
           <thead className="thead-light">
             <tr>
               <th>patientName</th>
+              <th>entryDate</th>
               <th>form</th>
               <th>additionalNote</th>
               <th>doctorNote</th>
-              <th>entryDate</th>
+              <th>doctorNoteDate</th>
             </tr>
           </thead>
           <tbody>
