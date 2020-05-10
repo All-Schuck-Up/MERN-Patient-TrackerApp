@@ -212,8 +212,6 @@ window.location ='/';
                 />
           </div>
           
-          
-        
   
           <div className="form-group">
             <input type="submit" value="Save Record" className="btn btn-primary" />
