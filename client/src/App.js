@@ -18,8 +18,9 @@ import PatientImmediateAttList from './components/PatientImmediateAttList.compon
 function App() {
   return (
     <Router>
-      
-      <div className="container">
+
+      <div className="mainBody">
+        <div className="container">
           <br/>
           <Route exact path="/">
               <Landing />
@@ -55,7 +56,7 @@ function App() {
               <PatientAlertList />
               <PatientImmediateAttList />
           </Route>
-               
+      </div>      
      </div>  
     </Router>
   );
