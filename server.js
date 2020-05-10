@@ -19,13 +19,11 @@ app.use(express.json());
 // Routes (making app modular)
 const mainRoutes = require('./routes');
 const patientRoutes = require('./routes/patient/patient');
-const patientEntryRoutes = require('./routes/patient/patientEntry');
 const providerRoutes = require('./routes/provider/provider');
 
 // middleware for all routes
 app.use(mainRoutes);
 app.use(patientRoutes);
-app.use('/', patientEntryRoutes);
 app.use(providerRoutes);
 
 // Middleware (Testing middleware...)
