@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { registerPatient } from '../../actions/auth';
+import { Link, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export const RegisterPatient = () => {
+export const RegisterPatient = ({ registerPatient, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,36 +21,20 @@ export const RegisterPatient = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log('Password do not match');
+      console.log('Passwords do not match', 'danger');
     } else {
-      const newPatient = {
-        name,
-        email,
-        password,
-      };
-
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        };
-
-        // const body = JSON.stringify(newPatient);
-        // console.log(body);
-
-        const res = await axios.post('/patient', newPatient, config);
-        console.log(res.data);
-      } catch (err) {
-        console.error(err.resposne.data);
-      }
+      registerPatient({ name, email, password });
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to='/patient/login' />;
+  }
 
   return (
     <Fragment>
       <h1 className='large text-primary'>Register</h1>
-      <form className='LoginForm' onSubmit={(e) => onSubmit(e)}>
+      <form className='form' onSubmit={(e) => onSubmit(e)}>
         <h3 className='text-center'>WELCOME Future Patient</h3>
         <div className='form-group'>
           <label>Name</label>
@@ -89,7 +75,7 @@ export const RegisterPatient = () => {
         <div className='form-group'>
           <label>Confirm Password</label>
           <input
-            type='password2'
+            type='password'
             className='form-control'
             placeholder='ReEnter password'
             name='password2'
@@ -120,4 +106,13 @@ export const RegisterPatient = () => {
   );
 };
 
-export default RegisterPatient;
+RegisterPatient.propTypes = {
+  registerPatient: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { registerPatient })(RegisterPatient);

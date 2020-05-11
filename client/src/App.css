@@ -1,3 +1,12 @@
+/* global styles */
+:root {
+  --primary-color: #17a2b8;
+  --dark-color: #343a40;
+  --light-color: #f4f4f4;
+  --danger-color: #dc3545;
+  --success-color: #28a745;
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +44,27 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.alert {
+  padding: 0.8rem;
+  margin: 1rem 0;
+  opacity: 0.9;
+  background: var(--light-color);
+  color: #333;
+}
+
+.alert-primary {
+  background: var(--primary-color);
+  color: rgb(22, 147, 219);
+}
+
+.alert-success {
+  background: var(--success-color);
+  color: rgb(36, 168, 47);
+}
+
+.alert-danger {
+  background: var(--danger-color);
+  color: rgb(168, 25, 25);
 }

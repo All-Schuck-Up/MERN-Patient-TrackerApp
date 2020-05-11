@@ -1,14 +1,19 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-// import { Col, Button, Form, FormGroup, Label, Input } from "reactstrap"; (this is not being used)
+// Redux
+import { Provider } from 'react-redux';
+import store from './store';
+import { loadPatient } from './actions/auth';
+import setAuthToken from './utils/setAuthToken';
+
+// Component paths
 import Landing from './components/layout/Landing.component';
 import LoginPatient from './components/auth/LoginPatient.component';
 import LoginProvider from './components/auth/LoginProvider.component';
 import RegisterPatient from './components/auth/RegisterPatient.component';
 import RegisterProvider from './components/auth/RegisterProvider.component';
-import Navbar from './components/layout/Nbar.component';
 import CreateSymptom from './components/Create-patient-symptom.component';
 import PatientProfile from './components/PatientProfile.component';
 import WelcomeProvider from './components/WelcomeProvider.component';
@@ -16,11 +21,20 @@ import PatientSearch from './components/PatientSearch.component';
 import PatientAlertList from './components/PatientAlertList.component';
 import PatientImmediateAttList from './components/PatientImmediateAttList.component';
 
+// Check for user token
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
+
 function App() {
+  useEffect(() => {
+    store.dispatch(loadPatient());
+  }, []);
+
   return (
-    <Router>
-      <Fragment>
-        <div>
+    <Provider store={store}>
+      <Router>
+        <Fragment>
           <div className='container'>
             <br />
             <Route exact path='/'>
@@ -59,9 +73,9 @@ function App() {
               />
             </Switch>
           </section>
-        </div>
-      </Fragment>
-    </Router>
+        </Fragment>
+      </Router>
+    </Provider>
   );
 }
 export default App;

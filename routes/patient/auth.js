@@ -3,34 +3,29 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const authPatient = require('../../middleware/authPatient');
+const config = require('config');
 
+// bring in patient model
 const Patient = require('../../models/Patient');
 
-// GET request: Gets patient by token
-router.get('/auth', authPatient, async (req, res) => {
+// GET request: Retrieve user by token
+router.get('/', authPatient, async (req, res) => {
   try {
     const patient = await Patient.findById(req.patient.id).select('-password');
+    res.json(patient);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
 
-router.get('/patient/:_id', (req, res) => {});
-router.post('/patient/:_id', (req, res) => {});
-
-// Post req, This route registers user unless already exists TEST => POSTMAN POST to http://localhost:5000/patient/
+// POST request: Authenticate patient & get token
 router.post(
-  '/register',
+  '/',
   [
-    check('name', 'Name is required').not().isEmpty(),
     check('email', 'Enter a valid email').isEmail(),
-    check(
-      'password',
-      'Please enter password with atleast 4 characters'
-    ).isLength({ min: 4 }),
+    check('password', 'Password is required').exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -38,27 +33,20 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
       let patient = await Patient.findOne({ email });
 
-      if (patient) {
-        res.status(400).json({ errors: [{ msg: 'Patient alread in system' }] });
+      if (!patient) {
+        res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
       }
 
-      patient = new Patient({
-        name,
-        email,
-        password,
-      });
+      const isMatch = await bcrypt.compare(req.body.password, patient.password);
 
-      // encrypt password
-      patient.password = await bcrypt.hash(req.body.password, 10);
-      console.log(patient.password);
-      // End encryption
-
-      await patient.save();
+      if (!isMatch) {
+        res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
+      }
 
       const payload = {
         patient: {
@@ -72,13 +60,9 @@ router.post(
       });
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).json('Server Error');
     }
   }
 );
-
-router.get('/patient/logout', (req, res) => {
-  // TO DO --
-});
 
 module.exports = router;
