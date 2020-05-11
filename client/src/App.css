@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.mainBody {
+  width: 80%;
+  margin: 0 auto;
+}
+.loginForm {
+  width: 40%;
+  margin: 0 auto;
+}
