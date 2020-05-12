@@ -10,6 +10,7 @@ import { loadPatient, loadProvider } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 // Components
 import Landing from './components/Landing.component';
+import Navbar from './components/Nbar.component';
 import LoginPatient from './components/auth/LoginPatient.component';
 import RegisterPatient from './components/auth/RegisterPatient.component';
 import LoginProvider from './components/auth/LoginProvider.component';
@@ -28,50 +29,61 @@ if (localStorage.token) {
 
 function App() {
   useEffect(() => {
-    store.dispatch(loadPatient(), loadProvider());
+    store.dispatch(loadPatient());
   }, []);
 
   return (
     <Provider store={store}>
       <Router>
         <Fragment>
-          <div className='container'>
-            <br />
-            <Route exact path='/'>
-              <Landing />
-            </Route>
-          </div>
-          <section className='container'>
-            <Switch>
-              <Route exact path='/patient/login' component={LoginPatient} />
-              <Route
-                exact
-                path='/patient/register'
-                component={RegisterPatient}
-              />
-              <Route exact path='/provider/login' component={LoginProvider} />
-              <Route
-                exact
-                path='/provider/register'
-                component={RegisterProvider}
-              />
-              <Route exact path='/patient/:id' component={CreateSymptom} />
-              <Route
-                exact
-                path='/patient/:id/profile'
-                component={PatientProfile}
-              />
-              <Route
-                exact
-                path='/provider/:id'
-                component={
-                  (WelcomeProvider,
-                  PatientSearch,
-                  PatientAlertList,
-                  PatientImmediateAttList)
-                }
-              />
-            </Switch>
+          <section className='mainBody'>
+            <div className='container'>
+              <br />
+              <Route exact path='/'>
+                <Landing />
+              </Route>
+            </div>
+            <div className='container'>
+              <Route exact path='/patient/login'>
+                <LoginPatient />
+              </Route>
+            </div>
+            <div className='container'>
+              <Route exact path='/patient/register'>
+                <RegisterPatient />
+              </Route>
+            </div>
+            <div className='container'>
+              <Route exact path='/provider/login'>
+                <LoginProvider />
+              </Route>
+            </div>
+            <div className='container'>
+              <Route exact path='/provider/register'>
+                <RegisterProvider />
+              </Route>
+            </div>
+            <div className='container'>
+              <Route exact path='/patient/login/:id'>
+                <Navbar />
+                <CreateSymptom />
+              </Route>
+            </div>
+            <div className='container'>
+              <Route exact path='/patient/:id/profile'>
+                <Navbar />
+                <PatientProfile />
+              </Route>
+            </div>
+            <div className='container'>
+              <Route exact path='/provider/login/:id'>
+                <Navbar />
+                <WelcomeProvider />
+                <PatientSearch />
+                <PatientAlertList />
+                <PatientImmediateAttList />
+              </Route>
+            </div>
           </section>
         </Fragment>
       </Router>

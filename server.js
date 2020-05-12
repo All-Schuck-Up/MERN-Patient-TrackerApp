@@ -12,6 +12,10 @@ app.use(express.json({ extended: false }));
 // Routes (making app modular)
 app.use('/patient-api/patient', require('./routes/patient-api/patient'));
 app.use('/patient-api/auth', require('./routes/patient-api/auth'));
+// app.use(
+//   '/patient-api/patientEntry',
+//   require('./routes/patient-api/patientEntry')
+// );
 app.use('/provider-api/provider', require('./routes/provider-api/provider'));
 app.use('/provider-api/auth', require('./routes/provider-api/auth'));
 

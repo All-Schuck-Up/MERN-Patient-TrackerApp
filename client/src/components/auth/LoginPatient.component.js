@@ -21,7 +21,7 @@ const LoginPatient = ({ loginPatient, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to='/patient/:id/profile' />;
+    return <Redirect to='/patient/:id' />;
   }
 
   return (
@@ -79,7 +79,7 @@ const LoginPatient = ({ loginPatient, isAuthenticated }) => {
 };
 
 LoginPatient.propTypes = {
-  login: PropTypes.func.isRequired,
+  loginPatient: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
 
