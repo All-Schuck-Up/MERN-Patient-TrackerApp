@@ -1,57 +1,81 @@
-import React, { useState }from 'react';
-import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
+import React, { Fragment, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import { Col, Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+// Redux
+import { Provider } from 'react-redux';
+import store from './store';
+import { loadPatient } from './actions/auth';
+import setAuthToken from './utils/setAuthToken';
+// Components
 import Landing from './components/Landing.component';
-import Login from "./components/Login.component";
-import LoginProvider from "./components/LoginProvider.component";
-import Navbar from "./components/Nbar.component";
-import CreateSymptom from "./components/Create-patient-symptom.component";
-import PatientProfile from "./components/PatientProfile.component";
+import LoginPatient from './components/auth/LoginPatient.component';
+import RegisterPatient from './components/auth/RegisterPatient.component';
+import LoginProvider from './components/auth/LoginProvider.component';
+import RegisterProvider from './components/auth/RegisterProvider.component';
+import CreateSymptom from './components/Create-patient-symptom.component';
+import PatientProfile from './components/PatientProfile.component';
 import WelcomeProvider from './components/WelcomeProvider.component';
 import PatientSearch from './components/PatientSearch.component';
 import PatientAlertList from './components/PatientAlertList.component';
 import PatientImmediateAttList from './components/PatientImmediateAttList.component';
 
+// Check for token
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 function App() {
+  useEffect(() => {
+    store.dispatch(loadPatient());
+  }, []);
+
   return (
-    <Router>
-      <div>
-        <div className="container">
-          <br/>
-          <Route path="/">
+    <Provider store={store}>
+      <Router>
+        <Fragment>
+          <div className='container'>
+            <br />
+            <Route exact path='/'>
               <Landing />
-          </Route>
-        </div>
-      <div className="container">
-          <Route path="/patient/login">
-              <Login />
-          </Route>
-       </div>
-          <Route path="/provider/login">
-              <LoginProvider />
-          </Route>
-         <Route path="/patient/:id">
-              <Navbar />
-              <CreateSymptom />
-          </Route>
-        <Route path="/patient/:id/profile">
-              <Navbar />
-              <PatientProfile />
-          </Route>
-         <Route path="/provider/:id">
-              <Navbar />
-              <WelcomeProvider />
-              <PatientSearch />
-              <PatientAlertList />
-              <PatientImmediateAttList />
-          </Route>
-            
-        </div>
-     
-    </Router>
+            </Route>
+          </div>
+          <section className='container'>
+            <Switch>
+              <Route exact path='/patient/login' component={LoginPatient} />
+              <Route
+                exact
+                path='/patient/register'
+                component={RegisterPatient}
+              />
+              <Route exact path='/provider/login' component={LoginProvider} />
+              <Route
+                exact
+                path='/provider/register'
+                component={RegisterProvider}
+              />
+              <Route exact path='/patient/:id' component={CreateSymptom} />
+              <Route
+                exact
+                path='/patient/:id/profile'
+                component={PatientProfile}
+              />
+              <Route
+                exact
+                path='/provider/:id'
+                component={
+                  (WelcomeProvider,
+                  PatientSearch,
+                  PatientAlertList,
+                  PatientImmediateAttList)
+                }
+              />
+            </Switch>
+          </section>
+        </Fragment>
+      </Router>
+    </Provider>
   );
 }
 export default App;
