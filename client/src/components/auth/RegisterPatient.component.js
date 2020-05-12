@@ -21,7 +21,7 @@ export const RegisterPatient = ({ registerPatient, isAuthenticated }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log('Passwords do not match', 'danger');
+      console.log('Passwords do not match');
     } else {
       registerPatient({ name, email, password });
     }

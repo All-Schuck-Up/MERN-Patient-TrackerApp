@@ -52,7 +52,7 @@ export const registerPatient = ({ name, email, password }) => async (
 };
 
 // Login patient
-export const login = (email, password) => async (dispatch) => {
+export const loginPatient = (email, password) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -70,6 +70,75 @@ export const login = (email, password) => async (dispatch) => {
     });
 
     dispatch(loadPatient());
+  } catch (err) {
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
+};
+
+// Load provider
+export const loadProvider = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/provider-api/auth');
+
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    });
+  }
+};
+
+// Register Provider
+export const registerProvider = ({ name, email, password }) => async (
+  dispatch
+) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const body = JSON.stringify({ name, email, password });
+
+  try {
+    const res = await axios.post('/provider-api/provider', body, config);
+
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(loadProvider());
+  } catch (err) {
+    dispatch({
+      type: REGISTER_FAIL,
+    });
+  }
+};
+
+// Login provider
+export const loginProvider = (email, password) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const body = JSON.stringify({ email, password });
+
+  try {
+    const res = await axios.post('/provider-api/auth', body, config);
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+
+    dispatch(loadProvider());
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,

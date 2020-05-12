@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { registerProvider } from '../../actions/auth';
+import { Link, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export const RegisterProvider = () => {
+export const RegisterProvider = ({ registerProvider, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,29 +23,13 @@ export const RegisterProvider = () => {
     if (password !== password2) {
       console.log('Password do not match');
     } else {
-      const newProvider = {
-        name,
-        email,
-        password,
-      };
-
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        };
-
-        // const body = JSON.stringify(newPatient);
-        // console.log(body);
-
-        const res = await axios.post('/provider', newProvider, config);
-        console.log(res.data);
-      } catch (err) {
-        console.error(err.resposne.data);
-      }
+      registerProvider({ name, email, password });
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to='/provider/login' />;
+  }
 
   return (
     <Fragment>
@@ -120,4 +106,13 @@ export const RegisterProvider = () => {
   );
 };
 
-export default RegisterProvider;
+RegisterProvider.propTypes = {
+  registerProvider: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { registerProvider })(RegisterProvider);

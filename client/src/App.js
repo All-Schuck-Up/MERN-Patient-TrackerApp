@@ -6,7 +6,7 @@ import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 // Redux
 import { Provider } from 'react-redux';
 import store from './store';
-import { loadPatient } from './actions/auth';
+import { loadPatient, loadProvider } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 // Components
 import Landing from './components/Landing.component';
@@ -28,7 +28,7 @@ if (localStorage.token) {
 
 function App() {
   useEffect(() => {
-    store.dispatch(loadPatient());
+    store.dispatch(loadPatient(), loadProvider());
   }, []);
 
   return (
