@@ -34,6 +34,24 @@ export default class createSympotom extends Component
  
   }
 
+  
+  onChangeDate(e)
+  {
+    this.setState ({ 
+      date:e.target.value
+      test
+    });
+  };
+  componentDidMount() {
+
+    this.setState({ 
+
+      provider: ['test test'],
+
+      doctorNote: 'test Note'
+
+    });
+
  /* onChangeDate(e)
   {
     this.setState ({
