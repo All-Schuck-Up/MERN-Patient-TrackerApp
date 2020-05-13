@@ -286,6 +286,21 @@ export default class createSympotom extends Component {
             </Card>
           </Col>
         </Row>
+
+          </div>
+          
+  
+          <div className="form-group">
+            <input type="submit" value="Save Record" className="btn btn-primary" />
+          {" "}
+            <input type="submit" value="Mark entry as immediate attention" className="btn btn-secondary" />
+         
+          {" "}
+            <input type="submit" value="Cancle" className="btn btn-primary" />
+         </div>
+
+
+        </form>
       </div>
     )
   }
