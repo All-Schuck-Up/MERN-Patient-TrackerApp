@@ -3,6 +3,12 @@ Web App for Group-F <br  />
 <br  />
 Patient Symptom Tracking Web Application <br  />
 
+## Branch structure
+Master - Ready to install and run version of the application <br  />
+Dev - Current working version that received pull requests <br  />
+Rest of the branches - Feature branches <br  />
+
+## Directory structure
 Backend directory has all the routes and express services<br />
 Client directory has the main application index.js and app.js along with the styling css files<br />
 Components directory have all the components <br />
