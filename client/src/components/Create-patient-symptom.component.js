@@ -151,7 +151,6 @@ export default class createSympotom extends Component {
           <Col sm="6">
             <Card body>
 
-
               <form className="symptomEntry" class="form-horizontal" onSubmit={this.onSubmit}>
                 <h3 className="text-center">Patient Symptom Entery</h3>
 
@@ -162,63 +161,45 @@ export default class createSympotom extends Component {
                 />
                 <p>Date : {this.state.date.substring(0, 21)}</p>
 
-
-
                 <div className="form-group" >
-                  <div> <label class="spaceInput">Trouble breathing ?  </label>{"      "}
+                      <div> <label class="spaceInput">Trouble breathing ?  </label>{"      "}
+                        <div onChange={this.onCheckedSymptom1}>
+                          <input class="spaceInput" type="radio" value="yes" name="symptom1" /> Yes  {"  "}
 
-                    <div onChange={this.onCheckedSymptom1}>
-                      <input class="spaceInput" type="radio" value="yes" name="symptom1" /> Yes  {"  "}
-
-                      <input class="spaceInput" type="radio" value="no" name="symptom1" /> No  {"  "}
-                    </div>
-
-                  </div>
-
-                  <div className="form-group"  >
-
-                    <div> <label>Sore throat ?  </label>{"      "}
-
-                      <div onChange={this.onCheckedSymptom2}>
-                        <input class="spaceInput" type="radio" value="yes" name="symptom2" /> Yes  {"  "}
-
-                        <input class="spaceInput" type="radio" value="no" name="symptom2" /> No  {"  "}
+                          <input class="spaceInput" type="radio" value="no" name="symptom1" /> No  {"  "}
+                        </div>
                       </div>
 
-                    </div>
+                <div className="form-group"  >
+                        <div> <label>Sore throat ?  </label>{"      "}
+                          <div onChange={this.onCheckedSymptom2}>
+                            <input class="spaceInput" type="radio" value="yes" name="symptom2" /> Yes  {"  "}
 
-                  </div>
+                            <input class="spaceInput" type="radio" value="no" name="symptom2" /> No  {"  "}
+                          </div>
+                        </div>
+
+                </div>
                 </div>
                 <div className="form-group"  >
-
                   <div> <label>A dry cough ?  </label>{"      "}
-
                     <div onChange={this.onCheckedSymptom3}>
                       <input class="spaceInput" type="radio" value="yes" name="symptom3" /> Yes  {"  "}
 
                       <input class="spaceInput" type="radio" value="no" name="symptom3" /> No  {"  "}
                     </div>
-
                   </div>
-
-
                 </div>
                 <div className="form-group"  >
-
                   <div> <label>Heigh Fevere ?  </label>{"      "}
-
                     <div onChange={this.onCheckedSymptom4}>
                       <input class="spaceInput" type="radio" value="yes" name="symptom4" /> Yes  {"  "}
 
                       <input class="spaceInput" type="radio" value="no" name="symptom4" /> No  {"  "}
                     </div>
-
                   </div>
-
-
                 </div>
                 <div className="form-group" >
-
                   <label class="control-label col-sm-2" >Temerature: </label>
 
                   <input class="spaceInput" type="text"
@@ -229,20 +210,15 @@ export default class createSympotom extends Component {
                     placeholder={"body temperature "}
                   />
                 </div>
-
-
                 <div class="form-group">
-
                   <div>  <label  >Media  : </label></div>
-
-                  <div>
-                    <input class="spaceInput"
-                      type="file"
-                      onChange={this.onMediaChange} />
-                    <button onClick={this.onFileUpload}>
-                    </button>
-                  </div>
-
+                      <div>
+                        <input class="spaceInput"
+                          type="file"
+                          onChange={this.onMediaChange} />
+                        <button onClick={this.onFileUpload}>
+                        </button>
+                      </div>
                 </div>
 
                 <div className="form-group" >
@@ -259,48 +235,28 @@ export default class createSympotom extends Component {
                 </div>
 
                 <div className="form-group">
-
                   <input type="submit" value="Save Record" className="btn btn-primary" />
                   {" "}
-
                   <button className="btn btn-secondary" onClick={() => this.setState({ attention: true })}>Mark entry as immediate attention</button>
 
                   {" "}
                   <button className="btn btn-primary"
                     type="button">Cancel</button>
-
                 </div>
-
-
               </form>
-
             </Card>
           </Col>
+          
           <Col sm="4">
             <Card >
               <CardTitle > <h3 className="text-center">Latest Doctor Note</h3></CardTitle>
               <CardText> On click doctors note from patient profile will be displayed
               On click doctors note from patient profile
-          </CardText>
+              </CardText>
               <Button >View</Button>
             </Card>
           </Col>
         </Row>
-
-          </div>
-          
-  
-          <div className="form-group">
-            <input type="submit" value="Save Record" className="btn btn-primary" />
-          {" "}
-            <input type="submit" value="Mark entry as immediate attention" className="btn btn-secondary" />
-         
-          {" "}
-            <input type="submit" value="Cancle" className="btn btn-primary" />
-         </div>
-
-
-        </form>
       </div>
     )
   }
