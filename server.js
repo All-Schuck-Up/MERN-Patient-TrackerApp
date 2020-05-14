@@ -23,28 +23,14 @@ const patientEntryRoutes = require('./routes/patient/patientEntry');
 const providerRoutes = require('./routes/provider/provider');
 
 // middleware for all routes
-app.use(mainRoutes);
-app.use(patientRoutes);
+app.use('/', mainRoutes);
+app.use('/', patientRoutes);
 app.use('/', patientEntryRoutes);
-app.use(providerRoutes);
-
-// Middleware (Testing middleware...)
-app.use((req, res, next) => {
-    const err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-})
-
-// Error handler (work in progress) (takes 4 params) (return ...)
-app.use((err, req, res, next) => {
-    res.locals.error = err;
-    // const status = err.status || 500;
-    res.status(err.status);
-    // Render an error template (pass in template file and the err object)
-    res.render('error');
-})
+app.use('/', providerRoutes);
+app.use('/users/user', require('./routes/users/user'));
+app.use('/users/auth', require('./routes/users/auth'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`)
+  console.log(`Server started on port ${PORT}`);
 });
