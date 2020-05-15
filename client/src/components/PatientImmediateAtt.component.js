@@ -3,6 +3,7 @@ import React from 'react';
 class PatientImmediateAtt extends React.Component {
     constructor(props) {
         super(props);
+        
     }
     checkButton(e) {
         console.log("redirecting to patient " + this.props.patientID);
