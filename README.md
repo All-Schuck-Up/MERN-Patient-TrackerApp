@@ -19,7 +19,7 @@ Please keep in mind that this in a work in progress and is currently under devel
 -copy the "public" and "src" directories from the "client0" replace the files into "client" <br />
 -from your terminal run "npm install" to install all the dependencies needed <br />
 -install "reactstrap" and "bootstrap" manually from your terminal "npm i reactstrap" and "npm i bootstrap" <br />
--last but not least, from your terminal run "npm run dev" (we made a concurrent script to run both the server and the react) <br />
+-last but not least, from your terminal run <strong> npm run dev </strong> (we made a concurrent script to run both the server and the react) <br />
 
 Backend directory has all the routes and express services<br />
 Client directory has the main application index.js and app.js along with the styling css files<br />
