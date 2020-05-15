@@ -8,25 +8,25 @@ Master - Ready to install and run version of the application <br  />
 Dev - Current working version that received pull requests <br  />
 Rest of the branches - Feature branches <br  />
 
-## Directory structure
+## Steps to Launch 
+Please keep in mind that this in a work in progress and is currently under development by our team.
+
+<strong>Installing instruction: </strong> <br />
+-Clone the master repository<br />
+-On your local directory rename the "client" directory into "client0" <br />
+-from the terminal, run "npx create-react-app client" <br />
+(now you will have "client" and "client0" directories) <br />
+-copy the "public" and "src" directories from the "client0" replace the files into "client" <br />
+-from your terminal run "npm install" to install all the dependencies needed <br />
+-install "reactstrap" and "bootstrap" manually from your terminal "npm i reactstrap" and "npm i bootstrap" <br />
+-last but not least, from your terminal run "npm run dev" (we made a concurrent script to run both the server and the react) <br />
+
 Backend directory has all the routes and express services<br />
 Client directory has the main application index.js and app.js along with the styling css files<br />
 Components directory have all the components <br />
 <br />
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Steps to Launch 
-Please keep in mind that this in a work in progress and is currently under development by our team.
-
-1. Clone this branch 'Tempmaster'
-2. cd into root directory (This will be where to saved your repo clone on your machine)
-3. In terminal run 'npm i' (This will install all backend dependencies)
-4. In terminal run 'npm i -dev' (This will install all dev dependencies)
-5. cd into client with 'cd client'
-6. In terminal run 'npm i' (This will install required frontend dependencies)
-7. cd back to root with 'cd ..'
-8. Run in terminal 'npm run dev' (This will start the backend and frontend)
-9. Enjoy our app!
+ 
 
 ## Available Scripts
 

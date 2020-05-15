@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
 import './App.css';
@@ -18,39 +18,45 @@ import PatientImmediateAttList from './components/PatientImmediateAttList.compon
 function App() {
   return (
     <Router>
-      <div>
+      <div className="mainBody">
         <div className="container">
           <br/>
-          <Route path="/">
+          <Route exact path="/">
               <Landing />
-          </Route>
-        </div>
+          </Route> 
+      </div>
       <div className="container">
-          <Route path="/patient/login">
+          <Route exact path="/patient/login">
               <Login />
           </Route>
        </div>
-          <Route path="/provider/login">
+      <div className="container">
+          <Route exact path="/provider/login">
               <LoginProvider />
           </Route>
-         <Route path="/patient/:id">
+      </div>
+      <div className="container">
+         <Route exact path="/patient/login/:id">
               <Navbar />
               <CreateSymptom />
           </Route>
-        <Route path="/patient/:id/profile">
+      </div>
+      <div className="container">
+        <Route exact path="/patient/:id/profile">
               <Navbar />
               <PatientProfile />
           </Route>
-         <Route path="/provider/:id">
+      </div>
+      <div className="container">
+         <Route exact path="/provider/login/:id">
               <Navbar />
               <WelcomeProvider />
               <PatientSearch />
               <PatientAlertList />
               <PatientImmediateAttList />
           </Route>
-            
-        </div>
-     
+      </div>      
+     </div>  
     </Router>
   );
 }
