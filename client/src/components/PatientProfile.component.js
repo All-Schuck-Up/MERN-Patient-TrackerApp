@@ -48,20 +48,27 @@ class PatientProfile extends Component{
             <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>patientName</th>
-              <th>entryDate</th>
+              <th>Patient Name</th>
+              <th>Entry Date</th>
               <th>form</th>
-              <th>additionalNote</th>
-              <th>doctorNote</th>
-              <th>doctorNoteDate</th>
+              <th>Additional Note</th>
+              <th>Doctor's Note</th>
+              <th>Doctor's Note Date</th>
             </tr>
           </thead>
           <tbody>
             { this.patientEntryList() }
           </tbody>
         </table>
+<div>
+{this.state.patientEntry.map(patientEntry=><li key = {patientEntry.id}>{patientEntry.additionalNote}
+</li>
+)}
+       </div>
                </div>
+ 
               )
     }
 }                
 export default PatientProfile;
+//<div>{this.patientName},{this.additionalNote},{this.currententry},{this.PatientEntry},</div>

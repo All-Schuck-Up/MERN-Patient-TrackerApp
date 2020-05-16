@@ -27,6 +27,7 @@ const PatientSchema = new mongoose.Schema({
   },
 });
 
+
 async function createPatient() {
   //async function to create mock-up patients
 
