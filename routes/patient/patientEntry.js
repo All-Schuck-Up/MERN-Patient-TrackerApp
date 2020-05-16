@@ -10,13 +10,13 @@ router.route('/patientEntries').get((req, res) => {
 
 //patient entry adding route
 router.route('/patientEntry/add').post((req, res) => {
-    const patientFullName = req.body.patientFullName;
+    const patientEmail = req.body.patientEmail;
     const form = req.body.form;
     const doctorNote = req.body.doctorNote;
     const immediateAttention = req.body.immediateAttention;
 
-    const newPatientEntry = new Order({ patientFullName, form, doctorNote, immediateAttention});
-
+    const newPatientEntry = new PatientEntry({ patientEmail, form, doctorNote, immediateAttention});
+    console.log("++++++++++++++++++++++++++++++++++" + newPatientEntry);
     newPatientEntry.save()
         .then(() => res.json('Patient Entry Added!'))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -26,7 +26,7 @@ router.route('/patientEntry/add').post((req, res) => {
 router.route('/patientEntry/update/:id').post((req, res) => {
     PatientEntry.findById(req.params.id)
         .then(entry => {
-            entry.form[5] = req.body.updatedAdditionalNote;
+            entry.form[form.size() - 1[5]] = req.body.updatedAdditionalNote;
             entry.save()
                 .then(() => res.json('Patient Entry Note Updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
