@@ -21,3 +21,4 @@ const PatientEntrySchema = new mongoose.Schema({  //schema
 const PatientEntry = mongoose.model('patientEntry', PatientEntrySchema);
 
 module.exports = PatientEntry;
+
