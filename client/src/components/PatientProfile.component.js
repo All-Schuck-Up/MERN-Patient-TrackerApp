@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Navbar from "./Nbar.component";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -41,7 +40,7 @@ class PatientProfile extends Component{
     render(){   
        
         return(
-             <div class = "container">
+             <div className = "container">
             <h1>Profile</h1> 
             <h3>Assigned Doctor:</h3>
             <h2>History</h2>
