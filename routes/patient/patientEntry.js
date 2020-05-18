@@ -1,13 +1,50 @@
 const router = require('express').Router();
 let PatientEntry = require('../../models/PatientEntry');
+let Patient = require('../../models/Patient');
 
-//route for getting a array of all patient entries
+//route for getting an array of all patient entries
 router.route('/patientEntries').get((req, res) => {
-    PatientEntry.find()
+    PatientEntry
+        .find()
         .then(patientEntries => res.json(patientEntries))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+////route for getting all entries of 1st patient 
+router.route('/patientEntry').get((req, res) => {
+    PatientEntry
+        .findOne(req.query)
+        //.findOne({_id: req.params.patientEmail})
+    //.findOne({'email': req.params.patientEmail})
+        .then(patientEntries => res.json(patientEntries))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+/*
+/////
+router.route('patient/:id/patientEntry').get((req, res) => {
+    PatientEntry
+        .findOne(req.query)
+        //.findOne({_id: req.params.patientEmail})
+    //.findOne({'email': req.params.patientEmail})
+        .then(patientEntries => res.json(patientEntries))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+*/
 
+/*
+router.route('/patientEntry/:email').get((req, res) => {
+    PatientEntry
+        .find()
+        .then(patientEntries => res.json(patientEntries))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+*/
+//////for only 1 patient
+/*        router.route('patient/:id/patientEntries').get((req, res) => {
+            PatientEntry
+                .find()
+                .then(patientEntries => res.json(patientEntries))
+                .catch(err => res.status(400).json('Error: ' + err));
+        });*/
 //patient entry adding route
 router.route('/patientEntry/add').post((req, res) => {
     const patientFullName = req.body.patientFullName;

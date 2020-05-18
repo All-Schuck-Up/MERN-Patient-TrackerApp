@@ -4,6 +4,7 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
 const Patient = require('../../models/Patient');
+let PatientEntry = require('../../models/PatientEntry');
 
 router.get('/patient/login', (req, res) => {
 });
@@ -47,10 +48,38 @@ router.post('/patient/login', [
     }
   );
 
-router.get('/patient/:_id', (req, res) => {
+//router.get('/patient/:_id', (req, res) => {});
+//////for only 1 patient email, password, patient info
+router.get('/patient/:id',(req, res) => {
+    Patient
+        .findById(req.params.id)
+        .then(patient => res.json(patient))
+       //.then(patientEntries => res.json(patientEntries))  // NOT working as entries
+        .catch(err => res.status(400).json('Error: ' + err));
 });
-router.post('/patient/:_id', (req, res) => {
+
+router.route('patient/:id/patientEntry').get((req, res) => {
+    PatientEntries
+       //.findById(req.params)
+        //.findOne({_id: req.params.patientEmail})
+    //.findOne({'email': req.params.patientEmail})
+        .then(patientEntries => res.json(patientEntries))
+        .catch(err => res.status(400).json('Error: ' + err));
 });
+
+router.post('/patient/:_id', (req, res) => {});
+
+
+//all patients
+router.get('/patients',(req, res) => {
+    Patient
+        .find()
+        .then(patient => res.json(patient))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+
+
 
 // Post req, This route registers user unless already exists TEST => POSTMAN POST to http://localhost:5000/patient/
 router.post(
