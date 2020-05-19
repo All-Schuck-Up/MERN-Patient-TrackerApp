@@ -9,42 +9,23 @@ router.route('/patientEntries').get((req, res) => {
         .then(patientEntries => res.json(patientEntries))
         .catch(err => res.status(400).json('Error: ' + err));
 });
-////route for getting all entries of 1st patient 
-router.route('/patientEntry').get((req, res) => {
-    PatientEntry
-        .findOne(req.query)
-        //.findOne({_id: req.params.patientEmail})
-    //.findOne({'email': req.params.patientEmail})
-        .then(patientEntries => res.json(patientEntries))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-/*
-/////
-router.route('patient/:id/patientEntry').get((req, res) => {
-    PatientEntry
-        .findOne(req.query)
-        //.findOne({_id: req.params.patientEmail})
-    //.findOne({'email': req.params.patientEmail})
-        .then(patientEntries => res.json(patientEntries))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-*/
 
-/*
-router.route('/patientEntry/:email').get((req, res) => {
+//route for getting all entries of 1st patient 
+router.route('/patientEntry/').get((req, res) => {
     PatientEntry
-        .find()
+        .findOne()
         .then(patientEntries => res.json(patientEntries))
         .catch(err => res.status(400).json('Error: ' + err));
 });
-*/
-//////for only 1 patient
-/*        router.route('patient/:id/patientEntries').get((req, res) => {
-            PatientEntry
-                .find()
-                .then(patientEntries => res.json(patientEntries))
-                .catch(err => res.status(400).json('Error: ' + err));
-        });*/
+
+//route for getting patient's all entries by id 
+router.route('/patientEntries/:id').get((req, res) => {
+    PatientEntry
+        .findById(req.params.id)
+        .then(patientEntries => res.json(patientEntries))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 //patient entry adding route
 router.route('/patientEntry/add').post((req, res) => {
     const patientFullName = req.body.patientFullName;
