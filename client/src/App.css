@@ -45,3 +45,8 @@
   width: 40%;
   margin: 0 auto;
 }
+.errorMessage {
+  color: red;
+  font-size: 0.90em;
+  display: relative;
+}

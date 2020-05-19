@@ -11,6 +11,7 @@ connectDB();
 const patient = require('./models/Patient');
 const provider = require('./models/Provider');
 const patientEntry = require('./models/PatientEntry');
+const patientsymptom = require('./models/patientsymptom.model');
 
 // app.use is a middleware function (middleware is carried out in sequence)
 app.use(cors());
@@ -19,7 +20,8 @@ app.use(express.json());
 // Routes (making app modular)
 const mainRoutes = require('./routes');
 const patientRoutes = require('./routes/patient/patient');
-const patientEntryRoutes = require('./routes/patient/patientEntry');
+const patientEntryRoutes = require('./routes/patient/patientsymptoms');
+//const patientEntryRoutes = require('./routes/patient/patientEntry');
 const providerRoutes = require('./routes/provider/provider');
 
 // middleware for all routes

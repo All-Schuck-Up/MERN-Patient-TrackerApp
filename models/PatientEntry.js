@@ -8,7 +8,7 @@ const PatientEntrySchema = new mongoose.Schema({  //schema
     form: {
         type: [{date: Date, symptom1: String, symptom2: String, symptom3: String, symptom4: String, additionalNote: String, media: String}],
         required: true,
-        unique: true
+       
     },
     doctorNote: {
         type: String
@@ -17,6 +17,7 @@ const PatientEntrySchema = new mongoose.Schema({  //schema
         type: Boolean
     } 
 });
+
 
 async function createPatientEntry(){ //async function to create mock-up patient entries
 
