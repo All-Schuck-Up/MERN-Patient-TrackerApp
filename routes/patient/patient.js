@@ -64,7 +64,6 @@ router.get('/patient/:id',(req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-
 router.post('/patient/:_id', (req, res) => {});
 
 

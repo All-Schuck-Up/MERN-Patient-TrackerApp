@@ -24,6 +24,11 @@ const PatientEntrySchema = new mongoose.Schema({
   doctorNote: {
     type: String,
   },
+    patientId: {
+      type: String,
+      required: true, 
+        unique: true
+    },
   immediateAttention: {
     type: Boolean,
   },

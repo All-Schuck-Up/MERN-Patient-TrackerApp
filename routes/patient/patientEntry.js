@@ -10,6 +10,22 @@ router.route('/patientEntries').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//route for getting patient's all entries by 1 entryid 
+router.route('/patientEntries/:id').get((req, res) => {
+    PatientEntry
+        .findById(req.params.id)
+        .then(patientEntries => res.json(patientEntries))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//route for getting entries by patient Id
+router.route('/patientEntry/:id').get((req, res) => {
+    PatientEntry
+        .find({"patientId": req.params.id})
+        .then(patientEntries => res.json(patientEntries))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 //route for getting all entries of 1st patient 
 router.route('/patientEntry/').get((req, res) => {
     PatientEntry
@@ -18,13 +34,7 @@ router.route('/patientEntry/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-//route for getting patient's all entries by id 
-router.route('/patientEntries/:id').get((req, res) => {
-    PatientEntry
-        .findById(req.params.id)
-        .then(patientEntries => res.json(patientEntries))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
+
 
 //patient entry adding route
 router.route('/patientEntry/add').post((req, res) => {
