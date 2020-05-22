@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
         // else { res.redirect('landingPage') }
 });
 
-router.get('/welcome', (req, res, ) => { // TEST WITH => http://localhost:3000/welcome
+router.get('/welcome', (req, res, ) => { // TEST WITH => http://localhost:5000/welcome
     // res.send('To do: Welcome Page (button to redirect to a register page and button to login page');
     // if(onClick: register) { res.redirect('/register') }
     // if(onClick: login) { res.redirect('/login') }
