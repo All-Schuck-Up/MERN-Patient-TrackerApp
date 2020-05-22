@@ -7,6 +7,8 @@ const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
+const Patient = require('../../models/Patient');
+const Provider = require('../../models/Provider');
 
 // route    GET users/auth
 // desc     Get user by token (req is token vs user input)
@@ -73,6 +75,41 @@ router.post(
           res.json({ token });
         }
       );
+
+      // V3 UPDATE ----------
+      // const accountType = user.accountType;
+      // console.log(accountType);
+      // if (user.accountType == 'patient') {
+      //   const patient = await Patient.findOne({ email });
+
+      //   const payload = {
+      //     patient: {
+      //       fName: patient.firstName,
+      //       lName: patient.lastName,
+      //       age: patient.age,
+      //       uderlying: patient.underlying,
+      //     },
+      //   };
+
+      //   jwt.sign(
+      //     payload,
+      //     config.get('jwtSecret'),
+      //     { expiresIn: 3600 },
+      //     (err, token) => {
+      //       if (err) throw err;
+      //       res.json({ token });
+      //     }
+      //   );
+      // } else {
+      //   const provider = await provider.findOne({ email });
+
+      //   const payload = {
+      //     provider: {
+      //       fName: patient.firstName,
+      //       lName: patient.lastName,
+      //     },
+      //   };
+      // ----------------------->
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');

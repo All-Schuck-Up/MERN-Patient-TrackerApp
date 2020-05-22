@@ -2,7 +2,6 @@ import React, { Component, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 // Redux
 import { Provider } from 'react-redux';
 import store from './store';
@@ -16,7 +15,7 @@ import RegisterPatient from './components/auth/RegisterPatient.component';
 import LoginProvider from './components/auth/LoginProvider.component';
 import RegisterProvider from './components/auth/RegisterProvider.component';
 import Navbar from './components/Nbar.component';
-import CreateSymptom from './components/Create-patient-symptom.component';
+import CreateSymptom from './components/patient/Patient.SyptomEntry';
 import PatientProfile from './components/PatientProfile.component';
 import WelcomeProvider from './components/WelcomeProvider.component';
 import PatientSearch from './components/PatientSearch.component';

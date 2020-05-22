@@ -6,12 +6,17 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT,
 } from './types';
+import setAuthToken from '../utils/setAuthToken';
 
 // Load User upon app render
 // onSuccess: retrieve payload from localStorage
 // onFail: throw err, clear token
 export const loadUser = () => async (dispatch) => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
   try {
     const res = await axios.get('/users/auth');
 
@@ -81,4 +86,9 @@ export const login = (email, password) => async (dispatch) => {
       type: LOGIN_FAIL,
     });
   }
+};
+
+// LOGOUT/ CLEAR  TOKEN
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
 };

@@ -6,6 +6,7 @@ const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
+const Patient = require('../../models/Patient');
 
 // route    POST /user   TEST: https://localhost:5000/users/user
 // desc     Register user/ throw err if user exsits
@@ -53,6 +54,7 @@ router.post(
       const payload = {
         user: {
           id: user.id,
+          email: user.email,
           accountType: user.accountType,
         },
       };
