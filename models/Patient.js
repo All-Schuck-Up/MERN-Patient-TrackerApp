@@ -40,24 +40,22 @@ const PatientSchema = new mongoose.Schema({
         unique: true,
       },
       symptom1: {
-        type: Boolean,
-        required: true,
+        type: String,
       },
       symptom2: {
-        type: Boolean,
-        required: true,
+        type: String,
       },
       symptom3: {
-        type: Boolean,
-        required: true,
+        type: String,
+        // required: true,
       },
       symptom4: {
-        type: Boolean,
-        required: true,
+        type: String,
+        // required: true,
       },
       temp: {
         type: String,
-        required: true,
+        // required: true,
       },
       comment: {
         type: String,
@@ -72,6 +70,4 @@ const PatientSchema = new mongoose.Schema({
   ],
 });
 
-const Patient = mongoose.model('Patient', PatientSchema);
-
-module.exports = Patient;
+module.exports = Patient = mongoose.model('patient', PatientSchema);

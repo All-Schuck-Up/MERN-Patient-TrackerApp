@@ -40,7 +40,7 @@ export const addSymptomEntry = ({ formData, history }) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(getCurrentProfile());
-    history.push('/patient/:id/profile');
+    // history.push('/patient/:id/profile');
   } catch (err) {
     dispatch({
       type: ENTRY_ERROR,

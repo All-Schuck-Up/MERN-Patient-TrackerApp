@@ -1,20 +1,20 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { addSymptomEntry } from '../../actions/profile';
 import { Button } from 'semantic-ui-react';
 import { Col, Row, Card, CardTitle, CardText } from 'reactstrap';
 
-const CreateSymptom = ({ getCurrentProfile, addSymptomEntry, history }) => {
+const CreateSymptom = ({ addSymptomEntry, history }) => {
   const [formData, setFormData] = useState({
-    date: Date.now,
-    symptom1: false,
-    symptom2: false,
-    symptom3: false,
-    symptom4: false,
+    date: '',
+    symptom1: '',
+    symptom2: '',
+    symptom3: '',
+    symptom4: '',
     temp: '',
-    comment: null,
+    comment: '',
     immediateAttention: false,
   });
 
@@ -47,7 +47,6 @@ const CreateSymptom = ({ getCurrentProfile, addSymptomEntry, history }) => {
             <Card body>
               <form
                 className='form'
-                className='form-horizontal'
                 onSubmit={(e) => {
                   e.preventDefault();
                   addSymptomEntry(formData, history);
@@ -62,7 +61,7 @@ const CreateSymptom = ({ getCurrentProfile, addSymptomEntry, history }) => {
                   onChange={(e) => onChange(e)}
                 />
                 <div className='form-group'>
-                  <h4>From Date</h4>
+                  <h4>Date</h4>
                   <input
                     type='date'
                     name='date'
@@ -73,46 +72,42 @@ const CreateSymptom = ({ getCurrentProfile, addSymptomEntry, history }) => {
                 <div className='form-group'>
                   <label>Trouble breathing?</label> {'  '}
                   <input
-                    type='checkbox'
+                    type='text'
+                    placeholder='YES or NO'
                     name='symptom1'
-                    checked={symptom1}
                     value={symptom1}
-                    onChange={() => {
-                      setFormData({ ...formData, symptom1: !symptom1 });
-                    }}
+                    onChange={(e) => onChange(e)}
+                    required
                   />
                   <br></br>
                   <label>Sore Throat?</label> {'  '}
                   <input
-                    type='checkbox'
+                    type='text'
+                    placeholder='YES or NO'
                     name='symptom2'
-                    checked={symptom2}
                     value={symptom2}
-                    onChange={() => {
-                      setFormData({ ...formData, symptom2: !symptom2 });
-                    }}
+                    onChange={(e) => onChange(e)}
+                    required
                   />
                   <br></br>
                   <label>A Dry Cough?</label> {'  '}
                   <input
-                    type='checkbox'
+                    type='text'
+                    placeholder='YES or NO'
                     name='symptom3'
-                    checked={symptom3}
                     value={symptom3}
-                    onChange={() => {
-                      setFormData({ ...formData, symptom3: !symptom3 });
-                    }}
+                    onChange={(e) => onChange(e)}
+                    required
                   />
                   <br></br>
                   <label>Heigh Fever?</label> {'  '}
                   <input
-                    type='checkbox'
+                    type='text'
+                    placeholder='YES or NO'
                     name='symptom4'
-                    checked={symptom4}
                     value={symptom4}
-                    onChange={() => {
-                      setFormData({ ...formData, symptom4: !symptom4 });
-                    }}
+                    onChange={(e) => onChange(e)}
+                    required
                   />
                 </div>
                 <div className='form-group'>
@@ -123,7 +118,7 @@ const CreateSymptom = ({ getCurrentProfile, addSymptomEntry, history }) => {
                     placeholder='Enter boby temp'
                     name='temp'
                     value={temp}
-                    onChange={onChange}
+                    onChange={(e) => onChange(e)}
                     required
                   />
                   <br></br>
@@ -134,15 +129,20 @@ const CreateSymptom = ({ getCurrentProfile, addSymptomEntry, history }) => {
                     placeholder='Add any additional comments for your provider'
                     name='comment'
                     value={comment}
-                    onChange={onChange}
+                    onChange={(e) => onChange(e)}
                   />
                 </div>
-                <button
+                <input
+                  type='submit'
+                  className='btn btn-primary btn-block btn-lg'
+                />
+                <Link to='/patient/:id/profile' />
+                {/* <button
                   type='submit'
                   className='btn btn-primary btn-block btn-lg'
                 >
                   Save to Record
-                </button>
+                </button> */}
                 <br></br>
                 <button
                   className='btn btn-secondary'

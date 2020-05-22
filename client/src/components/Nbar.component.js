@@ -17,13 +17,11 @@ const Navbar = ({ logout }) => {
               Profile
             </Link>
           </li>
-          <a onClick={logout} href='#!'>
-            <li className='navbar-item'>
-              <Link to='/' className='nav-link'>
-                Logout
-              </Link>
-            </li>
-          </a>
+          <li>
+            <a onClick={logout} href='#!'>
+              <i className='navbar-item' />{' '}
+            </a>
+          </li>
         </ul>
       </div>
     </nav>
