@@ -20,9 +20,18 @@ const isFormValid = ({ formErrors, ...rest }) => {
 export default class createSympotom extends Component {
   constructor(props) {
     super(props);
-    //this.onChangeDate = this.onChangeDate.bind(this);
-    this.onChangeAttention = this.onChangeAttention.bind(this);
-//    this.onMediaChange = this.onMediaChange.bind(this);
+
+    this.onChangeDate = this.onChangeDate.bind(this);
+    this.onCheckedSymptom1 = this.onCheckedSymptom1.bind(this);
+    this.onCheckedSymptom2 = this.onCheckedSymptom2.bind(this);
+    this.onCheckedSymptom3 = this.onCheckedSymptom3.bind(this);
+    this.onCheckedSymptom4 = this.onCheckedSymptom4.bind(this);
+    this.onChangeTemperature = this.onChangeTemperature.bind(this);
+    this.onMediaChange = this.onMediaChange.bind(this);
+    this.onChangeadditionalNote = this.onChangeadditionalNote.bind(this);
+
+    this.onChangeAttention = this.onChangeAttention.bind(this)
+
     this.onSubmit = this.onSubmit.bind(this);
 
     // this.onCheckedSymptom1 = this.onCheckedSymptom1.bind(this);
