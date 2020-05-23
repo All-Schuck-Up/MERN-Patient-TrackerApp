@@ -25,8 +25,12 @@ form: {
    
    /* PatientID:{
       type:String,
+<<<<<<< Updated upstream
       ref:PatientSchema,
       required
+=======
+      required: true 
+>>>>>>> Stashed changes
     } */
 });
 const PatientEntry = mongoose.model('PatientEntry', PatientEntrySchema);
