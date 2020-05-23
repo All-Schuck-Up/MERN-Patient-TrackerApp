@@ -1,12 +1,12 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addSymptomEntry } from '../../actions/profile';
 import { Button } from 'semantic-ui-react';
 import { Col, Row, Card, CardTitle, CardText } from 'reactstrap';
 
-const CreateSymptom = ({ addSymptomEntry, history }) => {
+const CreateSymptom = ({ addSymptomEntry, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     date: '',
     symptom1: '',
@@ -49,19 +49,30 @@ const CreateSymptom = ({ addSymptomEntry, history }) => {
                 className='form'
                 onSubmit={(e) => {
                   e.preventDefault();
-                  addSymptomEntry(formData, history);
+                  addSymptomEntry({
+                    date,
+                    symptom1,
+                    symptom2,
+                    symptom3,
+                    symptom4,
+                    temp,
+                    comment,
+                    immediateAttention,
+                  });
                 }}
               >
                 <h3 className='text-center'>Patient Symptom Entery</h3>
-                <input
+                <br></br>
+                <br></br>
+                {/* <input
                   type='hidden'
                   className='form-group'
                   name='immediateAttention'
                   value={immediateAttention}
                   onChange={(e) => onChange(e)}
-                />
+                /> */}
                 <div className='form-group'>
-                  <h4>Date</h4>
+                  <label>Date</label> {'  '}
                   <input
                     type='date'
                     name='date'
@@ -132,18 +143,6 @@ const CreateSymptom = ({ addSymptomEntry, history }) => {
                     onChange={(e) => onChange(e)}
                   />
                 </div>
-                <input
-                  type='submit'
-                  className='btn btn-primary btn-block btn-lg'
-                />
-                <Link to='/patient/:id/profile' />
-                {/* <button
-                  type='submit'
-                  className='btn btn-primary btn-block btn-lg'
-                >
-                  Save to Record
-                </button> */}
-                <br></br>
                 <button
                   className='btn btn-secondary'
                   onClick={() => {
@@ -158,6 +157,12 @@ const CreateSymptom = ({ addSymptomEntry, history }) => {
                 <button className='btn btn-primary' type='button'>
                   cancel
                 </button>
+                <br></br>
+                <br></br>
+                <input
+                  type='submit'
+                  className='btn btn-primary btn-block btn-lg'
+                />
               </form>
             </Card>
           </Col>
@@ -184,8 +189,13 @@ const CreateSymptom = ({ addSymptomEntry, history }) => {
 
 CreateSymptom.propTypes = {
   addSymptomEntry: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, {
   addSymptomEntry,
 })(CreateSymptom);

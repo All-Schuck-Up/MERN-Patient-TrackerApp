@@ -25,26 +25,47 @@ export const getCurrentProfile = () => async (dispatch) => {
 };
 
 // Add new patient symptom entry to profile
-export const addSymptomEntry = ({ formData, history }) => async (dispatch) => {
+export const addSymptomEntry = ({
+  date,
+  symptom1,
+  symptom2,
+  symptom3,
+  symptom4,
+  temp,
+  comment,
+  immediateAttention,
+}) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
 
+  const body = JSON.stringify({
+    date,
+    symptom1,
+    symptom2,
+    symptom3,
+    symptom4,
+    temp,
+    comment,
+    immediateAttention,
+  });
+
   try {
-    const res = await axios.put('/patients/profile/newEntry', formData, config);
+    const res = await axios.put('/patients/profile/newEntry', body, config);
 
     dispatch({
       type: SYMPTOM_ENTRY,
       payload: res.data,
     });
-    dispatch(getCurrentProfile());
     // history.push('/patient/:id/profile');
   } catch (err) {
     dispatch({
       type: ENTRY_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: {
+        msg: 'Error with profile/action',
+      },
     });
   }
 };

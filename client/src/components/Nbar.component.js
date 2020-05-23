@@ -18,9 +18,9 @@ const Navbar = ({ logout }) => {
             </Link>
           </li>
           <li>
-            <a onClick={logout} href='#!'>
-              <i className='navbar-item' />{' '}
-            </a>
+            <Link to='/' className='nav-link' onClick={logout} href='#!'>
+              Logout
+            </Link>
           </li>
         </ul>
       </div>
