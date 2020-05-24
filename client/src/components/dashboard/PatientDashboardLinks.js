@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const DashboardActions = () => {
+const PatientDashboardLinks = () => {
   return (
     <div className='buttons'>
       <Link to='/symptomEntry' className='btn btn-light'>
@@ -17,4 +17,4 @@ const DashboardActions = () => {
   );
 };
 
-export default DashboardActions;
+export default PatientDashboardLinks;

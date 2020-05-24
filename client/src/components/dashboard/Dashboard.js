@@ -5,7 +5,8 @@ import { getCurrentProfile } from '../../actions/profile';
 //component
 import Spinner from '../layout/Spinner';
 import Navbar from '../layout/Nbar.component';
-import DashboardLinks from './DashboardLinks';
+import PatientDashboardLinks from './PatientDashboardLinks';
+import ProviderDashboardLinks from './ProviderDashboardLinks';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -25,16 +26,15 @@ const Dashboard = ({
       <p>
         <i>Welcome {user && user.name}!</i>
       </p>
-      {profile !== null ? (
+      {profile !== null && user.accountType === 'patient' ? (
         <Fragment>
-          <DashboardLinks />
+          <h4>I hope you are doing well, if not we are here to help</h4>
+          <PatientDashboardLinks />
         </Fragment>
       ) : (
         <Fragment>
-          <p>
-            No record found: Please contact your provider to gain access to this
-            app!
-          </p>
+          <h4>Doc your patients await</h4>
+          <ProviderDashboardLinks />
         </Fragment>
       )}
     </Fragment>

@@ -9,6 +9,7 @@ import LoginProvider from '../auth/LoginProvider.component';
 import Dashboard from '../dashboard/Dashboard';
 import SymptomEntry from '../patient/SymptomEntry';
 import Profile from '../profile/Profile';
+import ViewPatients from '../profiles/Profiles';
 
 const Routes = (props) => {
   return (
@@ -21,6 +22,7 @@ const Routes = (props) => {
         <PrivateRoute exact path='/dashboard' component={Dashboard} />
         <PrivateRoute exact path='/symptomEntry' component={SymptomEntry} />
         <PrivateRoute exact path='/profile/:id' component={Profile} />
+        <PrivateRoute exact path='/viewPatients' component={ViewPatients} />
       </Switch>
     </section>
   );

@@ -36,8 +36,8 @@ const PatientSchema = new mongoose.Schema({
       date: {
         type: Date,
         default: Date.now,
-        required: true,
-        unique: true,
+        required: false,
+        unique: false,
       },
       symptom1: {
         type: String,

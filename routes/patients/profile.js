@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
+const checkObjectId = require('../../middleware/checkObjectId');
 const { check, validationResult } = require('express-validator');
 
 const Patient = require('../../models/Patient');
@@ -37,6 +38,26 @@ router.get('/me', auth, async (req, res) => {
 
       res.json(profile);
     }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// ROUTE  GET patients/profile/:id
+// DESC   Get profile by id
+// RETURN onSuccess: target profile, onFail: err.msg
+router.get('/:user_id', checkObjectId('user_id'), async (req, res) => {
+  try {
+    const profile = await Patient.findOne({
+      user: req.params.user_id,
+    }).populate('user');
+
+    if (!profile) {
+      return res.status(400).json({ msg: 'Profile not found' });
+    }
+
+    return res.json(profile);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -96,6 +117,22 @@ router.post(
     }
   }
 );
+
+// ROUTE    GET patient/profile
+// DESC     Get all profiles
+// RETURN   onSuccess: returns all profiles onFail: err.msg
+router.get('/', async (req, res) => {
+  try {
+    const profiles = await Patient.find().populate('user', [
+      'email',
+      'accountType',
+    ]);
+    res.json(profiles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 // ROUTE    PUT patient/profile/newEntry
 // DESC     Add's patient symptom entry
