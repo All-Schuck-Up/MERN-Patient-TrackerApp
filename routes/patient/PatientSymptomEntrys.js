@@ -1,18 +1,15 @@
 const router = require('express').Router();
 let PatientSymptomEntry = require('../../models/PatientSymptomEntry');
 
-router.route('/PatientSymptomEntrys').get((req, res) => {
+router.route('/patientsymptomentries').get((req, res) => {
 
-  
-    PatientSymptomEntry.find(req.params.id)
-        .then(PatientSymptomEntrys => res.json(PatientSymptomEntrys))
+      PatientSymptomEntry.find()
+        .then(patientsymptomentries => res.json(patientsymptomentries))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 
-router.route('/PatientSymptomEntry/add').post((req, res) => {
-
-
+router.route('/PatientSymptomEntrys/add').post((req, res) => {
 
     const newSymptom = new PatientSymptomEntry({
         patientFullName:req.body.patientFullName,
@@ -37,7 +34,7 @@ router.route('/PatientSymptomEntry/add').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('PatientSymptomEntry/:id').get((req, res) => {
+router.route('patientsymptomentries/:id').get((req, res) => {
     PatientSymptomEntry.findById(req.params.id)
         .then(PatientSymptomEntry => res.json(PatientSymptomEntry))
         .catch(err => res.status(400).json('Error: ' + err));

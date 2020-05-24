@@ -26,14 +26,14 @@ const PatientEntrySchema = new Schema({
   },
 
    
-      media: { 
+    /*  media: { 
           type: Buffer,
         
-        
-        unique: true
+       
+      
     },
 
-   
+   */
   
     doctorNote: {
         type: String
