@@ -73,7 +73,7 @@ resetForm = () => {
     if (isFormValid(this.state))
     {
      console.log(symptom);
-     axios.post('http://localhost:3200/patientEntry/add', symptom)
+     axios.post('http://localhost:5000/PatientSymptomEntrys/add', symptom)
      .then(res => console.log(res.data));
      window.location = '/';
     }
