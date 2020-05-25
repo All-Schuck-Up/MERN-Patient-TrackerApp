@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { getCurrentProfile } from '../actions/profile';
 
 import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
-import PatientProfile from './PatientProfile.component';
-
 export default class createSympotom extends Component {
   constructor(props) {
     super(props);

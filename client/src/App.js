@@ -1,6 +1,6 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 // Redux
 import { Provider } from 'react-redux';
@@ -17,7 +17,6 @@ import RegisterProvider from './components/auth/RegisterProvider.component';
 import Navbar from './components/Nbar.component';
 import CreateSymptom from './components/patient/Patient.SyptomEntry';
 import PatientProfile from './components/PatientProfile.component';
-import WelcomeProvider from './components/WelcomeProvider.component';
 import PatientSearch from './components/PatientSearch.component';
 import PatientAlertList from './components/PatientAlertList.component';
 import PatientImmediateAttList from './components/PatientImmediateAttList.component';
@@ -70,14 +69,13 @@ function App() {
           </div>
           <div className='container'>
             <Route exact path='/patient/:id/profile'>
-              <Navbar />
+              <Navbar name="Patient Name"/>
               <PatientProfile />
             </Route>
           </div>
           <div className='container'>
             <Route exact path='/provider/login/:id'>
-              <Navbar />
-              <WelcomeProvider />
+              <Navbar name="Provider Name"/>
               <PatientSearch />
               <PatientAlertList />
               <PatientImmediateAttList />

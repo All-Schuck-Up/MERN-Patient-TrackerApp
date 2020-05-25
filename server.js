@@ -1,6 +1,6 @@
 const express = require('express');
 const connectDB = require('./config/db');
-const cors = require('express');
+const cors = require('cors');
 
 const app = express();
 
@@ -20,12 +20,14 @@ app.use(express.json());
 const mainRoutes = require('./routes');
 const patientEntryRoutes = require('./routes/patients/patientEntry');
 const providerRoutes = require('./routes/provider/provider');
+const immediateAttnRoutes = require('./routes/provider/immediateAttention');
 
 // middleware for all routes
 app.use('/', mainRoutes);
 app.use('/patients/profile', require('./routes/patients/profile'));
 app.use('/', patientEntryRoutes);
 app.use('/', providerRoutes);
+app.use('/', immediateAttnRoutes);
 app.use('/users/user', require('./routes/users/user'));
 app.use('/users/auth', require('./routes/users/auth'));
 

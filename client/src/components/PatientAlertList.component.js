@@ -10,7 +10,7 @@ class PatientAlertList extends React.Component {
     }
     render() {
         const alert = this.state.alertArray.map((elem) => {
-            return(<PatientAlert alertMessage={elem} />)
+            return(<PatientAlert key={elem} alertMessage={elem} />)
         });
         return(
             <div className="PatientAlertList">

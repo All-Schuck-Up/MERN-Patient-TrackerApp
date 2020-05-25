@@ -1,9 +1,6 @@
 import React from 'react';
 
 class PatientAlert extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return(
             <div className="PatientAlert">
