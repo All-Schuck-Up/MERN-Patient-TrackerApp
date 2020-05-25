@@ -1,17 +1,24 @@
 const router = require('express').Router();
 let PatientEntry = require('../../models/PatientEntry');
 
+
 router.route('/patientEntries').get((req, res) => {
  
-    PatientEntry.find(req.params.id)
+    PatientEntry.find()
         .then(patientEntries => res.json(patientEntries))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 
-router.route('/patientEntry/add').post((req, res) => {
+router.route('patientEntry/add').post((req, res) => {
     const newSymptom = new PatientEntry({
-        patientFullName:req.body.patientFullName,
+      
+        patientFullName:
+        {
+        firstName:req.body.firstName,
+        lastName:req.body.lastName,
+        },
+        patientId:req.body.patientId,
         form:
         {
             date : Date.parse(req.body.date),

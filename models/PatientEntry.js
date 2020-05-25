@@ -1,31 +1,31 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
 const PatientEntrySchema = new Schema({
 
-   /* patientFullName:
+
+ patientFullName:
      {
         firstName: {type: String,rquired: true },
         lastName: {type: String,rquired: true },
-      },*/
-      patientFullName:
-       {type: String,rquired: true },
-       
+      },
+
+ 
   form: {
        date: {type: Date,rquired: true },
-    symptom1:{type: Boolean,rquired: true },
-    symptom2: {type: Boolean,rquired: true },
-    symptom3: {type: Boolean,rquired: true },
+    symptom1:{type: Boolean },
+    symptom2: {type: Boolean },
+    symptom3: {type: Boolean },
              
-    symptom4: {type: Boolean,rquired: true },
+    symptom4: {type: Boolean },
 
     additionalNote: {type: String,rquired: true },
      
+    
    
     temperature: {type: String,rquired: true }
   },
 
-   
+   /*
       media: { 
           type: Buffer,
         
@@ -33,7 +33,7 @@ const PatientEntrySchema = new Schema({
         unique: true
     },
 
-   
+  */
   
     doctorNote: {
         type: String
@@ -43,9 +43,9 @@ const PatientEntrySchema = new Schema({
    immediateAttention: {
         type: Boolean
     } 
+
+
 });
-
-
 const PatientEntry = mongoose.model('PatientEntry', PatientEntrySchema);
 module.exports =PatientEntry;
 

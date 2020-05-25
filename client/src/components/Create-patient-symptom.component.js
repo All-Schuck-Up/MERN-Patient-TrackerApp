@@ -28,7 +28,8 @@ export default class createSympotom extends Component {
 
     this.state = {
       date: Date().toLocaleString(),
-      patientFullName: '',
+      firstName: '',
+      lastName: '',
       symptom1: '',
       symptom2: '',
       symptom3: '',
@@ -41,7 +42,8 @@ export default class createSympotom extends Component {
       additionalNote: '',
 
       formErrors: {
-        patientFullName: "",
+        firstName: "",
+        lastName:"",
         temperature: "",
         additionalNote: ""
 
@@ -59,7 +61,8 @@ export default class createSympotom extends Component {
 
   onSubmit(e) {
     const symptom = {
-      patientFullName: this.state.patientFullName,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
       date: this.state.date,
       symptom1: this.state.symptom1,
       symptom2: this.state.symptom2,
@@ -72,9 +75,15 @@ export default class createSympotom extends Component {
     }
     if (isFormValid(this.state)) {
       console.log(symptom);
-      axios.post('http://localhost:5000/PatientSymptomEntrys/add', symptom)
-        .then(res => console.log(res.data));
-      window.location = '/';
+     axios.post('http://localhost:5000/patientEntry/add', symptom)
+ 
+   //axios.post('http://localhost:5000/PatientSymptomEntrys/add', symptom)
+
+     .then(res => console.log(res.data));
+
+   window.location = '/';
+      
+
     }
 
 
@@ -92,11 +101,19 @@ export default class createSympotom extends Component {
 
     switch (name) {
 
-      case "patientFullName":
+      case "firstName":
 
-        formErrors.patientFullName =
+        formErrors.firstName =
 
-          value.length < 6 ? " Please Enter your Full Name" : "";
+          value.length < 6 ? " Please Enter your First Name" : "";
+
+        break;
+        
+        case "lastName":
+
+        formErrors.lastName =
+
+          value.length < 6 ? " Please Enter your last Name" : "";
 
         break;
         
@@ -189,20 +206,39 @@ export default class createSympotom extends Component {
 
                 <div className="form-group" >
 
-                  <label class="control-label col-sm-2" >Full Name: </label>
+                  <label class="control-label col-sm-2" >First Name: </label>
                   <input class="spaceInput" type="text"
-                    name="patientFullName"
+                    name="firstName"
                     required
                     className="form-control"
-                    value={this.state.patientFullName}
-                      placeholder={"Full Name "}
+                    value={this.state.firstName}
+                      placeholder={"First Name "}
                       onChange={this.handleChange.bind(this)}
                   />
                 </div>
 
-                {formErrors.patientFullName.length > 0 && (
-                  <span className="errorMessage" >{formErrors.patientFullName}</span>
+                {formErrors.firstName.length > 0 && (
+                  <span className="errorMessage" >{formErrors.firstName}</span>
                 )}
+
+
+<div className="form-group" >
+
+<label class="control-label col-sm-2" >LastName: </label>
+<input class="spaceInput" type="text"
+  name="lastName"
+  required
+  className="form-control"
+  value={this.state.lastName}
+    placeholder={"Last Name "}
+    onChange={this.handleChange.bind(this)}
+/>
+</div>
+
+{formErrors.lastName.length > 0 && (
+<span className="errorMessage" >{formErrors.lastName}</span>
+)}
+
                 <div className="form-group" >
                   <div> <label>Trouble breathing ?  </label>{"      "}
 
