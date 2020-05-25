@@ -2,10 +2,14 @@ const mongoose = require('mongoose');
 
 const PatientEntrySchema = new mongoose.Schema({
   //schema
-  patientFullName: {
-    type: String,
-    required: true,
-  },
+  firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
   form: {
     type: [
       {
@@ -24,11 +28,6 @@ const PatientEntrySchema = new mongoose.Schema({
   doctorNote: {
     type: String,
   },
-    patientId: {
-      type: String,
-      required: true, 
-        unique: true
-    },
   immediateAttention: {
     type: Boolean,
   },

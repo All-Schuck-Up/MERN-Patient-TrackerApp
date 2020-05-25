@@ -8,18 +8,22 @@ export default class PatientProfile extends Component{
     this.state = {
         symptom1:'',
         patientFullName:'',
+        firstName:'',
+        lastName:'',
+        assignedDoctor:'',
+        age:'',
+        email:'',
         patient:[],
         patientEntry: [],
-        patientName:'',
+        patientname:'',
         patientId:'',
-        generalInfo:[],
         form:[],
         date:''
     }
    }
     
 componentDidMount(){
-    /* axios.get('http://localhost:5000/patient/:id')
+     axios.get('http://localhost:5000/patient/:id')
         .then(res => {
             console.log(res);
             this.setState({patient: res.data});
@@ -27,15 +31,15 @@ componentDidMount(){
         .catch((error) => {
             console.log(error);
       })
-   */ axios.get('http://localhost:5000/patient/5ebb9acd08efd022b83d1c4b')
+  
+    axios.get('http://localhost:5000/patient/')
         .then(res => {
             console.log(res);
-            this.setState({patient: res.data.generalInfo});
+            this.setState({patient: res.data});
         })
         .catch((error) => {
             console.log(error);
       })
-  
    /* 
     axios.get('http://localhost:5000/patientEntries/')
         .then(res => {
@@ -46,7 +50,7 @@ componentDidMount(){
             console.log(error);
       })
    */ 
-    axios.get('http://localhost:5000/patientEntry/5ebb9acd08efd022b83d1c4b')
+    axios.get('http://localhost:5000/patientEntry/5ecb47c9f1741b0a4e6b993b')
         .then(res => {
             console.log(res);
             this.setState({patientEntry: res.data});
@@ -58,7 +62,7 @@ componentDidMount(){
 }
     
 render() {
-    const patientE=
+    const patientS=
           <ol>{this.state.patientEntry.map((patientEntry) =>
               <li>
                  {patientEntry.date},
@@ -70,19 +74,35 @@ render() {
               </li>
               )}
          </ol>
-    
+
+    const patientP =
+          <ol>{this.state.patient.map(patient =><li>{patient.name},
+                 {patient.date},
+                 {patient.firstName},
+                {patient.assignedDoctor},
+                {patient.lastName},
+                age: {patient.age}, 
+                    {patient.email},
+                  patient id: {patient.patientId}             
+              </li>
+              )}
+         </ol>
+    const patientAll=
+          <ul>
+          {this.state.patient.map(patient=><li>{patient.firstName}---{patient.age}</li>
+    )} </ul>
     return(
         <div className = "container">
+        
             <h1>Profile</h1> 
-                {this.state.patient.map(patient => <li>Patient name: {patient.firstName} {patient.lastName}, age: {patient.age}, 
-                    _id: {patient._id},{patient.email}{this.state.patient.email}{patient.name} 
-                        </li>
-                    )}
-             
-            <h3>Assigned Doctor:</h3>
+         <div>YES!{patientP}</div>
+         <div>Entries:{patientAll}</div>
+               
+            <h3>Assigned Doctor:</h3> 
+            <div>{this.state.patient.assignedDoctor}</div>
             <h2>History:</h2>
               <ul>
-                   {this.state.patientEntry.map(patientEntry =>         <li>{patientEntry._id} --   {patientEntry.patientName},patient id:
+                   {this.state.patientEntry.map(patientEntry =><li>{patientEntry._id} --   {patientEntry.patientName},patient id:
                    {patientEntry.patientId},
                    {patientEntry.patientFullName},
                    {patientEntry.name},
@@ -92,18 +112,24 @@ render() {
                    {patientEntry.immediateAttention}
                         </li>
                     )}
-             </ul>    
-           <div>Entries:{patientE}</div>
-        </div>
-    )
-}
-}
-   /* tests
-          <div>Patient {this.state.patient.email}</div>  
+             </ul>   
+
+                   <div>Patient {this.state.patient.email}</div>  
          <div>Patient {this.state.patient.age}</div>  
          <div>Patient {this.props.name}</div>
         <div>Patient {this.props.patientFullName}</div>
         <div>name {this.props.patientName}</div>
         <div>id {this.props.patientId}</div> 
-        <div>Patient age {this.state.patient.generalInfo}</div> */
+        <div>Patient age {this.state.patient.generalInfo}</div> 
+           <div>Entries:{patientS}</div>
+        </div>
+    )
+}
+}
+
+// {this.patient.map((patient) => <li>Patient name: {patient.firstName} {patient.lastName}, age: {patient.age}, 
+//                    {patient.email}
+//                        </li>
+//                    )}
+//             
                                           

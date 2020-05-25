@@ -72,9 +72,11 @@ router.post('/patient/:_id', (req, res) => {});
 router.post(
   '/patient/',
   [
-    check('name', 'Name is required').not().isEmpty(),
+    check('firstName', 'firstName is required').not().isEmpty(),
+    check('lastName', 'lastName is required').not().isEmpty(),
     check('email', 'Enter a valid email').isEmail(),
-    check('password', 'Please enter password with atleast 4 characters').isLength({ min: 4 }),
+    check('age', 'Enter a valid age').not().isEmpty()
+   // check('password', 'Please enter password with atleast 4 characters').isLength({ min: 4 }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -82,7 +84,9 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    //const { name, email, password } = req.body;
+      const { firstName, lastName, email, age, underli } = req.body;
+
 
     try {
       let patient = await Patient.findOne({ email });
@@ -92,16 +96,19 @@ router.post(
       }
 
       patient = new Patient({
-        name,
+        firstName,
+        lastName,
         email,
-        password,
+          age,
+          underlying
+    //    password,
       });
-
+/*
       // encrypt password
       patient.password = await bcrypt.hash(req.body.password, 10);
       console.log(patient.password);
       // End encryption
-
+*/
       await patient.save();
       res.send('Patient added');
     } catch (err) {
