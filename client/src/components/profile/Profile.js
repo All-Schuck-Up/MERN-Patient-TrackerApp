@@ -21,7 +21,7 @@ const Profile = ({ getProfileById, profile: { profile }, auth, match }) => {
         <Spinner />
       ) : (
         <Fragment>
-          <div className='profile'>
+          <div className='container'>
             <ProfileDemo profile={profile} />
           </div>
           <div>

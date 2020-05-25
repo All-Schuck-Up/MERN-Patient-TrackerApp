@@ -14,29 +14,30 @@ const ProfileEntry = ({
     immediateAttention,
   },
 }) => (
-  <div>
-    <h3>Date: </h3>
-    <p>{date}</p>
-    <p>
-      <strong>Trouble Breathing: </strong> {symptom1}
-    </p>
-    <p>
-      <strong>Sore Throat: </strong> {symptom2}
-    </p>
-    <p>
-      <strong>Dry Cough: </strong> {symptom3}
-    </p>
-    <p>
-      <strong>Hieigh Fever: </strong> {symptom4}
-    </p>
-    <h5>Temp: </h5>
-    <p>{temp}</p>
-    <p>
-      <strong>Addition Comments: </strong> {comment}
-    </p>
-    <p>
-      <strong>Immediate Attention: </strong> {immediateAttention}
-    </p>
+  <div className='container'>
+    <table>
+      <thead className='thead-light'>
+        <tr>
+          <th>Entry Date</th>
+          <th>Trouble Breathing:</th>
+          <th>Sore Throat:</th>
+          <th>Hieigh Fever:</th>
+          <th>Temp:</th>
+          <th>Addition Note:</th>
+          <th>Doctor Note:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <td>{date}</td>
+        <td>{symptom1}</td>
+        <td>{symptom2}</td>
+        <td>{symptom3}</td>
+        <td>{symptom4}</td>
+        <td>{temp}</td>
+        <td>{comment}</td>
+        <td>{doctorNote}</td>
+      </tbody>
+    </table>
   </div>
 );
 
