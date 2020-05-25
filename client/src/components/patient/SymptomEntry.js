@@ -156,6 +156,16 @@ const CreateSymptom = ({ addSymptomEntry }) => {
                       ...formData,
                       immediateAttention: !immediateAttention,
                     });
+                    addSymptomEntry({
+                      date,
+                      symptom1,
+                      symptom2,
+                      symptom3,
+                      symptom4,
+                      temp,
+                      comment,
+                      immediateAttention,
+                    });
                   }}
                 >
                   Mark entry as immediate attention
@@ -166,10 +176,9 @@ const CreateSymptom = ({ addSymptomEntry }) => {
                 <br></br>
                 <br></br>
                 <Link
+                  to='/dashboard'
                   type='submit'
                   className='btn btn-primary'
-                  value='Submit'
-                  to='/dashboard'
                   onClick={(e) => {
                     e.preventDefault();
                     addSymptomEntry({

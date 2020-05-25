@@ -21,6 +21,7 @@ const ProfileEntry = ({
           <th>Entry Date</th>
           <th>Trouble Breathing:</th>
           <th>Sore Throat:</th>
+          <th>Dry Cough:</th>
           <th>Hieigh Fever:</th>
           <th>Temp:</th>
           <th>Addition Note:</th>
