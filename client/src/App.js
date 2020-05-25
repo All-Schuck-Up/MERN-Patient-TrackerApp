@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 // Redux
 import { Provider } from 'react-redux';
@@ -88,14 +88,13 @@ function App() {
           </div>
           <div className='container'>
             <Route exact path='/patient/:id/profile'>
-              <Navbar />
+              <Navbar name="Patient Name"/>
               <PatientProfile />
             </Route>
           </div>
           <div className='container'>
             <Route exact path='/provider/login/:id'>
-              <Navbar />
-              <WelcomeProvider />
+              <Navbar name="Provider Name"/>
               <PatientSearch />
               <PatientAlertList />
               <PatientImmediateAttList />
