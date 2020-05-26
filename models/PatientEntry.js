@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const PatientEntrySchema = new mongoose.Schema({
-  //schema
-  firstName: {
+  //patient entry schema
+    firstName: {
         type: String,
         required: true
     },
@@ -14,31 +14,29 @@ const PatientEntrySchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-  form: {
-    type: [
-      {
-        date: Date,
-        symptom1: String,
-        symptom2: String,
-        symptom3: String,
-        symptom4: String,
-        additionalNote: String,
-        media: String,
+    form: {
+        type: [
+          {
+            date: Date,
+            symptom1: String,
+            symptom2: String,
+            symptom3: String,
+            symptom4: String,
+            additionalNote: String,
+            media: String,
+          },
+        ],
+        required: true,
+        unique: true,
       },
-    ],
-    required: true,
-    unique: true,
-  },
-  doctorNote: {
-    type: String,
-  },
-  immediateAttention: {
-    type: Boolean,
-  },
+    doctorNote: {
+        type: String,
+      },
+    immediateAttention: {
+        type: Boolean,
+    },
 });
 
 
 module.exports = PatientEntry = mongoose.model(
-  'patientEntry',
-  PatientEntrySchema
-);
+      'patientEntry', PatientEntrySchema);

@@ -38,14 +38,17 @@ router.route('/patientEntry/').get((req, res) => {
 
 //patient entry adding route
 router.route('/patientEntry/add').post((req, res) => {
-    const patientFullName = req.body.patientFullName;
+    const firstName = req.body.firstName;
     const form = req.body.form;
     const doctorNote = req.body.doctorNote;
     const immediateAttention = req.body.immediateAttention;
 
-    const newPatientEntry = new Order({ patientFullName, form, doctorNote, immediateAttention});
+    const newPatientEntry = new PatientEntry({               firstName, 
+        form,
+        doctorNote,
+        immediateAttention});
 
-    newPatientEntry.save()
+    PatientEntry.save()
         .then(() => res.json('Patient Entry Added!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
