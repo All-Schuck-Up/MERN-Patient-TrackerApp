@@ -27,7 +27,11 @@ componentDidMount(){
      axios.get('http://localhost:5000/patient/5ebb9acb08efd022b83d1c43')
         .then(res => {
             console.log(res);
-            this.setState({patient: res.data.assignedDoctor});
+           
+         this.setState({patient: res.data.assignedDoctor,
+                         patientname:(res.data.firstName + " "+
+                    res.data.lastName), age: res.data.age});
+         
          //this.setState({patient: res.data});
         })
         .catch((error) => {
@@ -61,17 +65,18 @@ render() {
 
     return(
         <div className = "container">
-            <h1>Profile</h1>
-        
-            <h2>Assigned Doctor:{patientP}</h2>    
+            <h1>Profile:</h1>
+           <h4> Patient name: {this.state.patientname}, Age: {this.state.age}</h4>  
+            <h4>Assigned Doctor:{patientP}</h4>    
             <h2>History:</h2>
                 <div>Entries:{patientS}</div>
-                <CreateSymptoms/>
+           
                  
                
     
         </div>
     )
 }
-}   
+}
+// <CreateSymptoms patientId='5ebb9acb08efd022b83d1c43'/>
                 
