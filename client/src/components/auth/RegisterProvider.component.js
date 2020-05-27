@@ -29,7 +29,7 @@ export const RegisterProvider = ({ register, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to='/provider/login' />;
+    return <Redirect to='/dashboard' />;
   }
 
   return (
@@ -111,7 +111,7 @@ export const RegisterProvider = ({ register, isAuthenticated }) => {
         </button>
         <p className='forgot-password text-right'>
           {/* Forgot <a href='#'>password?</a> */}
-          Already have Account <Link to='/provider/login'>Login</Link>
+          Already have Account <Link to='/login/provider'>Login</Link>
         </p>
       </form>
     </Fragment>

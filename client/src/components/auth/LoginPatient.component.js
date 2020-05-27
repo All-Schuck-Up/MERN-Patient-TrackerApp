@@ -21,7 +21,7 @@ const LoginPatient = ({ login, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to='/patient/login/:id' />;
+    return <Redirect to='/dashboard' />;
   }
 
   return (
@@ -71,7 +71,7 @@ const LoginPatient = ({ login, isAuthenticated }) => {
         </button>
         <p className='forgot-password text-right'>
           {/* Forgot <a href='#'>password?</a> */}
-          Dont have Account <Link to='/patient/register'>Register</Link>
+          Dont have Account <Link to='/register/patient'>Register</Link>
         </p>
       </form>
     </Fragment>

@@ -1,14 +1,15 @@
 import React, { Fragment, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addSymptomEntry } from '../../actions/profile';
-import { Button } from 'semantic-ui-react';
-import { Col, Row, Card, CardTitle, CardText } from 'reactstrap';
+import { Col, Row, Card, CardTitle, CardText, Button } from 'reactstrap';
+// Components
+import Navbar from '../layout/Nbar.component';
 
-const CreateSymptom = ({ addSymptomEntry, isAuthenticated }) => {
+const CreateSymptom = ({ addSymptomEntry }) => {
   const [formData, setFormData] = useState({
-    date: '',
+    date: Date(),
     symptom1: '',
     symptom2: '',
     symptom3: '',
@@ -29,6 +30,8 @@ const CreateSymptom = ({ addSymptomEntry, isAuthenticated }) => {
     immediateAttention,
   } = formData;
 
+  const currentDate = Date();
+
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -41,6 +44,7 @@ const CreateSymptom = ({ addSymptomEntry, isAuthenticated }) => {
 
   return (
     <Fragment>
+      <Navbar />
       <div>
         <Row>
           <Col sm='6'>
@@ -74,10 +78,11 @@ const CreateSymptom = ({ addSymptomEntry, isAuthenticated }) => {
                 <div className='form-group'>
                   <label>Date</label> {'  '}
                   <input
-                    type='date'
+                    type='text'
                     name='date'
-                    value={date}
-                    onChange={onChange}
+                    value={currentDate}
+                    onChange={(e) => onChange(e)}
+                    disabled={true}
                   />
                 </div>
                 <div className='form-group'>
@@ -143,7 +148,8 @@ const CreateSymptom = ({ addSymptomEntry, isAuthenticated }) => {
                     onChange={(e) => onChange(e)}
                   />
                 </div>
-                <button
+                <Link
+                  to='/dashboard'
                   className='btn btn-secondary'
                   onClick={() => {
                     setFormData({
@@ -153,16 +159,33 @@ const CreateSymptom = ({ addSymptomEntry, isAuthenticated }) => {
                   }}
                 >
                   Mark entry as immediate attention
-                </button>{' '}
+                </Link>{' '}
                 <button className='btn btn-primary' type='button'>
                   cancel
                 </button>
                 <br></br>
                 <br></br>
-                <input
+                <Link
                   type='submit'
-                  className='btn btn-primary btn-block btn-lg'
-                />
+                  className='btn btn-primary'
+                  value='Submit'
+                  to='/dashboard'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    addSymptomEntry({
+                      date,
+                      symptom1,
+                      symptom2,
+                      symptom3,
+                      symptom4,
+                      temp,
+                      comment,
+                      immediateAttention,
+                    });
+                  }}
+                >
+                  Submit
+                </Link>
               </form>
             </Card>
           </Col>

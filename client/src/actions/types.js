@@ -10,6 +10,7 @@ export const LOGOUT = 'LOGOUT';
 // Profile redux actions
 export const GET_PROFILE = 'GET_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
+export const CLEAR_PROFILE = 'PROFILE_ERROR';
 
 // Patient Entry
 export const SYMPTOM_ENTRY = 'SYMPTOM_ENTRY';

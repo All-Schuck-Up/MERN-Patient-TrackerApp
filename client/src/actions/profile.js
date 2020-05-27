@@ -5,12 +5,28 @@ import {
   SYMPTOM_ENTRY,
   ENTRY_ERROR,
 } from './types';
-import { Redirect } from 'react-router-dom';
 
 // Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {
   try {
     const res = await axios.get('/patients/profile/me');
+
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: 'Error with profile/action' },
+    });
+  }
+};
+
+// Get profile by ID
+export const getProfileById = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/profile/user/${userId}`);
 
     dispatch({
       type: GET_PROFILE,
@@ -59,7 +75,6 @@ export const addSymptomEntry = ({
       type: SYMPTOM_ENTRY,
       payload: res.data,
     });
-    // history.push('/patient/:id/profile');
   } catch (err) {
     dispatch({
       type: ENTRY_ERROR,
