@@ -105,7 +105,7 @@ export default class createSympotom extends Component {
 
         formErrors.firstName =
 
-          value.length < 6 ? " Please Enter your First Name" : "";
+          value.length < 1 ? " Please Enter your First Name" : "";
 
         break;
         
@@ -113,7 +113,7 @@ export default class createSympotom extends Component {
 
         formErrors.lastName =
 
-          value.length < 6 ? " Please Enter your last Name" : "";
+          value.length < 1 ? " Please Enter your last Name" : "";
 
         break;
         
@@ -130,7 +130,7 @@ export default class createSympotom extends Component {
 
         formErrors.additionalNote =
 
-          value.length < 20 ? " Please Enter detailed note" : "";
+          value.length < 5 ? " Please Enter detailed note" : "";
 
         break;
       default:
