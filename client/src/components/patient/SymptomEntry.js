@@ -36,11 +36,20 @@ const CreateSymptom = ({ addSymptomEntry }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const onSubmit = async (e) => {
-  //   e.preventDefault();
-  //   addSymptomEntry(formData, history);
-  //   console.log('Entry created');
-  // };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    addSymptomEntry({
+      date,
+      symptom1,
+      symptom2,
+      symptom3,
+      symptom4,
+      temp,
+      comment,
+      immediateAttention,
+    });
+    console.log('Entry created');
+  };
 
   return (
     <Fragment>
@@ -49,22 +58,7 @@ const CreateSymptom = ({ addSymptomEntry }) => {
         <Row>
           <Col sm='6'>
             <Card body>
-              <form
-                className='form'
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  addSymptomEntry({
-                    date,
-                    symptom1,
-                    symptom2,
-                    symptom3,
-                    symptom4,
-                    temp,
-                    comment,
-                    immediateAttention,
-                  });
-                }}
-              >
+              <form className='form'>
                 <h3 className='text-center'>Patient Symptom Entery</h3>
                 <br></br>
                 <br></br>
@@ -152,10 +146,10 @@ const CreateSymptom = ({ addSymptomEntry }) => {
                   to='/dashboard'
                   className='btn btn-secondary'
                   onClick={() => {
-                    setFormData({
-                      ...formData,
-                      immediateAttention: !immediateAttention,
-                    });
+                    // setFormData({
+                    //   ...formData,
+                    //   immediateAttention: true,
+                    // });
                     addSymptomEntry({
                       date,
                       symptom1,
@@ -164,7 +158,7 @@ const CreateSymptom = ({ addSymptomEntry }) => {
                       symptom4,
                       temp,
                       comment,
-                      immediateAttention,
+                      immediateAttention: true,
                     });
                   }}
                 >
@@ -177,10 +171,8 @@ const CreateSymptom = ({ addSymptomEntry }) => {
                 <br></br>
                 <Link
                   to='/dashboard'
-                  type='submit'
                   className='btn btn-primary'
-                  onClick={(e) => {
-                    e.preventDefault();
+                  onClick={() => {
                     addSymptomEntry({
                       date,
                       symptom1,
@@ -189,7 +181,7 @@ const CreateSymptom = ({ addSymptomEntry }) => {
                       symptom4,
                       temp,
                       comment,
-                      immediateAttention,
+                      immediateAttention: false,
                     });
                   }}
                 >
