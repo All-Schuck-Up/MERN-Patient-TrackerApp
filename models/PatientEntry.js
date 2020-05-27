@@ -1,52 +1,32 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const PatientEntrySchema = new Schema({
 
 
- patientFullName:
-     {
-        firstName: {type: String,rquired: true },
-        lastName: {type: String,rquired: true },
-      },
-
- 
-  form: {
-       date: {type: Date,rquired: true },
-    symptom1:{type: Boolean },
-    symptom2: {type: Boolean },
-    symptom3: {type: Boolean },
-             
-    symptom4: {type: Boolean },
-
-    additionalNote: {type: String,rquired: true },
-     
-    
-   
-    temperature: {type: String,rquired: true }
-  },
-
-   /*
-      media: { 
-          type: Buffer,
-        
-        
+const PatientEntrySchema = new mongoose.Schema({  //schema
+    patientEmail: {
+        type: String,
+        required: true
+    },
+    form: {
+        type: [{ date: {
+          type: Date,
+          default: Date.now
+        }, symptom1: String, symptom2: String, symptom3: String, symptom4: String, additionalNote: String, temperature: String}],
+        required: true,
         unique: true
     },
-
-  */
-  
     doctorNote: {
         type: String
     },
-    
-
-   immediateAttention: {
+    immediateAttention: {
         type: Boolean
-    } 
-
-
+    },
+    patientId: {
+      type: String, 
+      required : true
+    }
 });
-const PatientEntry = mongoose.model('PatientEntry', PatientEntrySchema);
-module.exports =PatientEntry;
 
- 
+const PatientEntry = mongoose.model('patientEntry', PatientEntrySchema);
+
+module.exports = PatientEntry;
+
