@@ -22,34 +22,19 @@ export default class createSympotom extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeAttention = this.onChangeAttention.bind(this);
-
     this.onSubmit = this.onSubmit.bind(this);
-
+//    this.handleChangeTemp = this.handleChangeTemp.bind(this);
+    
     this.state = {
-      date: Date().toLocaleString(),
-      firstName: '',
-      lastName: '',
       symptom1: '',
       symptom2: '',
       symptom3: '',
       symptom4: '',
-      temperature: '',
-      //media:'',
-      // mediaDescription: '',
-      // media: null,
+      temp: '',
+      comment: '',
+      doctorNote:'none',
       immediateAttention: false,
-      additionalNote: '',
-
-      formErrors: {
-        firstName: "",
-        lastName:"",
-        temperature: "",
-        additionalNote: ""
-
-
-      }
-
+      formErrors: "Please enter a valid number"
     };
     this.baseState = this.state
   }
@@ -60,125 +45,87 @@ export default class createSympotom extends Component {
 
 
   onSubmit(e) {
-    const symptom = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      date: this.state.date,
-      symptom1: this.state.symptom1,
+    if (isFormValid(this.state)) {
+     axios.put('http://localhost:5000/patientEntry/add/' + this.props.patientId, 
+      {symptom1: this.state.symptom1,
       symptom2: this.state.symptom2,
       symptom3: this.state.symptom3,
       symptom4: this.state.symptom4,
-      additionalNote: this.state.additionalNote,
-      temperature: this.state.temperature,
-      //  media: this.state.media,
-      immediateAttention: this.state.immediateAttention,
-    }
-    if (isFormValid(this.state)) {
-      console.log(symptom);
-     axios.post('http://localhost:5000/patientEntry/add', symptom)
- 
-   //axios.post('http://localhost:5000/PatientSymptomEntrys/add', symptom)
-
+      temp: this.state.temp,
+      comment: this.state.comment,
+      doctorNote:this.state.doctorNote,
+      immediateAttention: this.state.immediateAttention})
      .then(res => console.log(res.data));
 
-   window.location = '/';
+      window.location = '/';
       
 
-    }
-
-
-    else {
+    } else {
       console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
     }
 
   };
 
-  handleChange = (e) => {
-    e.preventDefault();
+  // handleChange(e) {
+    
+  //   const { name, value } = e.target;
+  //   let formErrors = { ...this.state.formErrors };
 
-    const { name, value } = e.target;
-    let formErrors = { ...this.state.formErrors };
+  //   switch (name) {
+  //     case "temperature":
 
-    switch (name) {
+  //       formErrors.temperature =
 
-      case "firstName":
+  //         value.length < 2 ? " Please Enter valid Number" : "";
 
-        formErrors.firstName =
+  //       break;
 
-          value.length < 1 ? " Please Enter your First Name" : "";
+  //     case "additionalNote":
 
-        break;
-        
-        case "lastName":
+  //       formErrors.additionalNote =
 
-        formErrors.lastName =
+  //         value.length < 5 ? " Please Enter detailed note" : "";
 
-          value.length < 1 ? " Please Enter your last Name" : "";
+  //       break;
+  //     default:
 
-        break;
-        
+  //       break;
 
-      case "temperature":
-
-        formErrors.temperature =
-
-          value.length < 2 ? " Please Enter valid Number" : "";
-
-        break;
-
-      case "additionalNote":
-
-        formErrors.additionalNote =
-
-          value.length < 5 ? " Please Enter detailed note" : "";
-
-        break;
-      default:
-
-        break;
-
-    }
+  //   }
 
 
-    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+  //   this.setState({ formErrors, [name]: value }, () => console.log(this.state));
 
-  };
+  // };
 
-  onChangeDate(e) {
-    this.setState({
-      date: e.target.value
+  handleChangeTemp = (event) => {
+    let num = event.target.value;
+    this.setState({temp: num});
+  }
 
-    });
-  };
-
-
-  onChangeAttention(e) {
-    this.setState({
-      immediateAttention: e.target.value
-
-    });
-  };
-
+  handleChangeAdditionalNote = (event) => {
+    this.setState({additionalNote: event.target.value});
+  }
   //on file select 
-  onMediaChange = event => {
-    // Update the state 
-    this.setState({ media: event.target.files[0] });
-  };
-  //On file upload (click upload button)
-  onFileUpload(e) {
-    //create an object of form data
-    const patientMedia = new FormData();
-    //update the formData object
-    patientMedia.append(
-      "myFile",
-      this.state.media,
-      this.state.media.name
-    );
-    //file upload info
-    //console.log(this.state.media);
-    //axios.post("http://localhost:5000/uploadfile", patientMedia);
+  // onMediaChange = event => {
+  //   // Update the state 
+  //   this.setState({ media: event.target.files[0] });
+  // };
+  // //On file upload (click upload button)
+  // onFileUpload(e) {
+  //   //create an object of form data
+  //   const patientMedia = new FormData();
+  //   //update the formData object
+  //   patientMedia.append(
+  //     "myFile",
+  //     this.state.media,
+  //     this.state.media.name
+  //   );
+  //   //file upload info
+  //   //console.log(this.state.media);
+  //   //axios.post("http://localhost:5000/uploadfile", patientMedia);
 
-  };
+  // };
 
 
 
@@ -190,177 +137,84 @@ export default class createSympotom extends Component {
         <Row>
           <Col sm="8">
             <Card body>
-
-              <form class="form-horizontal" onSubmit={this.onSubmit}>
-                <h3 className="text-center">Patient Symptom Entery</h3>
-                <input type="hidden"
-                  className="form-control"
-                  value={this.state.immediateAttention}
-                  onChange={this.onChangeAttention}
-                />
-                <p>Date : <input type="text" name="date"
-                  className="form-control"
-                  value={this.state.date.substring(0, 21)}
-                  onChange={this.handleChange.bind(this)}
-                /></p>
-
+              <form className="form-horizontal" onSubmit={this.onSubmit}>
+                <h3 className="text-center">Patient Symptom Entry</h3>
+                
                 <div className="form-group" >
+                  <label>Trouble breathing ?  </label>{"      "}
 
-                  <label class="control-label col-sm-2" >First Name: </label>
-                  <input class="spaceInput" type="text"
-                    name="firstName"
-                    required
-                    className="form-control"
-                    value={this.state.firstName}
-                      placeholder={"First Name "}
-                      onChange={this.handleChange.bind(this)}
-                  />
-                </div>
+                   <input className="spaceInput" type="radio" value="yes" name="symptom1"   onClick={() => this.setState({symptom1 : 'yes'})} /> Yes  {"  "}
 
-                {formErrors.firstName.length > 0 && (
-                  <span className="errorMessage" >{formErrors.firstName}</span>
-                )}
-
-
-<div className="form-group" >
-
-<label class="control-label col-sm-2" >LastName: </label>
-<input class="spaceInput" type="text"
-  name="lastName"
-  required
-  className="form-control"
-  value={this.state.lastName}
-    placeholder={"Last Name "}
-    onChange={this.handleChange.bind(this)}
-/>
-</div>
-
-{formErrors.lastName.length > 0 && (
-<span className="errorMessage" >{formErrors.lastName}</span>
-)}
-
-                <div className="form-group" >
-                  <div> <label>Trouble breathing ?  </label>{"      "}
-
-                   <input class="spaceInput" type="radio" value="yes" name="symptom1"   required/> Yes  {"  "}
-
-                    <input class="spaceInput" type="radio" value="no" name="symptom1" required /> No  {"  "}
-
-                    <div onChange={this.handleChange.bind(this)}>
-
-                    </div>
-                  </div>
+                    <input className="spaceInput" type="radio" value="no" name="symptom1" onClick={() => this.setState({symptom1 : 'no'})}  /> No  {"  "}
                 </div>
 
                 <div className="form-group" >
 
-                  <div> <label>A dry cough ? </label>{"      "}
+                  <label>A dry cough ? </label>{"      "}
 
-                    <input class="spaceInput" type="radio" value="yes" name="symptom2" required /> Yes  {"  "}
+                    <input className="spaceInput" type="radio" value="yes" name="symptom2" onClick={() => this.setState({symptom2 : 'yes'})} /> Yes  {"  "}
 
-                    <input class="spaceInput" type="radio" value="no" name="symptom2" required/> No  {"  "}
-                    <div onChange={this.handleChange.bind(this)}>
-                    </div>
+                    <input className="spaceInput" type="radio" value="no" name="symptom2" onClick={() => this.setState({symptom2 : 'no'})} /> No  {"  "}
+                </div>
+                   
+                   <div className="form-group" >
 
-                  </div>
+                     <label>Sore throat ?  </label>{"        "}
 
-                  <div className="form-group" >
+                      <input className="spaceInput" type="radio" value="yes" name="symptom3" onClick={() => this.setState({symptom3 : 'yes'})} /> Yes  {"  "}
 
-                    <div> <label>Sore throat ?  </label>{"        "}
+                      <input className="spaceInput" type="radio" value="no" name="symptom3"  onClick={() => this.setState({symptom3 : 'no'})} /> No  {"  "}
 
-                      <input class="spaceInput" type="radio" value="yes" name="symptom3" required/> Yes  {"  "}
-
-                      <input class="spaceInput" type="radio" value="no" name="symptom3"  required/> No  {"  "}
-
-                      <div onChange={this.handleChange.bind(this)}>
-                      </div>
-
-                    </div>
                   </div>
                   <div className="form-group" >
 
-                    <div> <label>Heigh Fever ?  </label>{"        "}
+                     <label>Heigh Fever ?  </label>{"        "}
 
-                      <input class="spaceInput" type="radio" value="yes" name="symptom4" required/> Yes  {"  "}
+                      <input className="spaceInput" type="radio" value="yes" name="symptom4" onClick={() => this.setState({symptom4 : 'yes'})} /> Yes  {"  "}
 
-                      <input class="spaceInput" type="radio" value="no" name="symptom4" required /> No  {"  "}
+                      <input className="spaceInput" type="radio" value="no" name="symptom4" onClick={() => this.setState({symptom4 : 'no'})}  /> No  {"  "}
 
-
-                      <div onChange={this.handleChange.bind(this)}>
-                      </div>
-                       </div>
-                  </div>
                 </div>
                 <div className="form-group" >
-
-
-                  <label class="control-label col-sm-2" >Temerature: </label>
-
-                  <input class="spaceInput" type="text"
-                    name="temperature"
-                    required
-                    className="form-control"
-                    value={this.state.temperature}
-                    onChange={this.handleChange.bind(this)}
-
-                    placeholder={"body temperature "}
-                  />
+                <label>Temperature:</label> {"    "} 
+                     <textarea className="spaceInput" onChange={this.handleChangeTemp} rows={1} /> {"    "}
+                     {this.state.temp < 90 && this.state.temp > 0 && (<span className="errorMessage" >{formErrors}</span>
+                )}
+                  
                 </div>
 
-                {formErrors.temperature.length > 0 && (
-                  <span className="errorMessage" >{formErrors.temperature}</span>
-                )}
-
-                <div class="form-group">
+{/* 
+                <div className="form-group">
 
                   <div>  <label  >Media  : </label></div>
 
                   <div>
-                    <input class="spaceInput"
+                    <input className="spaceInput"
                       type="file"
                       onChange={this.onMediaChange} />
                     <button onClick={this.onFileUpload}>
                     </button>
                   </div>
 
-                </div>
+                </div> */}
 
                 <div className="form-group" >
-                  <div>  <label>Additional Note : </label></div>
-                  <textarea class="spaceInput"
+                <label>Additional Note : </label>
+                  <textarea className="spaceInputNote"
                     name="additionalNote"
-                    required
                     rows={4}
-
-                    className="form-control"
-                    value={this.state.additionalNote}
-                    onChange={this.handleChange.bind(this)}
-                    placeholder={"Add additional Note to the doctor"}
+                    onChange={this.handleChangeAdditionalNote}
+                    placeholder={"Add additional note to the doctor"}
                   />
 
                 </div>
-                {formErrors.additionalNote.length > 0 && (
-
-                  <span className="errorMessage" >{formErrors.additionalNote}</span>
-                )}
                 <div className="form-group">
-                  {" "}
-                  <input type="button" value="Mark as Immediate Attention" onClick={() => this.setState({ immediateAttention: true })} className="btn btn-primary" />
-                  {" "}
-
-                  {" "}
-                  <input type="submit" value="Save Record" className="btn btn-primary" />
-                  {" "}
-
-
-                  <button className="btn btn-primary"
-                    type="button" name="cancle" onClick={this.resetForm}>Cancel</button>
+                  {" "}<Button className="btn btn-primary" onClick={() => this.setState({ immediateAttention: true })}>Mark as Immediate Attention</Button>
+                  {" "}<Button className="btn btn-primary" type="submit" >Save Record</Button>
+                  {" "}<Button className="btn btn-primary" type="button" name="cancel" onClick={this.resetForm}>Cancel</Button>
 
                 </div>
-
-
               </form>
-
             </Card>
           </Col>
           <Col sm="4">

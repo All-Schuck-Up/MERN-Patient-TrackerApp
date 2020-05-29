@@ -52,3 +52,7 @@
   font-size: 0.99em;
   display: relative;
 }
+
+.spaceInputNote {
+  width: 90%;
+}

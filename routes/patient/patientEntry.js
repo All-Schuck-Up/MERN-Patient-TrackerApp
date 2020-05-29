@@ -10,10 +10,9 @@ router.route('/patientEntries').get((req, res) => {
 });
 
 
-router.route('/patientEntry/add/:id').put((req, res) => {
+router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
 
     const formElement = {
-        date : Date.parse(req.body.date),
         symptom1 :req.body.symptom1,
         symptom2 :req.body.symptom2,
         symptom3 :req.body.symptom3,

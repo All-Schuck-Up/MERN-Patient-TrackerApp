@@ -1,17 +1,11 @@
 const express = require('express');
 const connectDB = require('./config/db');
-const cors = require('express');
+const cors = require('cors');
 
 const app = express();
 
 // Connect MongoDB
 connectDB();
-
-// Bring in db schema
-const patient = require('./models/Patient');
-const provider = require('./models/Provider');
-const patientEntry = require('./models/PatientEntry');
-//const patientEntry = require('./models/PatientSymptomEntry');
 
 // app.use is a middleware function (middleware is carried out in sequence)
 app.use(cors());

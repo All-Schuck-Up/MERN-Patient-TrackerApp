@@ -54,7 +54,7 @@ const PatientSchema = new mongoose.Schema({
         // required: true,
       },
       temp: {
-        type: String,
+        type: Number,
         // required: true,
       },
       comment: {

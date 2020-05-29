@@ -1,6 +1,6 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 //import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 // Redux
@@ -66,7 +66,7 @@ function App() {
           <div className='container'>
             <Route exact path='/patient/login/:id'>
               <Navbar />
-              <CreateSymptom />
+              <CreateSymptom patientId="5ecb471af1741b0a4e6b993a"/>
             </Route>
           </div>
           <div className='container'>
