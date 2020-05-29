@@ -18,11 +18,13 @@
         "config": "^3.3.1",
         "cors": "^2.8.5",
         "express": "^4.17.1",
+        "express-session": "^1.17.1",
         "express-validator": "^6.4.1",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.9.12",
         "react-redux": "^7.2.0",
-        "react-router-dom": "^5.1.2"
+        "react-router-dom": "^5.1.2",
+        "req-flash": "0.0.3"
     },
     "devDependencies": {
         "concurrently": "^5.2.0",

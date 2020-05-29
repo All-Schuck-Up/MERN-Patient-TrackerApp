@@ -8,7 +8,8 @@ import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 const isFormValid = ({ formErrors, ...rest }) => {
   let valid = true;
   // validate form errors being empty
-  Object.values(formErrors).forEach(val => {
+  Object.values(formErrors).forEach(val =>
+     {
     val.length > 0 && (valid = false);
   });
   // validate the form was filled out
@@ -180,7 +181,16 @@ export default class createSympotom extends Component {
 
   };
 
+/*
 
+<% include layout %>
+ 
+<% if (typeof successMsg != 'undefined' && successMsg) { %>
+    <div class="alert alert-success"><%- successMsg %></div>
+    <% } else if(typeof errorMsg != 'undefined' && errorMsg) { %>
+            <div class="alert alert-danger"><%- errorMsg %></div>
+            <% } %>
+*/
 
   render() {
     const { formErrors } = this.state;

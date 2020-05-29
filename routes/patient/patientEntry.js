@@ -34,16 +34,30 @@ router.route('patientEntry/add').post((req, res) => {
         },
         immediateAttention :req.body.immediateAttention
     });
+
+    /*
     newSymptom.save()
         .then(() => res.json('Patient Symptom saved!'))
         .catch(err => res.status(400).json('Error: ' + err));
-});
+        */ 
+        newSymptom.save(function(err){
+         if(err){
+          res.render('patientEntry/add', { message: 'Invalid request!' });
+         }else{
+          res.render('patientEntry/add', { message: 'Symptom Svedsuccessfully!'});
+         } 
+        })
+       });
+       
+
 
 router.route('/patientEntry/:id').get((req, res) => {
     PatientEntry.findById(req.params.id)
         .then(patientEntry => res.json(patientEntry))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
+
 
 
 //update route for the patient to add a note to their entry entered in last 24 hours

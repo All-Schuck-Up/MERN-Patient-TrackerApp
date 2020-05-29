@@ -1,7 +1,8 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('express');
-
+var session= require('express-session'),
+var flash= require('req-flash');
 const app = express();
 
 // Connect MongoDB
@@ -16,7 +17,15 @@ const patientEntry = require('./models/PatientEntry');
 // app.use is a middleware function (middleware is carried out in sequence)
 app.use(cors());
 app.use(express.json());
+//Error message
 
+app.use(session({
+  secret: 'djhxcvxfgshajfgjhgsjhfgsakjeauytsdfy',
+  resave: false,
+  saveUninitialized: true
+  }));
+
+  app.use(flash());
 // Routes (making app modular)
 const mainRoutes = require('./routes');
 const patientRoutes = require('./routes/patient/patient');
