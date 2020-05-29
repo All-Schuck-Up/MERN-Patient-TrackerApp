@@ -9,7 +9,6 @@ router.route('/patientEntries').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-
 router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
 
     const formElement = {
@@ -30,6 +29,7 @@ router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
             .catch(err => res.status(400).json('Error: ' + err));
     })
     .catch(err => res.status(400).json('Error: ' + err));
+
 });
 
 // router.route('/patientEntry/:id').get((req, res) => {
@@ -40,6 +40,7 @@ router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
 
 
 //update route for the patient to add a note to their entry entered in last 24 hours
+
 /*
 router.route('/PatientEntry/update/:id').post((req, res) => {
     PatientEntry.findById(req.params.id)
@@ -48,6 +49,15 @@ router.route('/PatientEntry/update/:id').post((req, res) => {
 
             patientsymptom.save()
                 .then(() => res.json('Patient Entry Node  updated!'))
+
+router.route('/patientEntry/update/:id').put((req, res) => {
+    PatientEntry.findById(req.params.id)
+        .then(entry => {
+            //entry.form[form.size() - 1[5]] = req.body.updatedAdditionalNote;
+            entry.doctorNote = req.body.doctorNote;
+            entry.save()
+                .then(() => res.json('Patient Entry Note Updated!'))
+
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
