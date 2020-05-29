@@ -99,4 +99,10 @@ router.get('/patient/logout', (req, res) => {
   // TO DO --
 });
 
+router.get('/patients', (req, res) => {
+    Patient.find()
+      .then(patient => res.json(patient))
+      .catch(err => res.status(400).json('Error' + err));
+});
+
 module.exports = router;

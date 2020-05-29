@@ -17,12 +17,14 @@ const patientRoutes = require('./routes/patient/patient');
 const patientEntryRoutes = require('./routes/patient/patientEntry');
 //const patientEntryRoutes = require('./routes/patient/PatientSymptomEntrys');
 const providerRoutes = require('./routes/provider/provider');
+const immediateAttnRoutes = require('./routes/provider/immediateAttention');
 
 // middleware for all routes
 app.use('/', mainRoutes);
 app.use('/', patientRoutes);
 app.use('/', patientEntryRoutes);
 app.use('/', providerRoutes);
+app.use('/', immediateAttnRoutes);
 app.use('/users/user', require('./routes/users/user'));
 app.use('/users/auth', require('./routes/users/auth'));
 

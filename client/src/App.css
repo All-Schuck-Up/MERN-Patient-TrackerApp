@@ -46,6 +46,9 @@
   margin: 0 auto;
 }
 
+.rowImmediateAtt {
+  margin: 10px;
+}
 
 .errorMessage {
   color: red;

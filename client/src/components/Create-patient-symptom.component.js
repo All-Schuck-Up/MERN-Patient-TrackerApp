@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+
 //import PatientProfile from "./PatientProfile.component";
 
 
