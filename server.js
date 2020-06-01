@@ -7,11 +7,6 @@ const app = express();
 // Connect MongoDB
 connectDB();
 
-// Bring in db schema
-const patient = require('./models/Patient');
-const provider = require('./models/Provider');
-const patientEntry = require('./models/PatientEntry');
-
 // app.use is a middleware function (middleware is carried out in sequence)
 app.use(cors());
 app.use(express.json());
@@ -20,6 +15,7 @@ app.use(express.json());
 const mainRoutes = require('./routes');
 const patientRoutes = require('./routes/patient/patient');
 const patientEntryRoutes = require('./routes/patient/patientEntry');
+//const patientEntryRoutes = require('./routes/patient/PatientSymptomEntrys');
 const providerRoutes = require('./routes/provider/provider');
 const immediateAttnRoutes = require('./routes/provider/immediateAttention');
 

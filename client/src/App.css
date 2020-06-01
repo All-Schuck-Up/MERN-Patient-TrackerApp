@@ -49,3 +49,13 @@
 .rowImmediateAtt {
   margin: 10px;
 }
+
+.errorMessage {
+  color: red;
+  font-size: 0.99em;
+  display: relative;
+}
+
+.spaceInputNote {
+  width: 90%;
+}
