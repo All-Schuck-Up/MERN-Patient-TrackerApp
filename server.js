@@ -1,10 +1,10 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('express');
-var expressSession = require('express-session');
+// var expressSession = require('express-session');
 //var expressValidatore = require('express-validator');
 const bodyParser = require('body-parser');
-var flash= require('req-flash');
+// var flash= require('req-flash');
 const app = express();
 
 
@@ -25,27 +25,27 @@ app.use(express.json());
 //Error message
 
 
- app.use(flash());
+//  app.use(flash());
 
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
-      extended: false
-  }));
+//   app.use(bodyParser.json());
+//   app.use(bodyParser.urlencoded({
+//       extended: false
+//   }));
 
  
   //Express session Middleware
-  app.use(expressSession({
-      secret: 'covid',
-      resave: false,
-      saveUninitialized: false,
+  // app.use(expressSession({
+  //     secret: 'covid',
+  //     resave: false,
+  //     saveUninitialized: false,
       
-    }))
+  //   }))
 
-    app.use(require('connect-flash')());
-    app.use(function (req, res, next) {
-      res.locals.messages = require('express-messages')(req, res);
-      next();
-    });
+    // app.use(require('connect-flash')());
+    // app.use(function (req, res, next) {
+    //   res.locals.messages = require('express-messages')(req, res);
+    //   next();
+    // });
     
     // app.use(expressValidator({
     //     errorFormatter: function(param, msg, value) {
