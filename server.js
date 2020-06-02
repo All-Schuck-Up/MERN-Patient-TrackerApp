@@ -9,9 +9,9 @@ const app = express();
 connectDB();
 
 // Bring in db schema
-const patient = require('./models/Patient');
-const provider = require('./models/Provider');
-const patientEntry = require('./models/PatientEntry');
+//const patient = require('./models/Patient');
+//const provider = require('./models/Provider');
+//const patientEntry = require('./models/PatientEntry');
 
 // app.use is a middleware function (middleware is carried out in sequence)
 app.use(cors());
@@ -22,12 +22,15 @@ const mainRoutes = require('./routes');
 const patientRoutes = require('./routes/patient/patient');
 const patientEntryRoutes = require('./routes/patient/patientEntry');
 const providerRoutes = require('./routes/provider/provider');
+const immediateAttnRoutes = require('./routes/provider/immediateAttention');
+
 
 // middleware for all routes
 app.use('/', mainRoutes);
 app.use('/', patientRoutes);
 app.use('/', patientEntryRoutes);
 app.use('/', providerRoutes);
+app.use('/', immediateAttnRoutes);
 app.use('/users/user', require('./routes/users/user'));
 app.use('/users/auth', require('./routes/users/auth'));
 

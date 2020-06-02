@@ -20,10 +20,6 @@ export default class PatientProfile extends Component{
    constructor(props){
     super(props);
     this.state = {
-        symptom1:'',
-        patientFullName:'',
-        firstName:'',
-        lastName:'',
         assignedDoctor:'',
         age:'',
         email:'',
@@ -31,15 +27,13 @@ export default class PatientProfile extends Component{
         patientEntry:[],
         patientname:'',
         underlying:true,
-        patientId:'',
-        form:[],
-        date:''
+        patientId:''
     }
    }
     
     
 componentDidMount(){
-     axios.get('http://localhost:5000/patient/5ebb9acb08efd022b83d1c43')
+     axios.get('http://localhost:5000/patient/5ecb4228f1741b0a4e6b9939')
         .then(res => {
             console.log(res);
            
@@ -47,7 +41,8 @@ componentDidMount(){
                         patient: res.data.assignedDoctor,  
                         patientname:(res.data.firstName + " "+ res.data.lastName),
                         age: res.data.age,
-                        underlying: res.data.underlying});
+                        underlying: res.data.underlying
+         });
          
          //this.setState({patient: res.data});
         })
@@ -55,32 +50,33 @@ componentDidMount(){
             console.log(error);
       })
    
-  axios.get('http://localhost:5000/patientEntry/5ebb9acb08efd022b83d1c43')
+  axios.get('http://localhost:5000/patientEntry/5ecb4228f1741b0a4e6b9939')
         .then(res => {
             console.log(res);
             //this.setState({patientEntry: res.data});
         this.setState({
             patientEntry: res.data.map(el=>el.doctorNote)});
-        //res.data.map(el=>el.form.map(ele=>ele.symptom1))});
+       // res.data.map(el=>el.form.map(ele=>ele.symptom1))});
         })
         .catch((error) => {
             console.log(error);
       })   
 }
 
- patientEntryList() {
-    return this.state.patientEntries.map(currententry => {
-      return <PatientEntry patientEntry={currententry} key={currententry._id}/>;
-    })
-  }
+    
+// patientEntryList() {
+//    return this.state.patientEntries.map(currententry => {
+//      return <PatientEntry patientEntry={currententry} key={currententry._id}/>;
+//    })
+//  }
   
 render() {
     const patientS=
-          <ol>{this.state.patientEntry.map((patientEntry) =>
-              <li>{patientEntry}
+          <ul>{this.state.patientEntry.map((patientEntry) =>
+              <li key={patientEntry._id}>{patientEntry}
               </li>
               )}
-         </ol>
+         </ul>
 
     const patientP =
             <ol>{this.state.patient}</ol>
@@ -96,7 +92,8 @@ render() {
            <h4>Patient name: {this.state.patientname}, Age: {this.state.age},  Underline condition: {this.state.underlying.toString()}</h4> 
            <h4>Assigned Doctor:{patientP}</h4>    
            <h2>History:</h2>
-                <div>Last Doctor Note:{patientS}</div>
+                <div>Last Patient Note
+    from old schema: {patientS}</div>
         
          <table className="table">
           <thead className="thead-light">
@@ -109,11 +106,10 @@ render() {
             </tr>
           </thead>
           <tbody>
-            {patientS}  {}    
+       
           </tbody>
-        </table>
-           
-                 
+        </table>  
+         <CreateSymptoms patientId='5ecb4228f1741b0a4e6b9939'/>   
             
         </div>
     )

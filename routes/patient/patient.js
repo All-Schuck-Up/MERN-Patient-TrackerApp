@@ -4,7 +4,7 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
 const Patient = require('../../models/Patient');
-let PatientEntry = require('../../models/PatientEntry');
+//let PatientEntry = require('../../models/PatientEntry');
 
 router.get('/patient/login', (req, res) => {
 });
@@ -96,9 +96,9 @@ router.post(
       }
 
       patient = new Patient({
-        firstName,
-        lastName,
-        email,
+          firstName,
+          lastName,
+          email,
           age,
           underlying
     //    password,

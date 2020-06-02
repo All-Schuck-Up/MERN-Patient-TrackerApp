@@ -1,25 +1,22 @@
 const mongoose = require('mongoose');
 
 const PatientSchema = new mongoose.Schema({ //patient schema
-   firstName: {
-        type: String,
-        required: true
-    },
-    lastName: {
-        type: String,
-        required: true
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
     },
     email: {
         type: String,
         required: true,
         unique: true
     },
-    assignedDoctor: {
-        type: String
+    firstName: {
+        type: String,
+        required: true
     },
-    date: {
-        type: Date,
-        default: Date.now
+    lastName: {
+        type: String,
+        required: true
     },
     age: {
         type: Number,
@@ -28,8 +25,52 @@ const PatientSchema = new mongoose.Schema({ //patient schema
     underlying: {
         type: Boolean,
         required: true
-    }
-    
+    },  
+//NO need date here    
+//    date: {
+//        type: Date,
+//        default: Date.now
+//    },
+    assignedDoctor: {
+        type: String
+    },
+    patientEntry: [
+    {
+      date: {
+        type: Date,
+        default: Date.now,
+        required: false,
+        unique: false,
+      },
+      symptom1: {
+        type: String,
+      },
+      symptom2: {
+        type: String,
+      },
+      symptom3: {
+        type: String,
+        // required: true,
+      },
+      symptom4: {
+        type: String,
+        // required: true,
+      },
+      temp: {
+        type: Number,
+        // required: true,
+      },
+      comment: {
+        type: String,
+      },
+      doctorNote: {
+        type: String,
+      },
+      immediateAttention: {
+        type: Boolean,
+      },
+    },
+   ],         
 });
 
 

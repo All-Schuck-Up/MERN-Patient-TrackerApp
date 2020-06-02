@@ -1,8 +1,8 @@
 import React, { Component, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
-import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+//import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 // Redux
 import { Provider } from 'react-redux';
 import store from './store';
