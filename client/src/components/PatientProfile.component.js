@@ -95,25 +95,10 @@ render() {
                 <div>Last Patient Note
     from old schema: {patientS}</div>
         
-         <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Entry Date</th>
-              <th>form, media?</th>
-              <th>Additional Note</th>
-              <th>Doctor Note</th>
-              <th>Doctor Note Date</th>
-            </tr>
-          </thead>
-          <tbody>
-       
-          </tbody>
-        </table>  
-         <CreateSymptoms patientId='5ecb4228f1741b0a4e6b9939'/>   
+         
+          <CreateSymptoms patientId='5ecb4228f1741b0a4e6b9939'/> 
             
         </div>
     )
 }
 }
-// <CreateSymptoms patientId='5ebb9acb08efd022b83d1c43'/>
-                

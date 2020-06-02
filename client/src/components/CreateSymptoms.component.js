@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+
 export default class createSympotom extends Component {
     constructor() {
         super();
         this.state = {
-            //  formArray:[]
             _id : '',
             date: '',
+            //date: Date().toLocaleString(),
             symptom1:'',
-            symptom10:'',
             symptom2:'',
             symptom3:'',
             symptom4:'',
@@ -19,7 +19,8 @@ export default class createSympotom extends Component {
             immediateAttention:true,
             entry:'',
             patientEntry:[],
-            patient:[]
+            patient:[],
+            object:[]
 //            media: ''
         }
     }
@@ -27,10 +28,13 @@ export default class createSympotom extends Component {
         axios.get('http://localhost:5000/patient/' + this.props.patientId)
         .then(res => {
             console.log(res);
-            this.setState({
-               entry: res.data,
-               //patientEntry: res.data.map(el=>el.patientEntry.map(el=>el.symptom1))  
-                date: res.data.patientEntry.map(el=>el.date), 
+            this.setState({     
+    //      patientEntry:res.data,  
+         // patientEntry: res.data.patientEntry,
+         // patientEntry: res.data.map(el=>el.symptom1)    
+         
+                _id : res.data.patientEntry.map(el => el._id),
+                date:res.data.patientEntry.map(el=>el.date),
                 symptom1: res.data.patientEntry.map(el=>el.symptom1),
                 symptom2: res.data.patientEntry.map(el=>el.symptom2),
                 symptom3: res.data.patientEntry.map(el=>el.symptom3),
@@ -38,54 +42,90 @@ export default class createSympotom extends Component {
                 temp: res.data.patientEntry.map(el=>el.temp),
                 comment: res.data.patientEntry.map(el=>el.comment),
                 doctorNote: res.data.patientEntry.map(el=>el.doctorNote),
-                immediateAttention: res.data.patientEntry.map(el=>el.immediateAttention),
-          //      symptom10: res.data.patientEntry.map(el=>el.symptom1.map(el=>el.symptom1))
+                immediateAttention: res.data.patientEntry.map(el=>el.immediateAttention)[0]
+         
+//j:                         formArray:res.data.form
+//ja:                     formArray:res.data.patientEntry     
+                            
 
-               // patientEntry: res.data.map(el=>el.symptom1)
-                //res.data.map(el=>el.patientEntry.map(ele=>ele.symptom1))
- //               patientEntry:res.data
-               // res.data.map(el=>el.doctorNote)
-                
- //j:                         formArray:res.data.form
-//ja:                     formArray:res.data.patientEntry
-        //        _id : res.data.patientEntry.map(el => el.symptom1),
-//               // _id : res.data.form.map(el => el.symptom1),
             });
         })
         .catch((error) => {
             console.log(error);
          }) 
     }
-    render() {
+    render(){
+        
+        const F=
+              <tr>
+                <td> {this.state.date[0]}</td>
+                <td> {this.state.symptom1[0]}</td>
+                <td> {this.state.symptom2[0]}</td>
+                <td> {this.state.symptom3[0]}</td>
+                <td> {this.state.symptom4[0]}</td>
+                <td> {this.state.temp[0]}</td>
+                <td> {this.state.comment[0]}</td>
+                <td> {this.state.doctorNote[0]}</td>
+                <td> {this.state.immediateAttention.toString()}</td>  
+              </tr>
+        const line = <ul>
+                     {this.state.date[1]} , 
+                     {this.state.symptom1[1]} ,
+                     {this.state.symptom2[1]} ,
+                     {this.state.symptom3[1]} ,
+                     {this.state.symptom4[1]} ,
+                     {this.state.temp[1]} ,
+                     {(this.state.comment[1])} ,
+                     {this.state.doctorNote[1]} ,{this.state.immediateAttention.toString()}
+                   </ul>
         const patientP =
             <ol>
-                <li>Date: {this.state.date}</li>
-                <li>symptom1: {this.state.symptom1}</li> 
-                <li>symptom2: {this.state.symptom2}</li> 
-                <li>symptom3: {this.state.symptom3}</li> 
-                <li>symptom4: {this.state.symptom4}</li> 
-                <li>temp: {this.state.temp}</li> 
-                <li>comment: {this.state.comment}</li>
-                <li>doctorNote: {this.state.doctorNote}</li> 
-                <li>immediateAttention: {this.state.immediateAttention.toString()}</li> 
-                
-            </ol>
-        const entry1=<ol>
-            <li>{this.state.entry}</li>
-            </ol>
+                <li>Date: {(this.state.date)[0]}</li>
+                <li>symptom1: {this.state.symptom1[0]}</li> 
+                <li>symptom2: {this.state.symptom2[0]}</li> 
+                <li>symptom3: {this.state.symptom3[0]}</li> 
+                <li>symptom4: {this.state.symptom4[0]}</li> 
+                <li>temp: {this.state.temp[0]}</li> 
+                <li>comment: {(this.state.comment)[0]}</li>
+                <li>doctorNote: {(this.state.doctorNote)[0]}</li> 
+                <li>immediateAttention: {this.state.immediateAttention.toString()[0]}</li>      
+            </ol>                          
+        
         const patientE =
-            <ol><li>{this.state.patientEntry.symptom1}</li>
-                <li>{this.state.symptom10}</li>
+            <ol><li key={this.state.patientEntry._id}>    {this.state.comment[0]}</li>
+                <li key={this.state.patientEntry._id}>{this.state.immediateAttention.toString()}</li>
             </ol>
+        
+        const entry1=<ol>
+            <li>Object.values({this.state._id[0]})</li>
+            <li>Object.values({this.state.patientEntry[0]})</li>
+            </ol>
+        
+//      const S = {this.state.patientEntry.map(el=> el.date)[0]}
+        
+//      const patientT=
+//          <ul>
+//              {this.state.patientEntry.map((patientEntry) =>
+//              <li key={patientEntry._id}>{patientEntry}
+//              </li>
+//              )}
+//         </ul>        
+        
+        
         //const {data} = this.state;
-//        const symptoms = this.state.patientEntry.map(patientEntry =>{
-//            return (<ol>
-//                <li key={patientEntry._id}>Entry Date:{patientEntry.data}</li>  
-//                <li key={patientEntry._id}>Entry Date:{patientEntry.symptom1}</li>
-//                <li key={patientEntry._id}>Entry Date:{patientEntry.comment}</li>
-//                    </ol>
-//            )          
-//        })
+        //const dat = this.state;
+//        const symptoms =
+//              <ul>{this.state.patientEntry.map((patientEntry)=>
+//                return(<li key={this.state.patientEntry.id}>{this.state.patientEntry[0]}</li>
+//                )
+////            return (<ol>
+////                <li key={this.state.patientEntry._id[0]}>Entry Date:{this.state.date[0]}</li>  
+////                <li key={this.state.patientEntry._id[0]}>Entry Date:{this.state.symptom1[0]}</li>
+////                <li key={this.state.patientEntry._id[0]}>Entry Date:{this.state.temp}</li>
+////                    </ol>
+//            ) }         </ul>
+//     //   }
+                
 //        const PED=
 //          <ol>{this.state.patientEntry.map((patientEntry) =>
 //             // <li>{patientEntry}</li>
@@ -93,26 +133,31 @@ export default class createSympotom extends Component {
 //              )}
 //          </ol>
         
-        return(
-            <div className='patientEntryForm'>
-                <ol>
-                  <li>patientP:{patientP}</li> 
-                  <li>patientE:{patientE}</li>                  
-                  <li>Entry Date:{this.state.date}</li>  
-                  <li>Entry Date:{this.state.patient.date}</li>
-                  <li>Entry Date:{this.state.patient.patientEntry}</li>
-                  <li>Symptom  1:{this.state.symptom1}</li> 
-                  <li>doctorNote:{this.state.doctorNote}</li> 
-                  <li>Comment:{this.state.comment}</li> 
-                </ol>
+        return(     
+             <table className="table">
+              <thead className="thead-light">
+                <tr>
+                  <th>Entry Date</th>
+                  <th>Dry Cough</th>
+                  <th>Sore Throat</th>
+                  <th>Trouble Breathing</th>
+                  <th>Heigh Fever</th>
+                  <th>Temp</th>
+                  <th>Additional Note</th>
+                  <th>Doctor Note</th>
+                  <th>Immediate Attention</th>
+                </tr>
+              </thead>
+              <tbody>
+                {F}
+              </tbody>
+        </table>                                                    
+                                         
            
-            </div>
+        
         )
     }
 }
-
-//<li>Patient Id: {this.state.formArray[0]}</li>
-
 
 
 /*this 
@@ -122,9 +167,3 @@ goes with this:const patientP = <ol>{this.state.patient}</ol>
             <div className='patientEntryForm'>
                 <ol>
             <li>{patientP}</li> */
-
-/*  this.setState({
-                date:res.data.date
-                            
-                 <li>Entry Date:{this.state.date}</li> receives 1st level date */
-
