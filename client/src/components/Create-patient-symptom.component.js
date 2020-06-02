@@ -74,7 +74,7 @@ export default class createSympotom extends Component {
 onSubmit(e) {
   e.preventDefault();
   const symptom = new FormData()
-  symptom.append('media', this.state.media);
+
   symptom.append('symptom1', this.state.symptom1);
   symptom.append('symptom2', this.state.symptom2);
   symptom.append('symptom3', this.state.symptom3);
@@ -85,12 +85,12 @@ onSubmit(e) {
   symptom.append('comment', this.state.comment);
   symptom.append('doctorNote', this.state.doctorNote);
   symptom.append('immediateAttention', this.state.immediateAttention);
-    
+  symptom.append('media', this.state.media); 
   
   if (isFormValid(this.state))
   {
    console.log(symptom);
-   axios.post('http://localhost:3200/PatientEntry/add+ this.props.patientId', symptom)
+   axios.post('http://localhost:5000/PatientEntry/add+ this.props.patientId', symptom)
    .then(res => console.log(res.data));
    window.location = '/';
   }
