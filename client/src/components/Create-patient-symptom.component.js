@@ -124,7 +124,7 @@ export default class createSympotom extends Component {
   }
 
   handleChangeAdditionalNote = (event) => {
-    this.setState({additionalNote: event.target.value});
+    this.setState({comment: event.target.value});
   }
   //on file select 
   // onMediaChange = event => {
@@ -160,7 +160,6 @@ export default class createSympotom extends Component {
             <Card body>
               <form className="form-horizontal" onSubmit={this.onSubmit}>
                 <h3 className="text-center">Patient Symptom Entry</h3>
-                
                 <div className="form-group" >
                   <label>Trouble breathing ?  </label>{"      "}
 
