@@ -1,6 +1,6 @@
 const express = require('express');
 const connectDB = require('./config/db');
-const cors = require('express');
+var cors = require('cors')
 // var expressSession = require('express-session');
 //var expressValidatore = require('express-validator');
 const bodyParser = require('body-parser');
