@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-
+//const PatientEntry = props => (
+//  <tr>
+//                <td> {props.patientEntry.date.substring(0,10)}</td>
+//                <td> {props.patientEntry.symptom1}</td>
+//                <td> {props.patientEntry.symptom2}</td>
+//                <td> {props.patientEntry.symptom3}</td>
+//                <td> {props.patientEntry.symptom4}</td>
+//                <td> {props.patientEntry.temp}</td>
+//                <td> {props.patientEntry.comment}</td>
+//                <td> {props.patientEntry.doctorNote}</td>
+//                <td> {props.patientEntry.immediateAttention.toString()}</td>  
+//            
+//  </tr>
+//)
 export default class createSympotom extends Component {
     constructor() {
         super();
         this.state = {
             _id : '',
             date: '',
-            //date: Date().toLocaleString(),
             symptom1:'',
             symptom2:'',
             symptom3:'',
@@ -20,7 +32,7 @@ export default class createSympotom extends Component {
             entry:'',
             patientEntry:[],
             patient:[],
-            object:[]
+            object:[]       
 //            media: ''
         }
     }
@@ -29,9 +41,9 @@ export default class createSympotom extends Component {
         .then(res => {
             console.log(res);
             this.setState({     
-    //      patientEntry:res.data,  
-         // patientEntry: res.data.patientEntry,
-         // patientEntry: res.data.map(el=>el.symptom1)    
+         // patientEntry:res.data,  
+          patientEntry: res.data.patientEntry,
+         // patientEntry: res.data.patientEntry.data,   
          
                 _id : res.data.patientEntry.map(el => el._id),
                 date:res.data.patientEntry.map(el=>el.date),
@@ -42,7 +54,7 @@ export default class createSympotom extends Component {
                 temp: res.data.patientEntry.map(el=>el.temp),
                 comment: res.data.patientEntry.map(el=>el.comment),
                 doctorNote: res.data.patientEntry.map(el=>el.doctorNote),
-                immediateAttention: res.data.patientEntry.map(el=>el.immediateAttention)[0]
+                immediateAttention: res.data.patientEntry.map(el=>el.immediateAttention.toString())
          
 //j:                         formArray:res.data.form
 //ja:                     formArray:res.data.patientEntry     
@@ -54,9 +66,15 @@ export default class createSympotom extends Component {
             console.log(error);
          }) 
     }
+//    psList(){
+//        return this.state.patientEntry.map(hi => {
+//         return <PatientEntry patientEntry={hi} key={hi._id}/>;
+//    })
+ // }  
     render(){
+       
         
-        const F=
+        const F= 
               <tr>
                 <td> {this.state.date[0]}</td>
                 <td> {this.state.symptom1[0]}</td>
@@ -66,18 +84,21 @@ export default class createSympotom extends Component {
                 <td> {this.state.temp[0]}</td>
                 <td> {this.state.comment[0]}</td>
                 <td> {this.state.doctorNote[0]}</td>
-                <td> {this.state.immediateAttention.toString()}</td>  
+                <td> {this.state.immediateAttention[0]}</td>  
               </tr>
-        const line = <ul>
-                     {this.state.date[1]} , 
-                     {this.state.symptom1[1]} ,
-                     {this.state.symptom2[1]} ,
-                     {this.state.symptom3[1]} ,
-                     {this.state.symptom4[1]} ,
-                     {this.state.temp[1]} ,
-                     {(this.state.comment[1])} ,
-                     {this.state.doctorNote[1]} ,{this.state.immediateAttention.toString()}
-                   </ul>
+       
+        const W =  Object.values(F)
+        const line = <tr>
+                  <td>    {this.state.date[1]} </td> 
+                  <td>    {this.state.symptom1[1]} </td> 
+                  <td>    {this.state.symptom2[1]} </td> 
+                  <td>    {this.state.symptom3[1]} </td> 
+                  <td>    {this.state.symptom4[1]} </td> 
+                  <td>    {this.state.temp[1]} </td> 
+                  <td>    {(this.state.comment[1])} </td> 
+                  <td>    {this.state.doctorNote[1]}</td>
+                  <td> {this.state.immediateAttention[1]}</td> 
+                   </tr>
         const patientP =
             <ol>
                 <li>Date: {(this.state.date)[0]}</li>
@@ -91,16 +112,17 @@ export default class createSympotom extends Component {
                 <li>immediateAttention: {this.state.immediateAttention.toString()[0]}</li>      
             </ol>                          
         
-        const patientE =
-            <ol><li key={this.state.patientEntry._id}>    {this.state.comment[0]}</li>
-                <li key={this.state.patientEntry._id}>{this.state.immediateAttention.toString()}</li>
-            </ol>
+//        const patientE =
+//            <ol><li key={this.state.patientEntry._id}>    {this.state.comment[0]}</li>
+//                <li key={this.state.patientEntry._id}>{this.state.immediateAttention.toString()}</li>
+//            </ol>
         
-        const entry1=<ol>
-            <li>Object.values({this.state._id[0]})</li>
-            <li>Object.values({this.state.patientEntry[0]})</li>
-            </ol>
-        
+//        const entry1=<ol>
+//            <li>Object.values({this.state._id[0]})</li>
+//            <li>Object.values({this.state.patientEntry[0]})</li>
+//            </ol>
+//                                            
+      
 //      const S = {this.state.patientEntry.map(el=> el.date)[0]}
         
 //      const patientT=
@@ -146,14 +168,15 @@ export default class createSympotom extends Component {
                   <th>Additional Note</th>
                   <th>Doctor Note</th>
                   <th>Immediate Attention</th>
+                  <th>Updates</th>
                 </tr>
               </thead>
               <tbody>
-                {F}
-              </tbody>
-        </table>                                                    
-                                         
+            {F}{line}
+              </tbody>                   
            
+        </table>  
+            
         
         )
     }

@@ -89,15 +89,14 @@ render() {
     return(
         <div className = "container">
            <h1>Profile:</h1>
-           <h4>Patient name: {this.state.patientname}, Age: {this.state.age},  Underline condition: {this.state.underlying.toString()}</h4> 
-           <h4>Assigned Doctor:{patientP}</h4>    
+           <h4>Patient name: <i>{this.state.patientname}</i>,
+           Age: <i>{this.state.age}</i>,  Underline condition: <i>{this.state.underlying.toString()}</i></h4> 
+           <h4>Assigned Doctor: <i>{patientP}</i></h4>    
            <h2>History:</h2>
-                <div>Last Patient Note
-    from old schema: {patientS}</div>
-        
-         
+               
           <CreateSymptoms patientId='5ecb4228f1741b0a4e6b9939'/> 
-            
+             <div>Last Patient Note from old schema: {patientS}</div>
+        
         </div>
     )
 }
