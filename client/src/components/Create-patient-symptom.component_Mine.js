@@ -47,7 +47,7 @@ export default class createSympotom extends Component {
   onFileChange(e) {
     this.setState({ media: e.target.files[0] })
 }
-   onSubmit(e) {
+  /* onSubmit(e) {
     if (isFormValid(this.state)) {
      axios.put('http://localhost:5000/patientEntry/add/' + this.props.patientId, 
       {
@@ -69,9 +69,50 @@ export default class createSympotom extends Component {
     }
 
   };
- 
+ */
   
+onSubmit(e) {
+  e.preventDefault();
+ 
+      
+  const symptom = new FormData()
 
+  symptom.append('symptom1', this.state.symptom1);
+  symptom.append('symptom2', this.state.symptom2);
+  symptom.append('symptom3', this.state.symptom3);
+  symptom.append('symptom4', this.state.symptom4);
+  symptom.append('temp', this.state.temp);
+  symptom.append('symptom4', this.state.symptom4);
+  symptom.append('temp', this.state.temp);
+  symptom.append('comment', this.state.comment);
+  symptom.append('doctorNote', this.state.doctorNote);
+  symptom.append('immediateAttention', this.state.immediateAttention);
+  symptom.append('media', this.state.media);  
+  
+  if (isFormValid(this.state))
+  {
+   console.log(symptom);
+   axios.put('http://localhost:5000/patientEntry/add/'+ this.props.patientId, symptom)
+   .then(res => console.log(res.data));
+  // window.location = '/';
+  }
+
+
+  else {
+    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+  }
+
+};
+
+  // handleChangeTemp = (event) => {
+  //   let num = event.target.value;
+  //   this.setState({temp: num});
+  // }
+
+  // handleChangeAdditionalNote = (event) => {
+  //   this.setState({additionalNote: event.target.value});
+  // }
+  
 
 
   render() {
@@ -84,7 +125,22 @@ export default class createSympotom extends Component {
           <Col sm="8">
             <Card body>
               
-             }
+              {/* <h1> {{title}} </h1>
+              {{#if success}}
+              <section class="success">
+                <h2>Submitted Successfully</h2>
+              </section>
+               {{else}}
+                   {{# if errors}}
+                   <section class="errors">
+                   <ul>
+                   {{#each errors}}
+                   <li>{{this.msg}}</li>
+                   {{/each}}
+                   
+                   </ul>
+                   </section>
+                   {{/if}} */}
               <form className="form-horizontal" onSubmit={this.onSubmit}>
                 <h3 className="text-center">Patient Symptom Entry</h3>
                 

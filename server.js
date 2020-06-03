@@ -70,7 +70,7 @@ app.use(express.json());
 // Routes (making app modular)
 const mainRoutes = require('./routes');
 const patientRoutes = require('./routes/patient/patient');
-const patientEntryRoutes = require('./routes/patient/patientEntry');
+const patientEntryRoutes = require('./routes/patient/patientEntry2');
 //const patientEntryRoutes = require('./routes/patient/PatientSymptomEntrys');
 const providerRoutes = require('./routes/provider/provider');
 
