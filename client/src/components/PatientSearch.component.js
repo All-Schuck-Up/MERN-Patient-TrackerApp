@@ -28,16 +28,6 @@ class PatientSearch extends React.Component {
       })
       console.log(res.data)})
       const found = this.state.patientFound;
-      
-    
-  }
-
-  patientFound() {
-    const found = this.state.patientFound;
-    if (found) {
-      return <CardText color="success">Patient Found</CardText>;
-    }
-    return <CardText color="fail">Patient Found</CardText>;
   }
 
   render() {
@@ -56,9 +46,7 @@ class PatientSearch extends React.Component {
               placeholder="Patient Last Name with first letter capital"
               onChange={this.handleChange}
             />
-                  
          </FormGroup>
-          
         </Form></Col>
         <Col xs={6}><Alert color={this.state.patientFound ? 'success' : 'danger'}>{this.state.patientFound ? 'Patient Found' : 'Patient Not Found'}</Alert></Col>
         <Col ><form action={patientPageURL} method="get" label="hello">
