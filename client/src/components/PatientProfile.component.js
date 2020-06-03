@@ -33,7 +33,7 @@ export default class PatientProfile extends Component{
     
     
 componentDidMount(){
-     axios.get('http://localhost:5000/patient/5ecb4228f1741b0a4e6b9939')
+     axios.get('http://localhost:5000/patient/5ecaabd07dfcc538bce811fc')
         .then(res => {
             console.log(res);
            
@@ -43,33 +43,22 @@ componentDidMount(){
                         age: res.data.age,
                         underlying: res.data.underlying
          });
-         
-         //this.setState({patient: res.data});
         })
         .catch((error) => {
             console.log(error);
       })
    
-  axios.get('http://localhost:5000/patientEntry/5ecb4228f1741b0a4e6b9939')
+  axios.get('http://localhost:5000/patientEntry/5ecaabd07dfcc538bce811fc')
         .then(res => {
             console.log(res);
-            //this.setState({patientEntry: res.data});
         this.setState({
             patientEntry: res.data.map(el=>el.doctorNote)});
-       // res.data.map(el=>el.form.map(ele=>ele.symptom1))});
         })
         .catch((error) => {
             console.log(error);
       })   
 }
 
-    
-// patientEntryList() {
-//    return this.state.patientEntries.map(currententry => {
-//      return <PatientEntry patientEntry={currententry} key={currententry._id}/>;
-//    })
-//  }
-  
 render() {
     const patientS=
           <ul>{this.state.patientEntry.map((patientEntry) =>
@@ -80,11 +69,7 @@ render() {
 
     const patientP =
             <ol>{this.state.patient}</ol>
-// const patientEntryList= {
-//     this.state.patientEntry.map(currententry => {
-//       <PatientEntry patientEntry={currententry} key={currententry._id}/>;
-//    })
-//  }
+
    
     return(
         <div className = "container">
@@ -94,7 +79,7 @@ render() {
            <h4>Assigned Doctor: <i>{patientP}</i></h4>    
            <h2>History:</h2>
                
-          <CreateSymptoms patientId='5ecb4228f1741b0a4e6b9939'/> 
+          <CreateSymptoms patientId='5ecaabd07dfcc538bce811fc'/> 
              <div>Last Patient Note from old schema: {patientS}</div>
         
         </div>
