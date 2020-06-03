@@ -90,9 +90,9 @@ onSubmit(e) {
   if (isFormValid(this.state))
   {
    console.log(symptom);
-   axios.post('http://localhost:5000/PatientEntry/add+ this.props.patientId', symptom)
+   axios.put('http://localhost:5000/patientEntry/add/'+ this.props.patientId, symptom)
    .then(res => console.log(res.data));
-   window.location = '/';
+  // window.location = '/';
   }
 
 
@@ -102,14 +102,14 @@ onSubmit(e) {
 
 };
 
-  handleChangeTemp = (event) => {
-    let num = event.target.value;
-    this.setState({temp: num});
-  }
+  // handleChangeTemp = (event) => {
+  //   let num = event.target.value;
+  //   this.setState({temp: num});
+  // }
 
-  handleChangeAdditionalNote = (event) => {
-    this.setState({additionalNote: event.target.value});
-  }
+  // handleChangeAdditionalNote = (event) => {
+  //   this.setState({additionalNote: event.target.value});
+  // }
   
 
 
