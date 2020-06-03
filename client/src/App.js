@@ -17,9 +17,7 @@ import RegisterProvider from './components/auth/RegisterProvider.component';
 import Navbar from './components/Nbar.component';
 import CreateSymptom from './components/Create-patient-symptom.component';
 import PatientProfile from './components/PatientProfile.component';
-import PatientSearch from './components/PatientSearch.component';
-import PatientAlertList from './components/PatientAlertList.component';
-import PatientImmediateAttList from './components/PatientImmediateAttList.component';
+import ProviderProfile from './components/ProviderProfile';
 
 // check for token
 if (localStorage.token) {
@@ -76,9 +74,7 @@ function App() {
           <div className='container'>
             <Route exact path='/provider/login/:id'>
               <Navbar name="Provider Name"/>
-              <PatientSearch />
-              <PatientAlertList />
-              <PatientImmediateAttList />
+              <ProviderProfile />
             </Route>
           </div>
         </div>

@@ -24,7 +24,7 @@ class PatientImmediateAttList extends React.Component {
         return(
             
             <div className="immediateAttList">
-                <Alert color="danger">{this.state.immediateAttArray.length == 0 ? 'No Immediate Attention Requested' : 'Immediate Attention Requested'}</Alert>
+                <Alert color="danger">{this.state.immediateAttArray.length === 0 ? 'No Immediate Attention Requested' : 'Immediate Attention Requested'}</Alert>
                 {immediateAtt}
             </div>
         )

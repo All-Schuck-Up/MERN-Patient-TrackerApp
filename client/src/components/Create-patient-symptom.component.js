@@ -35,7 +35,11 @@ export default class createSympotom extends Component {
       comment: '',
       doctorNote:'none',
       immediateAttention: false,
-      formErrors: "Please enter a valid number"
+      formErrors: { 
+        valid : "Please enter a valid number",
+        highTemp : "This is a high temperature. We will create an alert for your doctor",
+        tooHighTemp: "too high! the highest recorded temperature is 115F by 52yo Willie Jones, maybe typo?"
+      }
     };
     this.baseState = this.state
   }
@@ -57,6 +61,21 @@ export default class createSympotom extends Component {
       doctorNote:this.state.doctorNote,
       immediateAttention: this.state.immediateAttention})
      .then(res => console.log(res.data));
+    
+     //high temperature alert sent to the alert cluster database
+     if(this.isHighTemp(this.state.temp)) {
+      axios.post('http://localhost:5000/alert/add', {
+        patientID : this.props.patientId,
+	      alertMessage: "High fever - " + this.state.temp + "F"
+      }).then(res => console.log(res.data));
+     }
+     //symptoms alert sent to the alert cluster database
+     if(this.state.symptom1 === 'yes' || this.state.symptom2 === 'yes' || this.state.symptom3 === 'yes' || this.state.symptom4 === 'yes') {
+      axios.post('http://localhost:5000/alert/add', {
+        patientID : this.props.patientId,
+	      alertMessage: "One or more symptoms appeared"
+      }).then(res => console.log(res.data));
+     }
 
       window.location = '/';
       
@@ -127,8 +146,9 @@ export default class createSympotom extends Component {
   //   //axios.post("http://localhost:5000/uploadfile", patientMedia);
 
   // };
-
-
+  isHighTemp(temp) {
+    return temp > 99
+  }
 
   render() {
     const { formErrors } = this.state;
@@ -179,8 +199,9 @@ export default class createSympotom extends Component {
                 <div className="form-group" >
                 <label>Temperature:</label> {"    "} 
                      <textarea className="spaceInput" onChange={this.handleChangeTemp} rows={1} /> {"    "}
-                     {this.state.temp < 90 && this.state.temp > 0 && (<span className="errorMessage" >{formErrors}</span>
-                )}
+                     {this.state.temp < 90 && this.state.temp > 0 && (<span className="errorMessage" >{formErrors.valid}</span>)}
+                     {this.isHighTemp(this.state.temp) && (<span className="errorMessage" >{formErrors.highTemp}</span>)}
+                     {this.state.temp > 114 && (<span className="errorMessage" >{formErrors.tooHighTemp}</span>)}
                   
                 </div>
 

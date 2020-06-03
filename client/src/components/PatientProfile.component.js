@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+//import PatientEntries from './PatientEntryList';
 
 //assigned doctor
 //symptoms delete to be change for update

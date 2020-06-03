@@ -1,11 +1,9 @@
 const router = require('express').Router();
 let PatientEntry = require('../../models/Patient');
 
-
 router.route('/patientEntries').get((req, res) => {
- 
-    PatientEntry.find()
-        .then(patientEntries => res.json(patientEntries.patientEntry))
+    PatientEntry.find().select('patientEntry') 
+        .then(patientEntries => res.json(patientEntries))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -32,11 +30,11 @@ router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
 
 });
 
-// router.route('/patientEntry/:id').get((req, res) => {
-//     PatientEntry.findById(req.params.id)
-//         .then(patientEntry => res.json(patientEntry))
-//         .catch(err => res.status(400).json('Error: ' + err));
-// });
+router.route('/patientEntry/:id').get((req, res) => {
+    PatientEntry.findById(req.params.id).select('patientEntry') 
+        .then(patientEntries => res.json(patientEntries))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 
 
 //update route for the patient to add a note to their entry entered in last 24 hours
