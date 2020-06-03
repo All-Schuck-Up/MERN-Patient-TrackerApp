@@ -21,11 +21,10 @@ const isFormValid = ({ formErrors, ...rest }) => {
 export default class createSympotom extends Component {
   constructor(props) {
     super(props);
-    this.onFileChange=this.onFileChange.bind(this);
+  
     this.onSubmit = this.onSubmit.bind(this);
 
-    
-    this.state = {
+      this.state = {
       symptom1: '',
       symptom2: '',
       symptom3: '',
@@ -70,11 +69,7 @@ export default class createSympotom extends Component {
 
   };
  
-  
-
-
-
-  render() {
+    render() {
     
     const { formErrors } = this.state;
     return (
