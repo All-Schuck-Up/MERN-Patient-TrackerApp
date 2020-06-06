@@ -59,3 +59,9 @@
 .spaceInputNote {
   width: 90%;
 }
+.inputSearch {
+  width : 70%
+}
+.patientSearch {
+  display:inline-block;
+}

@@ -47,10 +47,10 @@ router.post('/patient/login', [
     }
   );
 
-router.get('/patient/:_id', (req, res) => {
-});
-router.post('/patient/:_id', (req, res) => {
-});
+// router.get('/patient/:_id', (req, res) => {
+// });
+// router.post('/patient/:_id', (req, res) => {
+// });
 
 // Post req, This route registers user unless already exists TEST => POSTMAN POST to http://localhost:5000/patient/
 router.post(
@@ -103,6 +103,18 @@ router.get('/patients', (req, res) => {
     Patient.find()
       .then(patient => res.json(patient))
       .catch(err => res.status(400).json('Error' + err));
+});
+
+router.get('/patient/:id', (req, res) => {
+  Patient.findById(req.params.id)
+    .then(patient => res.json(patient))
+    .catch(err => res.status(400).json('Error' + err));
+});
+
+router.route('/patient/search/:lastname').get((req, res) => {
+  Patient.find({lastName : req.params.lastname}).select('_id') 
+      .then(patient => res.json(patient))
+      .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports = router;
