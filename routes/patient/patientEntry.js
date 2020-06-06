@@ -1,7 +1,6 @@
 const router = require('express').Router();
 let PatientEntry = require('../../models/Patient');
 
-
 router.route('/patientEntries').get((req, res) => {
  
     PatientEntry.find()
@@ -9,8 +8,49 @@ router.route('/patientEntries').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
+    let multer = require('multer');
+    
+     helpIdGenerator = () => {
+    
+      const uuidv4 = require('uuid/v4')
+    
+     } 
+    const { v4: uuidv4 } = require('uuid');
+    uuidv4();
+    
+    
+ 
+   const DIR ='C:/workspace/patient-Tracking-Local/AD-410-F/public';
 
+  //  const DIR = './public/';
+    
+    const storage = multer.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null, DIR);
+        },
+        filename: (req, file, cb) => {
+            const fileName = file.originalname.toLowerCase().split(' ').join('-');
+            cb(null, uuidv4() + '-' + fileName)
+        }
+    });
+    
+    var upload = multer({
+        storage: storage,
+        fileFilter: (req, file, cb) => {
+            if (file.mimetype == "video/MP4" ||file.mimetype == "image/png" ||file.mimetype =="video/avi"|| file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+                cb(null, true);
+            } else {
+                cb(null, false);
+                return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+            }
+        }
+    });
+
+
+//router.route('/patientEntry/add/:id',upload.single('media')).put((req, res) => { //patient Id
+ 
+router.put('/patientEntry/add/:id',upload.single('media'), (req, res,next) => { //patient Id
+const url = req.protocol + '://' + req.get('host')
     const formElement = {
         symptom1 :req.body.symptom1,
         symptom2 :req.body.symptom2,
@@ -19,48 +59,28 @@ router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
         temp : req.body.temp,
         comment : req.body.comment,
         doctorNote : req.body.doctorNote,
-        immediateAttention : req.body.immediateAttention};
+        immediateAttention : req.body.immediateAttention,
+        media: url + '/public/' + req.file.filename
+    };
     PatientEntry.findById(req.params.id)
     .then(patientEntries => {
         patientEntries.patientEntry.push(formElement)
 
-        patientEntries.save()
-            .then(() => res.json('Patient Entry Added!'))
-            .catch(err => res.status(400).json('Error: ' + err));
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
-
-});
-
-// router.route('/patientEntry/:id').get((req, res) => {
-//     PatientEntry.findById(req.params.id)
-//         .then(patientEntry => res.json(patientEntry))
-//         .catch(err => res.status(400).json('Error: ' + err));
-// });
-
-
-//update route for the patient to add a note to their entry entered in last 24 hours
-
-/*
-router.route('/PatientEntry/update/:id').post((req, res) => {
-    PatientEntry.findById(req.params.id)
-        .then(patientsymptom => {
-            patientsymptom.additionalNote = req.body.additionalNote;
-
-            patientsymptom.save()
-                .then(() => res.json('Patient Entry Node  updated!'))
-
-router.route('/patientEntry/update/:id').put((req, res) => {
-    PatientEntry.findById(req.params.id)
-        .then(entry => {
-            //entry.form[form.size() - 1[5]] = req.body.updatedAdditionalNote;
-            entry.doctorNote = req.body.doctorNote;
-            entry.save()
-                .then(() => res.json('Patient Entry Note Updated!'))
-
-                .catch(err => res.status(400).json('Error: ' + err));
+        patientEntries.save().then(result => {
+            res.status(201).json({
+                message: "User registered successfully!",
+                userCreated: {
+              //      _id: result._id,
+                    profileImg: result.profileImg
+                }
+            })
+        }).catch(err => {
+            console.log(err),
+                res.status(500).json({
+                    error: err
+                });
         })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-*/
+        
+    })
+})
 module.exports = router;
