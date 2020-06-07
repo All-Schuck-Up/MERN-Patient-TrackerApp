@@ -198,17 +198,18 @@ export default class createSympotom extends Component {
                 <div className="form-group" >
                 <label>Temperature:</label> {"    "} 
                      <textarea className="spaceInput" onChange={this.handleChangeTemp} rows={1} /> {"    "}
-                     {this.state.temp < 90 && this.state.temp > 0 && (<span className="errorMessage" >{formErrors.valid}</span>)}
-                     {this.isHighTemp(this.state.temp) && (<span className="errorMessage" >{formErrors.highTemp}</span>)}
-                     {this.state.temp > 114 && (<span className="errorMessage" >{formErrors.tooHighTemp}</span>)}
+                     {this.state.temp < 90 && this.state.temp > 0 && (<span className="errorMessage" >{formErrors.valid}</span>
+                                                                     )}
+                     {this.isHighTemp(this.state.temp) && (<span className="errorMessage" >{formErrors.highTemp}</span>
+                                                          )}
+                     {this.state.temp > 114 && (<span className="errorMessage" >{formErrors.tooHighTemp}</span>
+                                                          )}
                   
                 </div>
 
 {/* 
                 <div className="form-group">
-
                   <div>  <label  >Media  : </label></div>
-
                   <div>
                     <input className="spaceInput"
                       type="file"
@@ -216,7 +217,6 @@ export default class createSympotom extends Component {
                     <button onClick={this.onFileUpload}>
                     </button>
                   </div>
-
                 </div> */}
 
                 <div className="form-group" >
@@ -243,7 +243,7 @@ export default class createSympotom extends Component {
               <CardTitle > <h3 className="text-center">Latest Doctor Note</h3></CardTitle>
               <CardText> On click doctors note from patient profile will be displayed
               On click doctors note from patient profile
-          </CardText>
+              </CardText>
               <Button >View</Button>
 
             </Card>

@@ -44,7 +44,8 @@ export default class createSympotom extends Component {
             this.setState({     
          // patientEntry:res.data,  
           patientEntry: res.data.patientEntry,
-         // patientEntry: res.data.patientEntry.data,          
+         // patientEntry: res.data.patientEntry.data,  
+              
                 _id : res.data.patientEntry.map(el => el._id),
                 date:res.data.patientEntry.map(el=>el.date),
                 symptom1: res.data.patientEntry.map(el=>el.symptom1),
