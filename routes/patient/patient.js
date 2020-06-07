@@ -4,6 +4,7 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 
 const Patient = require('../../models/Patient');
+//let PatientEntry = require('../../models/PatientEntry');
 
 router.get('/patient/login', (req, res) => {
 });
@@ -47,18 +48,35 @@ router.post('/patient/login', [
     }
   );
 
-// router.get('/patient/:_id', (req, res) => {
-// });
-// router.post('/patient/:_id', (req, res) => {
-// });
+//route for all patients
+router.get('/patient/',(req, res) => {
+    Patient
+        .find()
+        .then(patient => res.json(patient))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//route for only 1 patient by id
+router.get('/patient/:id',(req, res) => {
+    Patient
+        .findById(req.params.id)
+        .then(patient => res.json(patient))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.post('/patient/:_id', (req, res) => {});
+
+
 
 // Post req, This route registers user unless already exists TEST => POSTMAN POST to http://localhost:5000/patient/
 router.post(
   '/patient/',
   [
-    check('name', 'Name is required').not().isEmpty(),
+    check('firstName', 'firstName is required').not().isEmpty(),
+    check('lastName', 'lastName is required').not().isEmpty(),
     check('email', 'Enter a valid email').isEmail(),
-    check('password', 'Please enter password with atleast 4 characters').isLength({ min: 4 }),
+    check('age', 'Enter a valid age').not().isEmpty()
+   // check('password', 'Please enter password with atleast 4 characters').isLength({ min: 4 }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -66,7 +84,9 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    //const { name, email, password } = req.body;
+      const { firstName, lastName, email, age, underli } = req.body;
+
 
     try {
       let patient = await Patient.findOne({ email });
@@ -76,16 +96,19 @@ router.post(
       }
 
       patient = new Patient({
-        name,
-        email,
-        password,
+          firstName,
+          lastName,
+          email,
+          age,
+          underlying
+    //    password,
       });
-
+/*
       // encrypt password
       patient.password = await bcrypt.hash(req.body.password, 10);
       console.log(patient.password);
       // End encryption
-
+*/
       await patient.save();
       res.send('Patient added');
     } catch (err) {
@@ -97,24 +120,6 @@ router.post(
 
 router.get('/patient/logout', (req, res) => {
   // TO DO --
-});
-
-router.get('/patients', (req, res) => {
-    Patient.find()
-      .then(patient => res.json(patient))
-      .catch(err => res.status(400).json('Error' + err));
-});
-
-router.get('/patient/:id', (req, res) => {
-  Patient.findById(req.params.id)
-    .then(patient => res.json(patient))
-    .catch(err => res.status(400).json('Error' + err));
-});
-
-router.route('/patient/search/:lastname').get((req, res) => {
-  Patient.find({lastName : req.params.lastname}).select('_id') 
-      .then(patient => res.json(patient))
-      .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports = router;
