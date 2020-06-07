@@ -1,6 +1,6 @@
 const router = require('express').Router();
-let PatientEntry = require('../../models/PatientEntry');
-let Patient = require('../../models/Patient');
+let PatientEntry = require('../../models/Patient');
+
 
 //route for getting an array of all patient entries
 router.route('/patientEntries').get((req, res) => {
@@ -37,21 +37,30 @@ router.route('/patientEntry/').get((req, res) => {
 
 
 //patient entry adding route
-router.route('/patientEntry/add').post((req, res) => {
-    const firstName = req.body.firstName;
-    const form = req.body.form;
-    const doctorNote = req.body.doctorNote;
-    const immediateAttention = req.body.immediateAttention;
 
-    const newPatientEntry = new PatientEntry({               firstName, 
-        form,
-        doctorNote,
-        immediateAttention});
+router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
 
-    PatientEntry.save()
-        .then(() => res.json('Patient Entry Added!'))
-        .catch(err => res.status(400).json('Error: ' + err));
+    const formElement = {
+        symptom1 :req.body.symptom1,
+        symptom2 :req.body.symptom2,
+        symptom3 :req.body.symptom3,
+        symptom4:req.body.symptom4,
+        temp : req.body.temp,
+        comment : req.body.comment,
+        doctorNote : req.body.doctorNote,
+        immediateAttention : req.body.immediateAttention};
+    PatientEntry.findById(req.params.id)
+    .then(patientEntries => {
+        patientEntries.patientEntry.push(formElement)
+
+        patientEntries.save()
+            .then(() => res.json('Patient Entry Added!'))
+            .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+
 });
+
 
 //update route for the patient to add a note to their entry entered in last 24 hours
 router.route('/patientEntry/update/:id').post((req, res) => {
