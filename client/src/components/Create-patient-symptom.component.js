@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import {Progress} from 'reactstrap';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const isFormValid = ({ formErrors, ...rest }) => {
@@ -18,14 +21,28 @@ const isFormValid = ({ formErrors, ...rest }) => {
   return valid;
 };
 
+// const ValidateTemp =() => {
+//   let errors = {}
+//   let formIsValid = true
+// if (!this.state.temp || this.state.temp.length < 2) {
+//     errors.name = "Please Enter a valid number..."
+//     toast.error(`${errors.name}`, {
+//       position: toast.POSITION.TOP_LEFT      });
+//     formIsValid = false
+//   }
+
+// this.setState({
+//     errors: errors
+//   })
+// }
 export default class createSympotom extends Component {
   constructor(props) {
     super(props);
     this.onFileChange=this.onFileChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
     
     this.state = {
+      loaded:0,
       symptom1: '',
       symptom2: '',
       symptom3: '',
@@ -41,35 +58,15 @@ export default class createSympotom extends Component {
   }
 
   resetForm = () => {
+    
     this.setState(this.baseState)
   }
+  
 
-  onFileChange(e) {
-    this.setState({ media: e.target.files[0] })
-}
-  /* onSubmit(e) {
-    if (isFormValid(this.state)) {
-     axios.put('http://localhost:5000/patientEntry/add/' + this.props.patientId, 
-      {
-      symptom1: this.state.symptom1,
-      symptom2: this.state.symptom2,
-      symptom3: this.state.symptom3,
-      symptom4: this.state.symptom4,
-      temp: this.state.temp,
-      comment: this.state.comment,
-      doctorNote:this.state.doctorNote,
-      immediateAttention: this.state.immediateAttention})
-     .then(res => console.log(res.data));
-
-      window.location = '/';
-      
-
-    } else {
-      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
-    }
-
-  };
- */
+   onFileChange(e) {
+     this.setState({ media: e.target.files[0] })
+ }
+  
   
 onSubmit(e) {
   e.preventDefault();
@@ -81,38 +78,34 @@ onSubmit(e) {
   symptom.append('symptom2', this.state.symptom2);
   symptom.append('symptom3', this.state.symptom3);
   symptom.append('symptom4', this.state.symptom4);
-  symptom.append('temp', this.state.temp);
-  symptom.append('symptom4', this.state.symptom4);
+  
   symptom.append('temp', this.state.temp);
   symptom.append('comment', this.state.comment);
   symptom.append('doctorNote', this.state.doctorNote);
   symptom.append('immediateAttention', this.state.immediateAttention);
-  symptom.append('media', this.state.media);  
+   symptom.append('media', this.state.media);  
   
-  if (isFormValid(this.state))
-  {
-   console.log(symptom);
-   axios.put('http://localhost:5000/patientEntry/add/'+ this.props.patientId, symptom)
-   .then(res => console.log(res.data));
-  // window.location = '/';
-  }
 
-
-  else {
-    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
-  }
+   if (isFormValid(this.state)) {
+   axios.put('http://localhost:5000/patientEntry/add/'+ this.props.patientId, symptom,{
+   //progress bar for image upload 
+   onUploadProgress: ProgressEvent => {
+      this.setState({
+        loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
+    })
+},
+})
+ .then(res => { 
+  toast.success('Symptom Entered successfully')
+  //window.location = '/';
+})
+.catch(err => { 
+  toast.error('upload fail ')
+}) 
 
 };
+}
 
-  // handleChangeTemp = (event) => {
-  //   let num = event.target.value;
-  //   this.setState({temp: num});
-  // }
-
-  // handleChangeAdditionalNote = (event) => {
-  //   this.setState({additionalNote: event.target.value});
-  // }
-  
 
 
   render() {
@@ -125,25 +118,15 @@ onSubmit(e) {
           <Col sm="8">
             <Card body>
               
-              {/* <h1> {{title}} </h1>
-              {{#if success}}
-              <section class="success">
-                <h2>Submitted Successfully</h2>
-              </section>
-               {{else}}
-                   {{# if errors}}
-                   <section class="errors">
-                   <ul>
-                   {{#each errors}}
-                   <li>{{this.msg}}</li>
-                   {{/each}}
-                   
-                   </ul>
-                   </section>
-                   {{/if}} */}
+          
               <form className="form-horizontal" onSubmit={this.onSubmit}>
                 <h3 className="text-center">Patient Symptom Entry</h3>
-                
+                { this.state.errorMessage &&
+  <h3 className="error"> { this.state.errorMessage } </h3> }
+               
+               <div class="form-group">
+   <ToastContainer />
+</div>
                 <div className="form-group" >
                   <label>Trouble breathing ?  </label>{"      "}
 
@@ -201,9 +184,13 @@ onSubmit(e) {
                 </div>
                 <div className="form-group">
                 <label>Select Media : </label>
-                            <input type="file" onChange={this.onFileChange} />
+                            <input type="file"  onChange={this.onFileChange} />
                         </div>
-                
+                        <div class="form-group">
+
+<Progress max="100" color="success" value={this.state.loaded} >{Math.round(this.state.loaded,2) }%</Progress>
+
+</div>
                 <div className="form-group">
                   {" "}<Button className="btn btn-primary" onClick={() => this.setState({ immediateAttention: true })}>Mark as Immediate Attention</Button>
                   {" "}<Button className="btn btn-primary" type="submit" >Save Record</Button>

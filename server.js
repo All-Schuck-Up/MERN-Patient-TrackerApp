@@ -26,10 +26,6 @@ app.use(cors());
 
 app.use('/public', express.static('public'));
 
-  
-  
-
-
 // Routes (making app modular)
 const mainRoutes = require('./routes');
 const patientRoutes = require('./routes/patient/patient');

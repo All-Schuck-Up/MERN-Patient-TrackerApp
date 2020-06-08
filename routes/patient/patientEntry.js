@@ -19,10 +19,8 @@ router.route('/patientEntries').get((req, res) => {
     uuidv4();
     
     
- 
-   const DIR ='C:/workspace/patient-Tracking-Local/AD-410-F/public';
-
-  //  const DIR = './public/';
+   
+   const DIR = './public/';
     
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
@@ -30,14 +28,16 @@ router.route('/patientEntries').get((req, res) => {
         },
         filename: (req, file, cb) => {
             const fileName = file.originalname.toLowerCase().split(' ').join('-');
-            cb(null, uuidv4() + '-' + fileName)
+         //   cb(null, uuidv4() + '-' + fileName)
+         cb(null, Date.now() + '-' +file.originalname )
         }
     });
     
     var upload = multer({
         storage: storage,
+        limits : {fileSize : 524288000},
         fileFilter: (req, file, cb) => {
-            if (file.mimetype == "video/MP4" ||file.mimetype == "image/png" ||file.mimetype =="video/avi"|| file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+           if (file.mimetype == "video/mp4" ||file.mimetype == "image/png" ||file.mimetype =="video/avi"|| file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
                 cb(null, true);
             } else {
                 cb(null, false);
@@ -46,9 +46,6 @@ router.route('/patientEntries').get((req, res) => {
         }
     });
 
-
-//router.route('/patientEntry/add/:id',upload.single('media')).put((req, res) => { //patient Id
- 
 router.put('/patientEntry/add/:id',upload.single('media'), (req, res,next) => { //patient Id
 const url = req.protocol + '://' + req.get('host')
     const formElement = {
@@ -56,7 +53,7 @@ const url = req.protocol + '://' + req.get('host')
         symptom2 :req.body.symptom2,
         symptom3 :req.body.symptom3,
         symptom4:req.body.symptom4,
-        temp : req.body.temp,
+        temp : Number((req.body.temp)),
         comment : req.body.comment,
         doctorNote : req.body.doctorNote,
         immediateAttention : req.body.immediateAttention,
@@ -68,11 +65,9 @@ const url = req.protocol + '://' + req.get('host')
 
         patientEntries.save().then(result => {
             res.status(201).json({
-                message: "User registered successfully!",
-                userCreated: {
-              //      _id: result._id,
-                    profileImg: result.profileImg
-                }
+                message: "Symptom Upload  successfully!",
+                
+               
             })
         }).catch(err => {
             console.log(err),
@@ -83,4 +78,5 @@ const url = req.protocol + '://' + req.get('host')
         
     })
 })
+        
 module.exports = router;
