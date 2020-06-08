@@ -63,6 +63,18 @@ export default class createSympotom extends Component {
   }
   
 
+  handleChangeTemp = (event) => {
+    let num = event.target.value;
+    this.setState({ temp: num });
+  };
+
+  handleChangeAdditionalNote = (event) => {
+    this.setState({ comment: event.target.value });
+  };
+
+  isHighTemp(temp) {
+    return temp > 99;
+  }
    onFileChange(e) {
      this.setState({ media: e.target.files[0] })
  }
@@ -104,10 +116,9 @@ onSubmit(e) {
 }) 
 
 };
+
+this.setState({ temp: '' });
 }
-
-
-
   render() {
     
     const { formErrors } = this.state;
