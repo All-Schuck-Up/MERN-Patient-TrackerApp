@@ -63,11 +63,12 @@ router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
 
 
 //update route for the patient to add a note to their entry entered in last 24 hours
-router.route('/patientEntry/update/:id').post((req, res) => {
-    PatientEntry.findById(req.params.id)
-        .then(entry => {
-            entry.form[5] = req.body.updatedAdditionalNote;
-            entry.save()
+router.route('/patientEntry/update/:id').put((req, res) => {
+    //PatientEntry.findById(req.params.id)
+    PatientEntry.find({"date": req.params.date})
+        .then(patientEntry => {
+            patientEntry[9] = req.body.updateNote
+            patientEntry.save()
                 .then(() => res.json('Patient Entry Note Updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })

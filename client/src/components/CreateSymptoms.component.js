@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import { Link, Dialog } from 'react-router-dom';
 import axios from 'axios';
+import UpdateDialog from './UpdateDialog.component';
+import { Button } from 'reactstrap';
 
+
+//implemented as functional React component
 const PatientEntry = props => (
   <tr>
                 <td> {props.patientEntry.date.substring(0,10)}</td>
@@ -11,14 +16,19 @@ const PatientEntry = props => (
                 <td> {props.patientEntry.temp}</td>
                 <td> {props.patientEntry.comment}</td>
                 <td> {props.patientEntry.doctorNote}</td>
-                <td> {props.patientEntry.immediateAttention.toString()}</td>  
+                <td> {props.patientEntry.immediateAttention.toString()}</td>
+                <td> {props.patientEntry.updateNote}</td>
             
   </tr>
+    
+    
 )
-
+//implemented as class component
 export default class createSympotom extends Component {
     constructor() {
         super();
+        
+        this.updatePatientEntry = this.updatePatientEntry.bind(this)
         this.state = {
             _id : '',
             date: '',
@@ -30,6 +40,7 @@ export default class createSympotom extends Component {
             comment:'',
             doctorNote:'',         
             immediateAttention:true,
+            updateNote:'',
             entry:'',
             patientEntry:[],
             patient:[],
@@ -55,17 +66,43 @@ export default class createSympotom extends Component {
                 temp: res.data.patientEntry.map(el=>el.temp),
                 comment: res.data.patientEntry.map(el=>el.comment),
                 doctorNote: res.data.patientEntry.map(el=>el.doctorNote),
-                immediateAttention: res.data.patientEntry.map(el=>el.immediateAttention.toString())
+                immediateAttention: res.data.patientEntry.map(el=>el.immediateAttention.toString()),
+                updateNote:
+                res.data.patientEntry.map(el=>el.updateNote)
 
             });
         })
         .catch((error) => {
             console.log(error);
          }) 
+        
+//        axios.get('http://localhost:5000/patientEntry/5ecaabd07dfcc538bce811fc')
+//        .then(res => {
+//            console.log(res);
+//        this.setState({
+//            patientEntry: res.data.map(el=>el.doctorNote)});
+//        })
+//        .catch((error) => {
+//            console.log(error);
+//      })   
+        
+    }
+    updatePatientEntry(id){
+    axios.put('http://localhost:5000/patientEntry/update/id')
+        .then(res => {
+            console.log(res.data);
+        this.setState({
+            //patientEntry: res.data.map(el=>el.doctorNote)});
+            patientEntry: this.state.patientEntry.filter((el=>el._id === id) && (el=>el.date === this.state.date))
+        });
+        })
+        .catch((error) => {
+            console.log(error);
+      })   
     }
     psList(){
         return this.state.patientEntry.map(hi => {
-         return <PatientEntry patientEntry={hi} key={hi._id}/>;
+         return <PatientEntry patientEntry={hi} updatePatientEntry={this.updatePatientEntry} key={hi._id}/>;
     })
   }  
     render(){
@@ -84,7 +121,8 @@ export default class createSympotom extends Component {
                 <td> {this.state.immediateAttention[0]}</td>  
               </tr>                        
            
-        return(     
+        return(   
+            <div>
              <table className="table">
               <thead className="thead-light">
                 <tr>
@@ -97,14 +135,18 @@ export default class createSympotom extends Component {
                   <th>Additional Note</th>
                   <th>Doctor Note</th>
                   <th>Immediate Attention</th>
-                  <th>Updates</th>
+                  <th>Update Note</th>
                 </tr>
               </thead>
               <tbody>
                 {this.psList()}
               </tbody>                        
             </table>  
-       
+        <div>
+            <Link to={"/update/"+this.state.patientEntry._id}>edit last entry</Link> | <a href="#" onClick={() => { this.state.deletePatientEntry(this.state.patientEntry._id) }}>delete</a>
+         </div>
+        <UpdateDialog />
+       </div>
         )
     }
 }

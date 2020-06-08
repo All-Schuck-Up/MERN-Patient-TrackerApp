@@ -80,7 +80,6 @@ render() {
            <h2>History:</h2>
                
           <CreateSymptoms patientId='5ecaabd07dfcc538bce811fc'/> 
-             <div>Last Patient Note from old schema: {patientS}</div>
         
         </div>
     )
