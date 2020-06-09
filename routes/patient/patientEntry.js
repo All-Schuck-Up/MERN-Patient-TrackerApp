@@ -47,7 +47,7 @@ router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
         symptom4:req.body.symptom4,
         temp : req.body.temp,
         comment : req.body.comment,
-        doctorNote : req.body.doctorNote,
+        updateNote : req.body.updateNote,
         immediateAttention : req.body.immediateAttention};
     PatientEntry.findById(req.params.id)
     .then(patientEntries => {
@@ -74,18 +74,27 @@ router.route('/patientEntry/update/:id').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//adds to the doctor note array in the patient cluster
 router.route('/patientEntry/addDoctorNote/:id').put((req, res) => {
     PatientEntry.findById(req.params.id)
         .then(entry => {
             if(req.body.isDoctor) {
-            entry.patientEntry[req.body.number].doctorNote = req.body.doctorNote;
+            entry.doctorNote.push(req.body.doctorNote);
             entry.save()
                 .then(() => res.json('Doctor Note Updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));}
             else {
-                res.json("header if statement returned false")
+                res.json("Only providers are allowed to update doctor notes")
             }
         })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//retrieves all the doctor notes
+router.route('/doctorNotes/:id').get((req, res) => {
+    PatientEntry
+        .findById(req.params.id)
+        .then(patient => res.json(patient.doctorNote))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 

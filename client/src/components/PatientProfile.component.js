@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import CreateSymptoms from './CreateSymptoms.component';
+import { Button } from 'reactstrap';
+import {Link} from 'react-router-dom';
 
 export default class PatientProfile extends Component{ 
    constructor(props){
@@ -38,7 +40,7 @@ componentDidMount(){
         .then(res => {
             console.log(res);
         this.setState({
-            patientEntry: res.data.map(el=>el.doctorNote)});
+            patientEntry: res.data.map(el=>el.updateNote)});
         })
         .catch((error) => {
             console.log(error);
@@ -67,7 +69,14 @@ render() {
                
           <CreateSymptoms patientId='5ecaabd07dfcc538bce811fc'/> 
              <div>Last Patient Note from old schema: {patientS}</div>
-        
+             { this.props.isDoctor ? 
+                <div >
+                    <Link to="/patient/doctorNotes" className="nav-link">
+                    <Button>Add a note to this patient's profile</Button>
+                    </Link>
+                    
+                </div>
+             : null }
         </div>
     )
 }

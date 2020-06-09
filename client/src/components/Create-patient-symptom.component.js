@@ -33,7 +33,7 @@ export default class createSympotom extends Component {
       symptom4: '',
       temp: '',
       comment: '',
-      doctorNote:'none',
+      updateNote:'none',
       immediateAttention: false,
       formErrors: { 
         valid : "Please enter a valid number",
@@ -58,7 +58,7 @@ export default class createSympotom extends Component {
       symptom4: this.state.symptom4,
       temp: this.state.temp,
       comment: this.state.comment,
-      doctorNote:this.state.doctorNote,
+      updateNote:this.state.updateNote,
       immediateAttention: this.state.immediateAttention})
      .then(res => console.log(res.data));
     
@@ -83,7 +83,7 @@ export default class createSympotom extends Component {
        }).then(res => console.log(res.data));
      }
 
-      window.location = '/';
+      window.location = '/patient/login/:id';
       
 
     } else {

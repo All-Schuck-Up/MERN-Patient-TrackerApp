@@ -10,7 +10,7 @@ const PatientEntry = props => (
                 <td> {props.patientEntry.symptom4}</td>
                 <td> {props.patientEntry.temp}</td>
                 <td> {props.patientEntry.comment}</td>
-                <td> {props.patientEntry.doctorNote}</td>
+                <td> {props.patientEntry.updateNote}</td>
                 <td> {props.patientEntry.immediateAttention.toString()}</td>  
             
   </tr>
@@ -28,12 +28,12 @@ export default class createSympotom extends Component {
             symptom4:'',
             temp:0,
             comment:'',
-            doctorNote:'',         
+            updateNote:'',         
             immediateAttention:true,
             entry:'',
             patientEntry:[],
             patient:[],
-            object:[]       
+            object:[] 
 //            media: ''
         }
     }
@@ -67,7 +67,7 @@ export default class createSympotom extends Component {
         return this.state.patientEntry.map(hi => {
          return <PatientEntry patientEntry={hi} key={hi._id}/>;
     })
-  }  
+  }
     render(){
         return(     
              <table className="table">
@@ -87,7 +87,7 @@ export default class createSympotom extends Component {
               </thead>
               <tbody>
                 {this.psList()}
-              </tbody>                        
+              </tbody>    
             </table>  
        
         )
