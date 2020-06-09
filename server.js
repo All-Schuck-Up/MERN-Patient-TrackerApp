@@ -12,13 +12,13 @@ app.use(cors());
 app.use(express.json());
 
 // Routes (making app modular)
-const mainRoutes = require('./routes');
-const patientRoutes = require('./routes/patient/patient');
-const patientEntryRoutes = require('./routes/patient/patientEntry');
+const mainRoutes = require('./backend/routes');
+const patientRoutes = require('./backend/routes/patient/patient');
+const patientEntryRoutes = require('./backend/routes/patient/patientEntry');
 //const patientEntryRoutes = require('./routes/patient/PatientSymptomEntrys');
-const providerRoutes = require('./routes/provider/provider');
-const immediateAttnRoutes = require('./routes/provider/immediateAttention');
-const alert = require('./routes/provider/alert')
+const providerRoutes = require('./backend/routes/provider/provider');
+const immediateAttnRoutes = require('./backend/routes/provider/immediateAttention');
+const alert = require('./backend/routes/provider/alert');
 
 // middleware for all routes
 app.use('/', mainRoutes);
@@ -26,9 +26,9 @@ app.use('/', patientRoutes);
 app.use('/', patientEntryRoutes);
 app.use('/', providerRoutes);
 app.use('/', immediateAttnRoutes);
-app.use('/', alert)
-app.use('/users/user', require('./routes/users/user'));
-app.use('/users/auth', require('./routes/users/auth'));
+app.use('/', alert);
+app.use('/users/user', require('./backend/routes/users/user'));
+app.use('/users/auth', require('./backend/routes/users/auth'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
