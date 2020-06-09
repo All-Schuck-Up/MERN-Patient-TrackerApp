@@ -13,7 +13,7 @@ class PatientImmediateAtt extends React.Component {
         return(
             <div className="PatientImmediateAtt">
                 <Row className="rowImmediateAtt">
-                <Col xs={7}><p className="PatientImmediateAttComponent">Patient {this.props.patientID} requested an immediate attention</p></Col>
+                <Col xs={7}><p className="PatientImmediateAttComponent">Patient {this.props.lastName} requested an immediate attention</p></Col>
                 <Col><form action={patientPageURL} method="get" label="hello">
                 <Button className="PatientImmediateAttComponent" color="primary">Check</Button>
                 </form></Col>

@@ -5,6 +5,10 @@ const ImmediateAttention = new mongoose.Schema({
         type: String,
         required: true
     },
+    lastName: {
+        type: String,
+        required: true
+    },
     checked: {
         type: Boolean,
         default: false
