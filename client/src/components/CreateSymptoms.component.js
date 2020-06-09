@@ -5,7 +5,7 @@ import UpdateDialog from './UpdateDialog.component';
 import { Button } from 'reactstrap';
 
 
-//implemented as functional React component
+//implemented as function React component
 const PatientEntry = props => (
   <tr>
                 <td> {props.patientEntry.date.substring(0,10)}</td>
@@ -50,6 +50,8 @@ export default class createSympotom extends Component {
     }
     componentDidMount() {
         axios.get('http://localhost:5000/patient/' + this.props.patientId)
+       //axios.get('http://localhost:5000/patient/' + this.props.match.params.patientId)
+        
         .then(res => {
             console.log(res);
             this.setState({     
@@ -67,8 +69,7 @@ export default class createSympotom extends Component {
                 comment: res.data.patientEntry.map(el=>el.comment),
                 doctorNote: res.data.patientEntry.map(el=>el.doctorNote),
                 immediateAttention: res.data.patientEntry.map(el=>el.immediateAttention.toString()),
-                updateNote:
-                res.data.patientEntry.map(el=>el.updateNote)
+                updateNote: res.data.patientEntry.map(el=>el.updateNote)
 
             });
         })
@@ -145,7 +146,7 @@ export default class createSympotom extends Component {
         <div>
             <Link to={"/update/"+this.state.patientEntry._id}>edit last entry</Link> | <a href="#" onClick={() => { this.state.deletePatientEntry(this.state.patientEntry._id) }}>delete</a>
          </div>
-        <UpdateDialog />
+       <UpdateDialog patientEntry={this.props.patientEntry}/>
        </div>
         )
     }
