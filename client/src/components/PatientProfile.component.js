@@ -1,20 +1,6 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import CreateSymptoms from './CreateSymptoms.component';
-
-const PatientEntry = props => (
-  <tr>
-    <td>{props.patientEntry.form}</td>
-    <td>{props.patientEntry.additionalNote}</td>
-    <td>{props.patientEntry.doctorNote}</td>
-    <td>{props.patientEntry.immediateAttention}</td>
-    <td>{props.patientEntry.entryDate}</td>
-    <td>
-      <Link to={"/edit/"+props.patientEntry._id}>edit</Link> | <a href="#" onClick={() => { props.deletePatientEntry(props.patientEntry._id) }}>delete</a>
-    </td>
-  </tr>
-)
 
 export default class PatientProfile extends Component{ 
    constructor(props){

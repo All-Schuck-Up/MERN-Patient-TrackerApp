@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const PatientEntry = props => (
   <tr>
-                <td> {props.patientEntry.date.substring(0,10)}</td>
+                <td width="120px"> {props.patientEntry.date.substring(0,10)}</td>
                 <td> {props.patientEntry.symptom1}</td>
                 <td> {props.patientEntry.symptom2}</td>
                 <td> {props.patientEntry.symptom3}</td>
@@ -69,21 +69,6 @@ export default class createSympotom extends Component {
     })
   }  
     render(){
-       
-        
-        const F= 
-              <tr>
-                <td> {this.state.date[0]}</td>
-                <td> {this.state.symptom1[0]}</td>
-                <td> {this.state.symptom2[0]}</td>
-                <td> {this.state.symptom3[0]}</td>
-                <td> {this.state.symptom4[0]}</td>
-                <td> {this.state.temp[0]}</td>
-                <td> {this.state.comment[0]}</td>
-                <td> {this.state.doctorNote[0]}</td>
-                <td> {this.state.immediateAttention[0]}</td>  
-              </tr>                        
-           
         return(     
              <table className="table">
               <thead className="thead-light">

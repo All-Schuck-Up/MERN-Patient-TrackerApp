@@ -74,4 +74,19 @@ router.route('/patientEntry/update/:id').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/patientEntry/addDoctorNote/:id').put((req, res) => {
+    PatientEntry.findById(req.params.id)
+        .then(entry => {
+            if(req.body.isDoctor) {
+            entry.patientEntry[req.body.number].doctorNote = req.body.doctorNote;
+            entry.save()
+                .then(() => res.json('Doctor Note Updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));}
+            else {
+                res.json("header if statement returned false")
+            }
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;
