@@ -5,11 +5,12 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   //LOGIN_FAIL,
+  LOGOUT,
 } from '../actions/types';
 
 const initialState = {
   token: localStorage.getItem('token'),
-  isAuthenticated: null,
+  isAuthenticated: false,
   loading: true,
   user: null,
 };
@@ -40,6 +41,7 @@ export default function (state = initialState, action) {
         loading: false,
       };
     case AUTH_ERROR:
+    case LOGOUT:
       return {
         ...state,
         token: null,
