@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Link, Dialog } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import axios from 'axios';
 import UpdateDialog from './UpdateDialog.component';
-import { Button } from 'reactstrap';
+//import { Button } from 'reactstrap';
 
 
-//implemented as function React component
+//implemented as a function React component
 const PatientEntry = props => (
   <tr>
                 <td> {props.patientEntry.date.substring(0,10)}</td>
@@ -76,24 +76,16 @@ export default class createSympotom extends Component {
         .catch((error) => {
             console.log(error);
          }) 
-        
-//        axios.get('http://localhost:5000/patientEntry/5ecaabd07dfcc538bce811fc')
-//        .then(res => {
-//            console.log(res);
-//        this.setState({
-//            patientEntry: res.data.map(el=>el.doctorNote)});
-//        })
-//        .catch((error) => {
-//            console.log(error);
-//      })   
-        
+       
     }
+    
+    //based on delete 
     updatePatientEntry(id){
-    axios.put('http://localhost:5000/patientEntry/update/id')
+    axios.put('http://localhost:5000/patientEntry/update/'+ //this.props.match.params.id)
+              this.props.patientId)
         .then(res => {
             console.log(res.data);
         this.setState({
-            //patientEntry: res.data.map(el=>el.doctorNote)});
             patientEntry: this.state.patientEntry.filter((el=>el._id === id) && (el=>el.date === this.state.date))
         });
         })
@@ -109,18 +101,18 @@ export default class createSympotom extends Component {
     render(){
        
         
-        const F= 
-              <tr>
-                <td> {this.state.date[0]}</td>
-                <td> {this.state.symptom1[0]}</td>
-                <td> {this.state.symptom2[0]}</td>
-                <td> {this.state.symptom3[0]}</td>
-                <td> {this.state.symptom4[0]}</td>
-                <td> {this.state.temp[0]}</td>
-                <td> {this.state.comment[0]}</td>
-                <td> {this.state.doctorNote[0]}</td>
-                <td> {this.state.immediateAttention[0]}</td>  
-              </tr>                        
+//        const F= 
+//              <tr>
+//                <td> {this.state.date[0]}</td>
+//                <td> {this.state.symptom1[0]}</td>
+//                <td> {this.state.symptom2[0]}</td>
+//                <td> {this.state.symptom3[0]}</td>
+//                <td> {this.state.symptom4[0]}</td>
+//                <td> {this.state.temp[0]}</td>
+//                <td> {this.state.comment[0]}</td>
+//                <td> {this.state.doctorNote[0]}</td>
+//                <td> {this.state.immediateAttention[0]}</td>  
+//              </tr>                        
            
         return(   
             <div>
@@ -141,13 +133,12 @@ export default class createSympotom extends Component {
               </thead>
               <tbody>
                 {this.psList()}
-              </tbody>                        
+              </tbody>
             </table>  
-        <div>
-            <Link to={"/update/"+this.state.patientEntry._id}>edit last entry</Link> | <a href="#" onClick={() => { this.state.deletePatientEntry(this.state.patientEntry._id) }}>delete</a>
-         </div>
-       <UpdateDialog patientEntry={this.props.patientEntry}/>
+       <UpdateDialog patientEntry={this.state.patientEntry}/>
        </div>
         )
     }
 }
+
+//<Link to={"/update/"+this.state.patientEntry._id}>edit last entry</Link> | <a href="#" onClick={() => { this.state.deletePatientEntry(this.state.patientEntry._id) }}>delete</a>

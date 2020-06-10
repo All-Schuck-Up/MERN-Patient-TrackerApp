@@ -35,6 +35,7 @@ export default class createSympotom extends Component {
       comment: '',
       doctorNote:'none',
       immediateAttention: false,
+      updateNote: '',
       formErrors: { 
         valid : "Please enter a valid number",
         highTemp : "This is a high temperature. We will create an alert for your doctor",
