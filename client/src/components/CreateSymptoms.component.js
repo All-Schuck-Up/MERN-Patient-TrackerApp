@@ -28,7 +28,7 @@ export default class createSympotom extends Component {
     constructor() {
         super();
         
-        this.updatePatientEntry = this.updatePatientEntry.bind(this)
+  //      this.updatePatientEntry = this.updatePatientEntry.bind(this)
         this.state = {
             _id : '',
             date: '',
@@ -78,7 +78,7 @@ export default class createSympotom extends Component {
          }) 
        
     }
-    
+ /*   
     //based on delete 
     updatePatientEntry(id){
     axios.put('http://localhost:5000/patientEntry/update/'+ //this.props.match.params.id)
@@ -92,10 +92,12 @@ export default class createSympotom extends Component {
         .catch((error) => {
             console.log(error);
       })   
-    }
+    }*/
     psList(){
         return this.state.patientEntry.map(hi => {
-         return <PatientEntry patientEntry={hi} updatePatientEntry={this.updatePatientEntry} key={hi._id}/>;
+         return <PatientEntry patientEntry={hi} 
+            //updatePatientEntry={this.updatePatientEntry}
+            key={hi._id}/>;
     })
   }  
     render(){

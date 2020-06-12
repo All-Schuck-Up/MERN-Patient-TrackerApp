@@ -71,7 +71,7 @@ const PatientSchema = new mongoose.Schema({
         type: Boolean,
       },
       updateNote: {
-        type: String,
+        type: String, 
       },
     },
   ],

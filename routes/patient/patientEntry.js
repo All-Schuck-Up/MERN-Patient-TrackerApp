@@ -48,7 +48,8 @@ router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
         temp : req.body.temp,
         comment : req.body.comment,
         doctorNote : req.body.doctorNote,
-        immediateAttention : req.body.immediateAttention};
+        immediateAttention : req.body.immediateAttention,
+        updateNote : req.body.updateNote};
     PatientEntry.findById(req.params.id)
     .then(patientEntries => {
         patientEntries.patientEntry.push(formElement)
@@ -62,14 +63,15 @@ router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
 });
 
 
+//update patient update note by index
 router.route('/patientEntry/update/:id').put((req, res) => {
     
     //const dialogInput = {updateNote : req.body.updateNote};
     PatientEntry.findById(req.params.id)
     //PatientEntry.find({"date": req.params.date})
         .then(entry => {
-    entry.patientEntry[entry.patientEntry.length-1].updateNote = req.body.updateNote;
-            patientEntry.save()
+            entry.patientEntry[entry.patientEntry.length-1].updateNote = req.body.updateNote;
+                   entry.save()
                 .then(() => res.json('Patient Entry Note Updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
