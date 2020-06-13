@@ -63,7 +63,7 @@ function App() {
           <div className='container'>
             <Route exact path='/patient/login/:id'>
               <Navbar />
-              <CreateSymptom patientId="5ecaabd07dfcc538bce811fc"/>
+              <CreateSymptom patientId="5ecaabd07dfcc538bce811fc" lastName="temp user name"/>
             </Route>
           </div>
           <div className='container'>
