@@ -69,7 +69,7 @@ render() {
                
           <CreateSymptoms patientId='5ecaabd07dfcc538bce811fc'/> 
              <div>Last Patient Note from old schema: {patientS}</div>
-             { this.props.isDoctor ? 
+             {this.props.isDoctor ? 
                 <div >
                     <Link to="/patient/doctorNotes" className="nav-link">
                     <Button>Add a note to this patient's profile</Button>

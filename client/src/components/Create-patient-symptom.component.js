@@ -24,6 +24,7 @@ export default class createSympotom extends Component {
     super(props);
 
     this.onSubmit = this.onSubmit.bind(this);
+    this.resetForm = this.resetForm.bind(this);
 //    this.handleChangeTemp = this.handleChangeTemp.bind(this);
     
     this.state = {
@@ -41,11 +42,29 @@ export default class createSympotom extends Component {
         tooHighTemp: "too high! the highest recorded temperature is 115F by 52yo Willie Jones, maybe typo?"
       }
     };
-    this.baseState = this.state
+    this.baseState = {
+      symptom1: '',
+      symptom2: '',
+      symptom3: '',
+      symptom4: '',
+      temp: '',
+      comment: '',
+      updateNote:'none',
+      immediateAttention: false}
   }
 
-  resetForm = () => {
+  resetForm() {
     this.setState(this.baseState)
+    // this.setState({
+    //   symptom1: '',
+    //   symptom2: '',
+    //   symptom3: '',
+    //   symptom4: '',
+    //   temp: '',
+    //   comment: '',
+    //   updateNote:'none',
+    //   immediateAttention: false
+    // })
   }
 
 
@@ -238,10 +257,11 @@ export default class createSympotom extends Component {
                 <div className="form-group">
                   {" "}<Button className="btn btn-primary" onClick={() => this.setState({ immediateAttention: true })}>Mark as Immediate Attention</Button>
                   {" "}<Button className="btn btn-primary" type="submit" >Save Record</Button>
-                  {" "}<Button className="btn btn-primary" type="button" name="cancel" onClick={this.resetForm}>Cancel</Button>
+                  {" "}
 
                 </div>
               </form>
+              <Button className="btn btn-primary" type="button" name="cancel" onClick={this.resetForm}>Cancel</Button>
             </Card>
           </Col>
           <Col sm="4">

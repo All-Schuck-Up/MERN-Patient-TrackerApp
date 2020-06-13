@@ -98,4 +98,16 @@ router.route('/doctorNotes/:id').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/patientEntry/addUpdateNote/:id').put((req, res) => {
+    PatientEntry.findById(req.params.id)
+        .then(entry => {
+            entry.patientEntry[entry.patientEntry.length - 1].updateNote = req.body.updateNote;
+            entry.save()
+                .then(() => res.json('Doctor Note Updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));}
+            
+        )
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;
