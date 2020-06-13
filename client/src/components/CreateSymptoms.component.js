@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component }from 'react';
 //import { Link } from 'react-router-dom';
 import axios from 'axios';
 import UpdateDialog from './UpdateDialog.component';
@@ -14,6 +14,7 @@ const PatientEntry = props => (
                 <td> {props.patientEntry.symptom3}</td>
                 <td> {props.patientEntry.symptom4}</td>
                 <td> {props.patientEntry.temp}</td>
+                <td> {props.patientEntry.media}</td>
                 <td> {props.patientEntry.comment}</td>
                 <td> {props.patientEntry.doctorNote}</td>
                 <td> {props.patientEntry.immediateAttention.toString()}</td>
@@ -44,8 +45,9 @@ export default class createSympotom extends Component {
             entry:'',
             patientEntry:[],
             patient:[],
-            object:[]       
-//            media: ''
+            object:[],       
+            media: '',
+            visible:true
         }
     }
     componentDidMount() {
@@ -55,10 +57,8 @@ export default class createSympotom extends Component {
         .then(res => {
             console.log(res);
             this.setState({     
-         // patientEntry:res.data,  
-          patientEntry: res.data.patientEntry,
-         // patientEntry: res.data.patientEntry.data,  
-              
+         
+             patientEntry: res.data.patientEntry,
                 _id : res.data.patientEntry.map(el => el._id),
                 date:res.data.patientEntry.map(el=>el.date),
                 symptom1: res.data.patientEntry.map(el=>el.symptom1),
@@ -69,7 +69,8 @@ export default class createSympotom extends Component {
                 comment: res.data.patientEntry.map(el=>el.comment),
                 doctorNote: res.data.patientEntry.map(el=>el.doctorNote),
                 immediateAttention: res.data.patientEntry.map(el=>el.immediateAttention.toString()),
-                updateNote: res.data.patientEntry.map(el=>el.updateNote)
+                updateNote: res.data.patientEntry.map(el=>el.updateNote),
+                media:res.data.patientEntry.map(el=>el.media)
 
             });
         })
@@ -78,21 +79,6 @@ export default class createSympotom extends Component {
          }) 
        
     }
- /*   
-    //based on delete 
-    updatePatientEntry(id){
-    axios.put('http://localhost:5000/patientEntry/update/'+ //this.props.match.params.id)
-              this.props.patientId)
-        .then(res => {
-            console.log(res.data);
-        this.setState({
-            patientEntry: this.state.patientEntry.filter((el=>el._id === id) && (el=>el.date === this.state.date))
-        });
-        })
-        .catch((error) => {
-            console.log(error);
-      })   
-    }*/
     psList(){
         return this.state.patientEntry.map(hi => {
          return <PatientEntry patientEntry={hi} 
@@ -100,6 +86,12 @@ export default class createSympotom extends Component {
             key={hi._id}/>;
     })
   }  
+ 
+
+onDismiss = () => {
+    this.setstate({visible:false})
+};
+
     render(){
        
         
@@ -127,6 +119,7 @@ export default class createSympotom extends Component {
                   <th>Trouble Breathing</th>
                   <th>Heigh Fever</th>
                   <th>Temp</th>
+                  <th>Media</th>
                   <th>Additional Note</th>
                   <th>Doctor Note</th>
                   <th>Immediate Attention</th>
@@ -137,10 +130,10 @@ export default class createSympotom extends Component {
                 {this.psList()}
               </tbody>
             </table>  
-       <UpdateDialog patientEntry={this.state.patientEntry}/>
+       <UpdateDialog patientEntry={this.state.patientEntry} patientId={this.props.patientId} />
+         
        </div>
+
         )
     }
 }
-
-//<Link to={"/update/"+this.state.patientEntry._id}>edit last entry</Link> | <a href="#" onClick={() => { this.state.deletePatientEntry(this.state.patientEntry._id) }}>delete</a>

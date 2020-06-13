@@ -1,10 +1,9 @@
-//import React from 'react';
 import React, { Component } from 'react';
 import axios from 'axios'; 
 //import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
+//import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -18,10 +17,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default class FormDialog extends Component {
     constructor(props) {
         super(props);
-        this.handleChangeUpdateNote=this.handleChangeUpdateNote.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        
+       
         this.state = {
             patientEntry:[],
             updateNote:'',
@@ -53,7 +50,7 @@ export default class FormDialog extends Component {
 //       var today = new Date().toISOString().substring(0,10);
 //       alert('from handleChangeUpdateNote  was submitted:' + 
 //            today)
-//             
+             
        this.setState({
            updateNote: e.target.value})
            //updateNote: this.state.updateNote})
@@ -66,13 +63,9 @@ export default class FormDialog extends Component {
    }
     
 
-    handleSubmit(event) {      
-        alert('This was submitted and to this entry date: ' + this.state.updateNote + this.props.patientEntry[this.props.patientEntry.length-1].date.substring(0,10));
-               
-        //if(this.state.patientEntry.date === this.state.date){
-        //if(this.state.date === this.state.patientEntry.date){   
-        //if(this.props.patientEntry.date === D){ 
-     if(this.isToday(this.props.patientEntry[this.props.patientEntry.length-1].date.substring(0,10))){
+    handleSubmit(event) { 
+        alert('You have submitted following to this entry date: ' + this.state.updateNote + " "+ this.props.patientEntry[this.props.patientEntry.length-1].date.substring(0,10));
+        if(this.isToday(this.props.patientEntry[this.props.patientEntry.length-1].date.substring(0,10))){
      axios.put('http://localhost:5000/patientEntry/update/'+this.props.patientId,
              {
          updateNote: this.state.updateNote
@@ -83,102 +76,46 @@ export default class FormDialog extends Component {
         .catch((error) => {
             console.log(error);
         })   
-//    } else {
-//      console.error("It is too late to add ");
+
     }
     }
        
  render() {
   return (
-       <> 
-      <Button variant="outlined" className="pull-right" color="primary" size="sm" onClick={this.handleClickOpen}>
-        Update Last Entry
-      </Button>
-      <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Update</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Due to legal obligations you can not change current data but you can enter a note here about it. 
-          </DialogContentText>
-            <form onSubmit={this.handleSubmit}>
-              <TextField
-                autoFocus
-                multiline
-                rows="2"
-                margin="dense"
-                name="updateNote"
-                label="Update Note"
-                id="updateNote"
-                type="text"
-                fullWidth
-                value={this.updateNote}
-                onChange={this.handleChangeUpdateNote}
-              />        
-          <Button color="primary" onClick={this.handleClose} >
-            Cancel
-          </Button>{'  '}
-          <Button color="primary" value="Submit" type="submit" onClick={this.handleClose} >
-            Submit
+        <> 
+          <Button variant="outlined" className="pull-right" color="primary" size="sm" bordered onClick={this.handleClickOpen}>
+            Update Last Entry
           </Button>
-          </form>     
-        </DialogContent>
-        
-      </Dialog>
+          <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+            <DialogTitle id="form-dialog-title">Update</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Due to legal obligations you can not change current data but you can enter a note here about it. 
+              </DialogContentText>
+                <form onSubmit={this.handleSubmit}>
+                  <TextField
+                    autoFocus
+                    multiline
+                    rows="2"
+                    margin="dense"
+                    name="updateNote"
+                    label="Update Note"
+                    id="updateNote"
+                    type="text"
+                    fullWidth
+                    value={this.updateNote}
+                    onChange={this.handleChangeUpdateNote}
+                  />        
+                  <Button color="primary" onClick={this.handleClose} >
+                    Cancel
+                  </Button>{'  '}
+                  <Button color="primary" value="Submit" type="submit"    onClick={this.handleClose} >
+                    Submit
+                  </Button>
+                </form>     
+            </DialogContent>      
+          </Dialog>
        </> 
   );
 }
 }
-///for this render use left submit inside dialog 
-
-//render() {
-//  return (
-//       <> 
-//      <Button variant="outlined" className="pull-right" color="primary" size="sm" onClick={this.handleClickOpen}>
-//        Update Last Entry
-//      </Button>
-//      <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-//        <DialogTitle id="form-dialog-title">Update</DialogTitle>
-//        <DialogContent>
-//          <DialogContentText>
-//            Due to legal obligations you can not change current data but you can enter a note here about it. 
-//          </DialogContentText>
-//            <form onSubmit={this.handleSubmit}>
-//              <TextField
-//                autoFocus
-//                multiline
-//                rows="3"
-//                margin="dense"
-//                name="updateNote"
-//                label="Update Note"
-//                id="updateNote"
-//                type="text"
-//                fullWidth
-//                value={this.updateNote}
-//                onChange={this.handleChangeUpdateNote}
-//              />
-//           <input type="submit" value="Submit" />
-//            </form>
-//                  <form onSubmit={this.handleSubmit}>
-//                      <textarea 
-//                        id="updateNote" 
-//                        name="updateNote"
-//                        value={this.updateNote}
-//                        onChange={this.handleChangeUpdateNote}
-//                        rows="3" cols="33">
-//                      </textarea>
-//                    <input type="submit" value="Submit" />
-//                   </form>
-//        </DialogContent>
-//        <DialogActions>
-//          <Button color="primary" onClick={this.handleClose} >
-//            Cancel
-//          </Button>
-//          <Button color="primary" value="Submit" type="submit" onClick={this.handleClose} >
-//            Submit
-//          </Button>
-//        </DialogActions>
-//      </Dialog>
-//       </> 
-//  );
-//}
-//}
