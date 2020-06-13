@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { Card, Button, CardTitle, CardText, Row, Col, UncontrolledCollapse, CardBody } from 'reactstrap';
 
 //import PatientProfile from "./PatientProfile.component";
 
@@ -36,6 +36,7 @@ export default class createSympotom extends Component {
       comment: '',
       updateNote:'none',
       immediateAttention: false,
+      doctorNoteArray: [],
       formErrors: { 
         valid : "Please enter a valid number",
         highTemp : "This is a high temperature. We will create an alert for your doctor",
@@ -52,6 +53,15 @@ export default class createSympotom extends Component {
       updateNote:'none',
       immediateAttention: false}
   }
+
+  async componentDidMount() {
+    //retrieves all the doctor notes
+    axios.get('http://localhost:5000/doctorNotes/' + this.props.patientId)
+        .then(response => {
+            console.log(response);
+            this.setState({doctorNoteArray : response.data});
+        });
+  };
 
   resetForm() {
     this.setState(this.baseState)
@@ -177,6 +187,12 @@ export default class createSympotom extends Component {
 
   render() {
     const { formErrors } = this.state;
+    const doctorNotes = this.state.doctorNoteArray.map(elem => {
+      return(
+      <Card body key={elem}>
+          <CardText>{elem}</CardText>
+       </Card>)
+  })
     return (
 
       <div>
@@ -266,12 +282,23 @@ export default class createSympotom extends Component {
           </Col>
           <Col sm="4">
             <Card >
-              <CardTitle > <h3 className="text-center">Latest Doctor Note</h3></CardTitle>
-              <CardText> On click doctors note from patient profile will be displayed
-              On click doctors note from patient profile
-              </CardText>
-              <Button >View</Button>
+              <CardTitle > <h3 className="text-center">Latest Doctor Notes</h3></CardTitle>
+              <CardText> 
 
+              <div>
+                <Button className="viewAllDoctorNotesButton" color="primary" id="toggler" style={{ marginBottom: '1rem' }}>View All Doctor Notes</Button>
+                  <UncontrolledCollapse toggler="#toggler">
+                    <Card>
+                      <CardBody>
+                        {doctorNotes}
+                      </CardBody>
+                    </Card>
+                  </UncontrolledCollapse>
+              </div>
+
+                <p>Latest Note: {this.state.doctorNoteArray[this.state.doctorNoteArray.length - 1]}</p>
+
+              </CardText>
             </Card>
           </Col>
         </Row>

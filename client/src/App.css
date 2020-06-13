@@ -65,3 +65,6 @@
 .patientSearch {
   display:inline-block;
 }
+.viewAllDoctorNotesButton {
+  width: 100%
+}
