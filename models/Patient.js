@@ -70,6 +70,9 @@ const PatientSchema = new mongoose.Schema({
       immediateAttention: {
         type: Boolean,
       },
+      updateNote: {
+        type: String, 
+      },
     },
   ],
 });

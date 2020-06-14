@@ -65,3 +65,10 @@
 .patientSearch {
   display:inline-block;
 }
+
+.pull-left {
+  float: left !important;
+}
+.pull-right {
+  float: right !important;
+}

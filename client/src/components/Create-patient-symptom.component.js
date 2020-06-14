@@ -3,8 +3,6 @@ import axios from 'axios';
 
 import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 
-//import PatientProfile from "./PatientProfile.component";
-
 
 const isFormValid = ({ formErrors, ...rest }) => {
   let valid = true;
@@ -35,6 +33,7 @@ export default class createSympotom extends Component {
       comment: '',
       doctorNote:'none',
       immediateAttention: false,
+      updateNote: 'none',
       formErrors: { 
         valid : "Please enter a valid number",
         highTemp : "This is a high temperature. We will create an alert for your doctor",
@@ -59,7 +58,8 @@ export default class createSympotom extends Component {
       temp: this.state.temp,
       comment: this.state.comment,
       doctorNote:this.state.doctorNote,
-      immediateAttention: this.state.immediateAttention})
+      immediateAttention: this.state.immediateAttention,
+      updateNote: this.state.updateNote})   
      .then(res => console.log(res.data));
     
      //high temperature alert sent to the alert cluster database
@@ -128,6 +128,7 @@ export default class createSympotom extends Component {
   handleChangeAdditionalNote = (event) => {
     this.setState({comment: event.target.value});
   }
+  
   //on file select 
   // onMediaChange = event => {
   //   // Update the state 
