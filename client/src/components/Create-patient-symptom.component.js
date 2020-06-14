@@ -6,21 +6,7 @@ import { Progress } from "reactstrap";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const validate=(comment, symptom1, symptom2)=>{
-  // we are going to store errors for all fields
-  // in a signle array
-  const errors = [];
 
-  if (comment.length === 0) {
-    errors.push("Temprature can't be empty");
-  }
-
-  if (symptom1.length < 0) {
-    errors.push("Symptom should notbe empity");
-  }
-
-  return errors;
-}
 
 const isFormValid = ({ formErrors, ...rest }) => {
   let valid = true;
@@ -44,7 +30,7 @@ export default class createSympotom extends Component {
 
     this.state = {
       loaded: 0,
-      
+
       symptom1: "",
       symptom2: "",
       symptom3: "",
@@ -54,30 +40,33 @@ export default class createSympotom extends Component {
       doctorNote: "none",
       immediateAttention: false,
       media: "",
-      formErrors: "Please enter a valid number",
-    }
+      formErrors: {
+        valid: "Please enter a valid number",
+        highTemp:
+          "This is a high temperature. We will create an alert for your doctor",
+        tooHighTemp:
+          "too high! the highest recorded temperature is 115F by 52yo Willie Jones, maybe typo?",
+      },
+    };
     this.baseState = this.state;
   }
- 
-  handleChangeTemp = async (event) => {
+
+  handleChangeTemp = (event) => {
     let num = event.target.value;
-   // if (this.ValidateTemp(event)) {
-      this.setState({ temp: num });
-  //  }
+    this.setState({ temp: num });
   };
 
   handleChangeAdditionalNote = (event) => {
     this.setState({ comment: event.target.value });
   };
-
   isHighTemp(temp) {
     return temp > 99;
   }
 
-
   onFileChange = (event) => {
     var file = event.target.files[0];
     console.log(file);
+
     console.log(this.validateSize(event));
     if (this.validateSize(event) && this.validateMediaType(event)) {
       console.log(file);
@@ -88,7 +77,8 @@ export default class createSympotom extends Component {
     }
   };
 
-  onSubmit(e) {
+  
+   onSubmit = async (e) => { 
     //e.preventDefault();
 
     const symptom = new FormData();
@@ -103,7 +93,6 @@ export default class createSympotom extends Component {
     symptom.append("doctorNote", this.state.doctorNote);
     symptom.append("immediateAttention", this.state.immediateAttention);
     symptom.append("media", this.state.media);
-   
 
     if (isFormValid(this.state)) {
       axios
@@ -111,7 +100,6 @@ export default class createSympotom extends Component {
           "http://localhost:5000/patientEntry/add/" + this.props.patientId,
           symptom,
           {
-            //progress bar for image upload
             onUploadProgress: (ProgressEvent) => {
               this.setState({
                 loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,
@@ -119,18 +107,42 @@ export default class createSympotom extends Component {
             },
           }
         )
-        .then((res) => {
-          toast.success("Symptom Entered successfully");
-          //window.location = '/';
-        //  e.target.reset();
-        })
+        .then(res => { 
+          toast.success('upload success')
+      })
         .catch((err) => {
           toast.error("upload fail ");
         });
-    }
 
-    this.setState({ temp: "" });
+      if (this.isHighTemp(this.state.temp)) {
+        axios
+          .post("http://localhost:5000/alert/add", {
+            patientID: this.props.patientId,
+            alertMessage: "High fever - " + this.state.temp + "F",
+          })
+          .then((res) => console.log(res.data));
+      }
+      //symptoms alert sent to the alert cluster database
+      if (
+        this.state.symptom1 === "yes" ||
+        this.state.symptom2 === "yes" ||
+        this.state.symptom3 === "yes" ||
+        this.state.symptom4 === "yes"
+      ) {
+        axios
+          .post("http://localhost:5000/alert/add", {
+            patientID: this.props.patientId,
+            alertMessage: "One or more symptoms appeared",
+          })
+          .then((res) => console.log(res.data));
+      }
+
+      //window.location = "/";
+    } else {
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+    }
   }
+
   validateMediaType = (event) => {
     //getting file object
     let files = event.target.files;
@@ -161,7 +173,7 @@ export default class createSympotom extends Component {
     }
     return true;
   };
-  
+
   //Image Size validator
   validateSize = (event) => {
     let file = event.target.files[0];
@@ -177,67 +189,24 @@ export default class createSympotom extends Component {
     return true;
   };
 
-  
-//  // Temp Validator
-//   ValidateTemp = (event) => {
-//     let temp = event.target.value;
-//     let errors = {};
-//     let formIsValid = true;
-//     if (!this.state.temp || this.state.temp.length < 2) {
-//       errors.name = "Please Enter a valid number...";
-//       toast.error(`${errors.name}`, {
-//         position: toast.POSITION.TOP_LEFT,
-//       });
-//       formIsValid = false;
-//     }
-
-    
-//   //   this.setState({
-//   //     errors: errors,
-//   //  });
-  
-//   }
-  
-
   resetForm(e) {
-   // e.preventDefault();
+    // e.preventDefault();
     this.props.resetForm();
   }
   resetForm = () => {
- 
-     this.setState(this.baseState);
-   };
-  //  cancelCourse = () => { 
-  //   this.setState({
-  //     symptom1: "",
-  //     symptom2: "",
-  //     symptom3: "",
-  //     symptom4: "",
-  //     temp: "",
-  //     //required:""
-  //   });
-  // }
-
+    this.setState(this.baseState);
+  };
 
   render() {
-    
-    
     const { formErrors } = this.state;
-  
+
     return (
       <div>
         <Row>
           <Col sm="8">
             <Card body>
               <form className="form-horizontal" onSubmit={this.onSubmit}>
-             
-                <h3 className="text-center">Patient Symptom Entry</h3>
-                {this.state.errorMessage && (
-                  <h3 className="error"> {this.state.errorMessage} </h3>
-                )}
-
-                <div class="form-group">
-                  <ToastContainer
+              { <ToastContainer
                     position="top-center"
                     autoClose={10000000}
                     hideProgressBar={false}
@@ -247,8 +216,16 @@ export default class createSympotom extends Component {
                     pauseOnFocusLoss
                     draggable
                     pauseOnHover
-                    autoDismiss={false}
-                  />
+                    //autoDismiss={false}
+                  /> }
+                <h3 className="text-center">Patient Symptom Entry</h3>
+               
+
+                <div class="form-group">
+                <div class="form-group">
+   
+</div>
+             
                 </div>
                 <div className="form-group">
                   <label>Trouble breathing ? </label>
@@ -259,8 +236,7 @@ export default class createSympotom extends Component {
                     type="radio"
                     value="yes"
                     name="symptom1"
-                    onClick={() => this.setState({ symptom1: "yes" },)}
-                  
+                    onClick={() => this.setState({ symptom1: "yes" })}
                   />{" "}
                   Yes {"  "}
                   <input
@@ -269,7 +245,7 @@ export default class createSympotom extends Component {
                     type="radio"
                     value="no"
                     name="symptom1"
-                    onClick={() => this.setState({ symptom1: "no" },)}
+                    onClick={() => this.setState({ symptom1: "no" })}
                   />{" "}
                   No {"  "}
                 </div>
@@ -277,13 +253,12 @@ export default class createSympotom extends Component {
                   <label>A dry cough ? </label>
                   {"      "}
                   <input
-                    className="spaceInput" 
+                    className="spaceInput"
                     required
                     type="radio"
                     value="yes"
                     name="symptom2"
-                    onClick={() => this.setState({ symptom2: "yes" },)}
-                    
+                    onClick={() => this.setState({ symptom2: "yes" })}
                   />{" "}
                   Yes {"  "}
                   <input
@@ -293,7 +268,6 @@ export default class createSympotom extends Component {
                     value="no"
                     name="symptom2"
                     onClick={() => this.setState({ symptom2: "no" })}
-                    
                   />{" "}
                   No {"  "}
                 </div>
@@ -308,7 +282,6 @@ export default class createSympotom extends Component {
                     value="yes"
                     name="symptom3"
                     onClick={() => this.setState({ symptom3: "yes" })}
-                    
                   />{" "}
                   Yes {"  "}
                   <input
@@ -318,7 +291,6 @@ export default class createSympotom extends Component {
                     value="no"
                     name="symptom3"
                     onClick={() => this.setState({ symptom3: "no" })}
-                    
                   />{" "}
                   No {"  "}
                 </div>
@@ -332,7 +304,6 @@ export default class createSympotom extends Component {
                     value="yes"
                     name="symptom4"
                     onClick={() => this.setState({ symptom4: "yes" })}
-                    
                   />{" "}
                   Yes {"  "}
                   <input
@@ -342,24 +313,27 @@ export default class createSympotom extends Component {
                     value="no"
                     name="symptom4"
                     onClick={() => this.setState({ symptom4: "no" })}
-                    
                   />{" "}
                   No {"  "}
                 </div>
                 <div className="form-group">
                   <label>Temperature:</label> {"    "}
                   <textarea
-                                
-                 
                     className="spaceInput"
-                    required
-                    name="temp"
                     onChange={this.handleChangeTemp}
                     rows={1}
                   />{" "}
                   {"    "}
                   {this.state.temp < 90 && this.state.temp > 0 && (
-                    <span className="errorMessage">{formErrors}</span>
+                    <span className="errorMessage">{formErrors.valid}</span>
+                  )}
+                  {this.isHighTemp(this.state.temp) && (
+                    <span className="errorMessage">{formErrors.highTemp}</span>
+                  )}
+                  {this.state.temp > 114 && (
+                    <span className="errorMessage">
+                      {formErrors.tooHighTemp}
+                    </span>
                   )}
                 </div>
 
@@ -367,7 +341,6 @@ export default class createSympotom extends Component {
                   <label>Additional Note : </label>
                   <textarea
                     className="spaceInputNote"
-                    
                     name="additionalNote"
                     rows={4}
                     onChange={this.handleChangeAdditionalNote}
@@ -380,9 +353,15 @@ export default class createSympotom extends Component {
                   <input type="file" onChange={this.onFileChange} />
                 </div>
                 <div class="form-group">
-                  <Progress max="100" color="success" value={this.state.loaded}>
-                    {Math.round(this.state.loaded, 2)}%
-                  </Progress>
+                  <div class="form-group">
+                    <Progress
+                      max="100"
+                      color="success"
+                      value={this.state.loaded}
+                    >
+                      {Math.round(this.state.loaded, 2)}%
+                    </Progress>
+                  </div>
                 </div>
                 <div className="form-group">
                   {" "}
@@ -392,16 +371,18 @@ export default class createSympotom extends Component {
                   >
                     Mark as Immediate Attention
                   </Button>{" "}
-                  
                   <Button className="btn btn-primary" type="submit">
                     Save Record
                   </Button>{" "}
-            
-                  <button type="reset"  className="btn btn-secondary" onClick={() => this.resetForm()}>Cancel</button> 
-                  
+                  <button
+                    type="reset"
+                    className="btn btn-secondary"
+                    onClick={() => this.resetForm()}
+                  >
+                    Cancel
+                  </button>
                 </div>
               </form>
-         
             </Card>
           </Col>
           <Col sm="4">
