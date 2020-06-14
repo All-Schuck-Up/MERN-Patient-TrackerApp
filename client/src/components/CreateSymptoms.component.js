@@ -5,6 +5,8 @@ import UpdateDialog from './UpdateDialog.component';
 //import { Button } from 'reactstrap';
 
 
+
+
 //implemented as a function React component
 const PatientEntry = props => (
   <tr>
@@ -21,7 +23,7 @@ const PatientEntry = props => (
                 <td> {props.patientEntry.updateNote}</td>
             
   </tr>
-    
+  
     
 )
 //implemented as class component

@@ -11,6 +11,20 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';	
+
+const validate=(updateNote)=>{
+  const errors = [];
+  if (updateNote.length === 0) {
+    errors.push("You have not submitted notification updating your last symptom");
+  }
+  if (updateNote.length > 150) {
+    errors.push("Too long notification.");
+  }
+  return errors;
+}
+
 
 
 
@@ -65,16 +79,19 @@ export default class FormDialog extends Component {
 
     handleSubmit(event) { 
         alert('You have submitted following to this entry date: ' + this.state.updateNote + " "+ this.props.patientEntry[this.props.patientEntry.length-1].date.substring(0,10));
+        
         if(this.isToday(this.props.patientEntry[this.props.patientEntry.length-1].date.substring(0,10))){
      axios.put('http://localhost:5000/patientEntry/update/'+this.props.patientId,
              {
          updateNote: this.state.updateNote
              }) 
-        .then(res => {
+        .then((res) => {
+         toast.success("Updating note was entered successfully");
             console.log(res.res.data);
         })
-        .catch((error) => {
-            console.log(error);
+        .catch((err) => {
+            toast.error("Updating note was not saved!");
+            console.log(err);
         })   
 
     }
@@ -83,7 +100,7 @@ export default class FormDialog extends Component {
  render() {
   return (
         <> 
-          <Button variant="outlined" className="pull-right" color="primary" size="sm" bordered onClick={this.handleClickOpen}>
+          <Button variant="outlined" className="pull-right" color="primary" size="sm" border="5em" onClick={this.handleClickOpen}>
             Update Last Entry
           </Button>
           <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">

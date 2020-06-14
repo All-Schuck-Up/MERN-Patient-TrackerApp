@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import CreateSymptoms from './CreateSymptoms.component';
 
+
 export default class PatientProfile extends Component{ 
    constructor(props){
     super(props);
