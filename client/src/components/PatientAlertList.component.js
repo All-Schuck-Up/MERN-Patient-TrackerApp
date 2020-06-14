@@ -1,23 +1,34 @@
 import React from 'react';
-import PatientAlert from './PatientAlert.component';
+import AlertComponent from './PatientAlert.component';
+import axios from 'axios';
+import { Alert } from 'reactstrap';
 
-class PatientAlertList extends React.Component {
+class AlertList extends React.Component {
     constructor() {
         super();
         this.state = {
-            alertArray: ["Patient 1 alert", "Patient 2 alert", "Patient 3 alert", "Patient 4 alert"]
+            alertArray: []
         }
     }
+    async componentDidMount() {
+        axios.get('http://localhost:5000/alerts')
+            .then(response => {
+                console.log(response);
+                this.setState({alertArray : response.data});
+            });
+    };
     render() {
         const alert = this.state.alertArray.map((elem) => {
-            return(<PatientAlert alertMessage={elem} />)
+            return(<AlertComponent key={elem.date} objectID={elem._id} patientID={elem.patientID} alertMessage={elem.alertMessage} lastName={elem.lastName}/>)
         });
         return(
-            <div className="PatientAlertList">
+            
+            <div className="alertList">
+                <Alert color="danger">{this.state.alertArray.length === 0 ? 'No Alert' : 'Alerts!!!'}</Alert>
                 {alert}
             </div>
         )
     }
 }
 
-export default PatientAlertList
+export default AlertList

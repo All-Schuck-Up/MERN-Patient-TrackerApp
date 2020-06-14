@@ -27,10 +27,16 @@ const PatientSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
+
+//NO need for date here    
+//    date: {
+//        type: Date,
+//        default: Date.now
+//    },
+  assignedDoctor: {
+        type: String
+    },
+
   patientEntry: [
     {
       date: {
@@ -66,8 +72,13 @@ const PatientSchema = new mongoose.Schema({
       immediateAttention: {
         type: Boolean,
       },
+
       media: {
         type: String,
+
+      updateNote: {
+        type: String, 
+
       },
     },
   ],

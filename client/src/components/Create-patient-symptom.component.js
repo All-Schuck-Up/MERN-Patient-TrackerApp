@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+
 import { Card, Button, CardTitle, CardText, Row, Col } from "reactstrap";
 import { Progress } from "reactstrap";
 
@@ -11,7 +12,9 @@ import "react-toastify/dist/ReactToastify.css";
 const isFormValid = ({ formErrors, ...rest }) => {
   let valid = true;
   // validate form errors being empty
-  Object.values(formErrors).forEach((val) => {
+
+  Object.values(formErrors).forEach(val => {
+
     val.length < 0 && (valid = false);
   });
   // validate the form was filled out
@@ -24,6 +27,7 @@ const isFormValid = ({ formErrors, ...rest }) => {
 export default class createSympotom extends Component {
   constructor(props) {
     super(props);
+
     this.onFileChange = this.onFileChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     //this.resetForm = this.resetForm.bind(this);
@@ -40,13 +44,12 @@ export default class createSympotom extends Component {
       doctorNote: "none",
       immediateAttention: false,
       media: "",
-      formErrors: {
-        valid: "Please enter a valid number",
-        highTemp:
-          "This is a high temperature. We will create an alert for your doctor",
-        tooHighTemp:
-          "too high! the highest recorded temperature is 115F by 52yo Willie Jones, maybe typo?",
-      },
+          formErrors: { 
+        valid : "Please enter a valid number",
+        highTemp : "This is a high temperature. We will create an alert for your doctor",
+        tooHighTemp: "too high! the highest recorded temperature is 115F by 52yo Willie Jones, maybe typo?"
+      }
+
     };
     this.baseState = this.state;
   }
@@ -74,8 +77,7 @@ export default class createSympotom extends Component {
       this.setState({
         media: file,
       });
-    }
-  };
+
 
   
    onSubmit = async (e) => { 
@@ -113,36 +115,36 @@ export default class createSympotom extends Component {
         .catch((err) => {
           toast.error("upload fail ");
         });
-
-      if (this.isHighTemp(this.state.temp)) {
-        axios
-          .post("http://localhost:5000/alert/add", {
-            patientID: this.props.patientId,
-            alertMessage: "High fever - " + this.state.temp + "F",
-          })
-          .then((res) => console.log(res.data));
-      }
-      //symptoms alert sent to the alert cluster database
-      if (
-        this.state.symptom1 === "yes" ||
-        this.state.symptom2 === "yes" ||
-        this.state.symptom3 === "yes" ||
-        this.state.symptom4 === "yes"
-      ) {
-        axios
-          .post("http://localhost:5000/alert/add", {
-            patientID: this.props.patientId,
-            alertMessage: "One or more symptoms appeared",
-          })
-          .then((res) => console.log(res.data));
-      }
-
+ 
+    if(this.isHighTemp(this.state.temp)) {
+      axios.post('http://localhost:5000/alert/add', {
+        patientID : this.props.patientId,
+        lastName : this.props.lastName,
+	      alertMessage: "High fever - " + this.state.temp + "F"
+      }).then(res => console.log(res.data));
+     }
+      
+      
+      
+      /high temperature alert sent to the alert cluster database
+   
+     //symptoms alert sent to the alert cluster database
+     if(this.state.symptom1 === 'yes' || 
+        this.state.symptom2 === 'yes' || 
+        this.state.symptom3 === 'yes' || 
+        this.state.symptom4 === 'yes') {
+      axios.post('http://localhost:5000/alert/add', {
+        patientID : this.props.patientId,
+        lastName : this.props.lastName,
+	      alertMessage: "One or more symptoms appeared"
+      }).then(res => console.log(res.data));
+     }
       //window.location = "/";
     } else {
       console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
     }
   }
-
+//Validate File type
   validateMediaType = (event) => {
     //getting file object
     let files = event.target.files;
@@ -197,6 +199,22 @@ export default class createSympotom extends Component {
     this.setState(this.baseState);
   };
 
+
+  handleChangeTemp = (event) => {
+    let num = event.target.value;
+    this.setState({temp: num});
+  }
+
+  handleChangeAdditionalNote = (event) => {
+    this.setState({comment: event.target.value});
+  }
+  
+ 
+  isHighTemp(temp) {
+    return temp > 99
+  }
+
+
   render() {
     const { formErrors } = this.state;
 
@@ -206,6 +224,7 @@ export default class createSympotom extends Component {
           <Col sm="8">
             <Card body>
               <form className="form-horizontal" onSubmit={this.onSubmit}>
+
               { <ToastContainer
                     position="top-center"
                     autoClose={10000000}
@@ -337,16 +356,18 @@ export default class createSympotom extends Component {
                   )}
                 </div>
 
-                <div className="form-group">
-                  <label>Additional Note : </label>
-                  <textarea
-                    className="spaceInputNote"
+              
+                      <div className="form-group" >
+                <label>Additional Note : </label>
+                  <textarea className="spaceInputNote"
+
                     name="additionalNote"
                     rows={4}
                     onChange={this.handleChangeAdditionalNote}
                     placeholder={"Add additional note to the doctor"}
                   />
                 </div>
+
                 <div className="form-group">
                   <label>Select Media : </label>
                   {"      "}
@@ -381,11 +402,14 @@ export default class createSympotom extends Component {
                   >
                     Cancel
                   </button>
+
+              
                 </div>
               </form>
             </Card>
           </Col>
           <Col sm="4">
+
             <Card>
               <CardTitle>
                 {" "}
@@ -397,6 +421,14 @@ export default class createSympotom extends Component {
                 click doctors note from patient profile
               </CardText>
               <Button>View</Button>
+
+            <Card >
+              <CardTitle > <h3 className="text-center">Latest Doctor Note</h3></CardTitle>
+              <CardText> On click doctors note from patient profile will be displayed
+              On click doctors note from patient profile
+              </CardText>
+              <Button >View</Button>
+
             </Card>
           </Col>
         </Row>

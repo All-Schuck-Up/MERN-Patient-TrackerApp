@@ -1,8 +1,7 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
-//import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 // Redux
 import { Provider } from 'react-redux';
 import store from './store';
@@ -18,10 +17,8 @@ import RegisterProvider from './components/auth/RegisterProvider.component';
 import Navbar from './components/Nbar.component';
 import CreateSymptom from './components/Create-patient-symptom.component';
 import PatientProfile from './components/PatientProfile.component';
-import WelcomeProvider from './components/WelcomeProvider.component';
-import PatientSearch from './components/PatientSearch.component';
-import PatientAlertList from './components/PatientAlertList.component';
-import PatientImmediateAttList from './components/PatientImmediateAttList.component';
+import ProviderProfile from './components/ProviderProfile';
+
 
 // check for token
 if (localStorage.token) {
@@ -66,22 +63,23 @@ function App() {
           <div className='container'>
             <Route exact path='/patient/login/:id'>
               <Navbar />
-              <CreateSymptom patientId="5ecb471af1741b0a4e6b993a"/>
+
+//              <CreateSymptom patientId="5ecb471af1741b0a4e6b993a"/>
+
+              <CreateSymptom patientId="5ecaabd07dfcc538bce811fc" lastName="temp user name"/>
+
             </Route>
           </div>
           <div className='container'>
             <Route exact path='/patient/:id/profile'>
-              <Navbar />
+              <Navbar name="Patient Name"/>
               <PatientProfile />
             </Route>
           </div>
           <div className='container'>
             <Route exact path='/provider/login/:id'>
-              <Navbar />
-              <WelcomeProvider />
-              <PatientSearch />
-              <PatientAlertList />
-              <PatientImmediateAttList />
+              <Navbar name="Provider Name"/>
+              <ProviderProfile />
             </Route>
           </div>
         </div>
