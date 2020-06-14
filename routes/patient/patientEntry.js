@@ -35,7 +35,7 @@ router.route('/patientEntries').get((req, res) => {
     
     var upload = multer({
         storage: storage,
-        limits : {fileSize : 524288000},
+       // limits : {fileSize : 524288000},
         fileFilter: (req, file, cb) => {
            if (file.mimetype == "video/mp4" ||file.mimetype == "image/png" ||file.mimetype =="video/avi"|| file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
                 cb(null, true);
