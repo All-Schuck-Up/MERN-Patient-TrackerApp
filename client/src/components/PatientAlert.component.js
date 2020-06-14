@@ -13,7 +13,7 @@ class Alert extends React.Component {
         return(
             <div className="PatientAlert">
                 <Row className="rowAlert">
-                <Col xs={6}><p className="PatientAlertComponent">Alert: {this.props.patientID} has: {this.props.alertMessage}</p></Col>
+                <Col xs={6}><p className="PatientAlertComponent">Alert: {this.props.lastName} has: {this.props.alertMessage}</p></Col>
                 <Col><form action={patientPageURL} method="get" label="hello">
                 <Button className="PatientAlertComponent" color="primary">Check</Button>
                 </form></Col>

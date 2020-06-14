@@ -66,6 +66,7 @@ export default class createSympotom extends Component {
      if(this.isHighTemp(this.state.temp)) {
       axios.post('http://localhost:5000/alert/add', {
         patientID : this.props.patientId,
+        lastName : this.props.lastName,
 	      alertMessage: "High fever - " + this.state.temp + "F"
       }).then(res => console.log(res.data));
      }
@@ -73,6 +74,7 @@ export default class createSympotom extends Component {
      if(this.state.symptom1 === 'yes' || this.state.symptom2 === 'yes' || this.state.symptom3 === 'yes' || this.state.symptom4 === 'yes') {
       axios.post('http://localhost:5000/alert/add', {
         patientID : this.props.patientId,
+        lastName : this.props.lastName,
 	      alertMessage: "One or more symptoms appeared"
       }).then(res => console.log(res.data));
      }

@@ -5,6 +5,10 @@ const Alert = new mongoose.Schema({
         type: String,
         required: true
     },
+    lastName: {
+        type: String,
+        required: true
+    },
     alertMessage: {
         type: String,
         required: true
