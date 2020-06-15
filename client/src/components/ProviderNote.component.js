@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import { Card, CardText, Alert, Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Card, CardText, Alert, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class ProviderNote extends React.Component {
     constructor() {
@@ -21,6 +23,15 @@ class ProviderNote extends React.Component {
                 this.setState({doctorNoteArray : response.data});
             });
     };
+    notify = () => toast.success('Note Added to the Patient\'s Profile!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
     addButton() { //adds doctor note to the database when button is clicked
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -29,8 +40,13 @@ class ProviderNote extends React.Component {
         axios.put('http://localhost:5000/patientEntry/addDoctorNote/5ecb471af1741b0a4e6b993a', {
             isDoctor: true,
             doctorNote: 'On ' + dateTime + ' :  ' + this.state.doctorNote
-        });
-        window.location.reload(false); //reloads the current window and displays the list again without the just-checked one
+        })
+            .then(() => {
+                this.notify();
+            }); //notifies when the put request is successful
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 8000);  // the window reloads after 5 secs
     }
     scheduleMeeting() { //redirects to the Zoom home page for meetings
         window.location.assign('https://zoom.us/signin');
@@ -44,6 +60,8 @@ class ProviderNote extends React.Component {
         })
         return(
             <div className="DoctorNote">
+                <ToastContainer />
+
                 <Form className="form-horizontal" onSubmit={this.addButton}>
                     <FormGroup>
                         <Label>Add a note : </Label>

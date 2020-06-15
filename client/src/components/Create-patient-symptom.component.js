@@ -189,9 +189,11 @@ export default class createSympotom extends Component {
     const { formErrors } = this.state;
     const doctorNotes = this.state.doctorNoteArray.map(elem => {
       return(
+        <div key={elem}>
       <Card body key={elem}>
-          <CardText>{elem}</CardText>
-       </Card>)
+          <CardText key={elem}>{elem}</CardText>
+       </Card>
+       </div>)
   })
     return (
 
@@ -283,9 +285,9 @@ export default class createSympotom extends Component {
           <Col sm="4">
             <Card >
               <CardTitle > <h3 className="text-center">Latest Doctor Notes</h3></CardTitle>
-              <CardText> 
+              
 
-              <div>
+              
                 <Button className="viewAllDoctorNotesButton" color="primary" id="toggler" style={{ marginBottom: '1rem' }}>View All Doctor Notes</Button>
                   <UncontrolledCollapse toggler="#toggler">
                     <Card>
@@ -294,11 +296,9 @@ export default class createSympotom extends Component {
                       </CardBody>
                     </Card>
                   </UncontrolledCollapse>
-              </div>
 
                 <p>Latest Note: {this.state.doctorNoteArray[this.state.doctorNoteArray.length - 1]}</p>
 
-              </CardText>
             </Card>
           </Col>
         </Row>
