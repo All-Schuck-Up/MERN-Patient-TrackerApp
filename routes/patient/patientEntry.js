@@ -78,24 +78,4 @@ router.route('/patientEntry/update/:id').put((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-
-
-
-
-
-
-
-////update route for the patient to add a note to their entry entered in last 24 hours
-//router.route('/patientEntry/update/:id').put((req, res) => {
-//    //PatientEntry.findById(req.params.id)
-//    PatientEntry.find({"date": req.params.date})
-//        .then(patientEntry => {
-//            patientEntry[9] = req.body.updateNote
-//            patientEntry.save()
-//                .then(() => res.json('Patient Entry Note Updated!'))
-//                .catch(err => res.status(400).json('Error: ' + err));
-//        })
-//        .catch(err => res.status(400).json('Error: ' + err));
-//});
-
 module.exports = router;

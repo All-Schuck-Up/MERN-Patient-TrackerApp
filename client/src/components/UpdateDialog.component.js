@@ -14,16 +14,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';	
 
-const validate=(updateNote)=>{
-  const errors = [];
-  if (updateNote.length === 0) {
-    errors.push("You have not submitted notification updating your last symptom");
-  }
-  if (updateNote.length > 150) {
-    errors.push("Too long notification.");
-  }
-  return errors;
-}
 
 toast.configure()
 
@@ -51,11 +41,15 @@ export default class FormDialog extends Component {
        this.setState({ open: false})
         toast.error('Ups! There was no update note submitted.', {position:toast.POSITION.TOP_CENTER});
     };
-   handleCloseS = () => {
-      // toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
-       this.setState({ open: false})
-       toast.success('Success!', {position:toast.POSITION.TOP_CENTER,autoClose:80000})
+    handleS = () => {
+       //toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
+        this.state.notify()
+       toast.success('Success!', {position:toast.POSITION.TOP_CENTER,autoClose:8000000}) 
         
+    };
+   handleCloseS = () => {
+       this.setState({ open: false})
+       toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
     };
 
    notify =() => {
@@ -72,13 +66,7 @@ export default class FormDialog extends Component {
  
    //this updates the state of TextFieldor textarea(each symbol)
    handleChangeUpdateNote = (e) => {
-//USE FOR TESTING:
- //     alert('from handleChangeUpdateNote  was submitted:' + this.state.updateNote);
-//       var today = new Date().toISOString().substring(0,10);
-//       alert('from handleChangeUpdateNote  was submitted:' + 
-//            today)
-             
-       this.setState({
+    this.setState({
            updateNote: e.target.value})
            //updateNote: this.state.updateNote})
          console.log(this.res);
@@ -99,15 +87,15 @@ export default class FormDialog extends Component {
       axios.put('http://localhost:5000/patientEntry/update/'+this.props.patientId,
              {updateNote: this.state.updateNote
              }) 
-        .then(res => {
+        .then((res) => {
+                 toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
+                //toast.notify(res.message)
+                //this.notify(toast.success)
           console.log(res.res.data);
-         toast.success('Success!You have submitted update note.', {position:toast.POSITION.TOP_CENTER,autoClose:80000})
-          this.notify()
          
       })
-        .catch((err) => {
-            toast.error('Updating note was not saved!', {position:toast.POSITION.TOP_CENTER, autoClose:80000});
-            console.log(err);
+        .catch((errors) => {
+            console.log(errors);
         }) 
 
     }
@@ -119,7 +107,8 @@ export default class FormDialog extends Component {
           <Button variant="outlined" className="pull-right" color="primary" size="sm" border="5em" onClick={this.handleClickOpen}>
             Update Last Entry
           </Button>
-          <Dialog open={this.state.open} onClose={this.handleCloseS} aria-labelledby="form-dialog-title">
+      
+          <Dialog open={this.state.open} onClose={this.handleS} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Update</DialogTitle>
             <DialogContent>
               <DialogContentText>
@@ -155,4 +144,3 @@ export default class FormDialog extends Component {
   );
 }
 }
-//
