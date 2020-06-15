@@ -14,7 +14,15 @@ const PatientEntry = props => (
                 <td> {props.patientEntry.symptom3}</td>
                 <td> {props.patientEntry.symptom4}</td>
                 <td> {props.patientEntry.temp}</td>
-                <td> {props.patientEntry.media}</td>
+                <td> <a
+        style={{ cursor:"pointer" }}
+        href={props.patientEntry.media}
+        onClick={() =>
+                      this.toggleModal("Media")
+                    }
+     >
+ Media...
+    </a></td>
                 <td> {props.patientEntry.comment}</td>
                 <td> {props.patientEntry.doctorNote}</td>
                 <td> {props.patientEntry.immediateAttention.toString()}</td>
