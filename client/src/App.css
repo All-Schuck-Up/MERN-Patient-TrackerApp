@@ -57,7 +57,9 @@
 }
 
 .spaceInputNote {
-  width: 90%;
+  margin-top: 10px;
+  width: 100%;
+  word-wrap: break-word;
 }
 .inputSearch {
   width : 70%
@@ -67,4 +69,8 @@
 }
 .viewAllDoctorNotesButton {
   width: 100%
+}
+ol li {
+  color: blue;
+  font-weight: bold;
 }

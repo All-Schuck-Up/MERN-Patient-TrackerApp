@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Card, Button, CardTitle, CardText, Row, Col, UncontrolledCollapse, CardBody } from 'reactstrap';
 
@@ -160,7 +162,18 @@ export default class createSympotom extends Component {
 
   handleChangeAdditionalNote = (event) => {
     this.setState({comment: event.target.value});
+    this.notify();
   }
+  
+  notify = () => toast.warn('Marked as Immediate Attention!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    });
   //on file select 
   // onMediaChange = event => {
   //   // Update the state 
@@ -198,6 +211,7 @@ export default class createSympotom extends Component {
     return (
 
       <div>
+        <ToastContainer />
         <Row>
           <Col sm="8">
             <Card body>

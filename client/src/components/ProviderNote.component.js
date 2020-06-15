@@ -14,6 +14,7 @@ class ProviderNote extends React.Component {
         }
         this.addButton = this.addButton.bind(this)
         this.scheduleMeeting = this.scheduleMeeting.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
     async componentDidMount() {
         //retrieves all the doctor notes
@@ -32,7 +33,12 @@ class ProviderNote extends React.Component {
         draggable: true,
         progress: undefined,
         });
+
+    handleChange(event) {
+        this.setState({doctorNote: event.target.value});
+    }
     addButton() { //adds doctor note to the database when button is clicked
+        this.notify();
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -41,12 +47,10 @@ class ProviderNote extends React.Component {
             isDoctor: true,
             doctorNote: 'On ' + dateTime + ' :  ' + this.state.doctorNote
         })
-            .then(() => {
-                this.notify();
-            }); //notifies when the put request is successful
+        
         setTimeout(function () {
             window.location.reload(1);
-        }, 8000);  // the window reloads after 5 secs
+        }, 5000);  // the window reloads after 5 secs
     }
     scheduleMeeting() { //redirects to the Zoom home page for meetings
         window.location.assign('https://zoom.us/signin');
@@ -60,20 +64,24 @@ class ProviderNote extends React.Component {
         })
         return(
             <div className="DoctorNote">
+                <div className="doctorNoteFixed">
                 <ToastContainer />
 
                 <Form className="form-horizontal" onSubmit={this.addButton}>
                     <FormGroup>
-                        <Label>Add a note : </Label>
-                        <Input className="spaceInputNote" name="doctorNote" onChange={(e) => this.setState({doctorNote: e.target.value})}
+                        <Input className="spaceInputNote" name="doctorNote" onChange={this.handleChange}
                                             placeholder={"Add a note to the patient"}/>
-                        <Button className="btn btn-primary" type="submit">Add</Button>
+                                                                         {/* if the doctor is empty string, button will be disabled */}
+                         <Button className="btn btn-primary" type="submit" disabled={this.state.doctorNote.length <= 0}>Add</Button>
                         </FormGroup>
                    
                     <Button className="btn btn-primary" onClick={this.scheduleMeeting} style={{ marginBottom: '1rem' }}>Schedule a Zoom Meeting</Button>
                 </Form>
                 <Alert color="success">Past Notes for {this.props.patientLastName}</Alert>
+                </div>
+                <div className="mainDoctorNote">
                 {notes}
+                </div>
             </div>
         )
     }
