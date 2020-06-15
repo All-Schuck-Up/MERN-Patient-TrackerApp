@@ -11,7 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';	
 
 const validate=(updateNote)=>{
@@ -25,7 +25,7 @@ const validate=(updateNote)=>{
   return errors;
 }
 
-
+toast.configure()
 
 
 export default class FormDialog extends Component {
@@ -48,9 +48,22 @@ export default class FormDialog extends Component {
     };
 
    handleClose = () => {
-        this.setState({ open: false})
+       this.setState({ open: false})
+        toast.error('Ups! There was no update note submitted.', {position:toast.POSITION.TOP_CENTER});
     };
-   
+   handleCloseS = () => {
+      // toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
+       this.setState({ open: false})
+       toast.success('Success!', {position:toast.POSITION.TOP_CENTER,autoClose:80000})
+        
+    };
+
+   notify =() => {
+       toast('Basic notification!',{position:toast.POSITION.TOP_RIGHT})
+       toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
+       toast.error('Error!', {position:toast.POSITION.TOP_LEFT})
+};
+
 
    handleChange= (e) => {
         this.setState({updateNote: e.target.value});
@@ -59,7 +72,7 @@ export default class FormDialog extends Component {
  
    //this updates the state of TextFieldor textarea(each symbol)
    handleChangeUpdateNote = (e) => {
-       //USE FOR TESTING:
+//USE FOR TESTING:
  //     alert('from handleChangeUpdateNote  was submitted:' + this.state.updateNote);
 //       var today = new Date().toISOString().substring(0,10);
 //       alert('from handleChangeUpdateNote  was submitted:' + 
@@ -78,21 +91,24 @@ export default class FormDialog extends Component {
     
 
     handleSubmit(event) { 
-        alert('You have submitted following to this entry date: ' + this.state.updateNote + " "+ this.props.patientEntry[this.props.patientEntry.length-1].date.substring(0,10));
-        
+       //  toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
+//      FOR TESTING:
+//        alert('You have submitted following to this entry date: ' + this.state.updateNote + " "+ this.props.patientEntry[this.props.patientEntry.length-1].date.substring(0,10));
+         
         if(this.isToday(this.props.patientEntry[this.props.patientEntry.length-1].date.substring(0,10))){
-     axios.put('http://localhost:5000/patientEntry/update/'+this.props.patientId,
-             {
-         updateNote: this.state.updateNote
+      axios.put('http://localhost:5000/patientEntry/update/'+this.props.patientId,
+             {updateNote: this.state.updateNote
              }) 
-        .then((res) => {
-         toast.success("Updating note was entered successfully");
-            console.log(res.res.data);
-        })
+        .then(res => {
+          console.log(res.res.data);
+         toast.success('Success!You have submitted update note.', {position:toast.POSITION.TOP_CENTER,autoClose:80000})
+          this.notify()
+         
+      })
         .catch((err) => {
-            toast.error("Updating note was not saved!");
+            toast.error('Updating note was not saved!', {position:toast.POSITION.TOP_CENTER, autoClose:80000});
             console.log(err);
-        })   
+        }) 
 
     }
     }
@@ -103,7 +119,7 @@ export default class FormDialog extends Component {
           <Button variant="outlined" className="pull-right" color="primary" size="sm" border="5em" onClick={this.handleClickOpen}>
             Update Last Entry
           </Button>
-          <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+          <Dialog open={this.state.open} onClose={this.handleCloseS} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Update</DialogTitle>
             <DialogContent>
               <DialogContentText>
@@ -126,9 +142,12 @@ export default class FormDialog extends Component {
                   <Button color="primary" onClick={this.handleClose} >
                     Cancel
                   </Button>{'  '}
-                  <Button color="primary" value="Submit" type="submit"    onClick={this.handleClose} >
+                  <Button color="primary" value="Submit" type="submit"    onClick={this.handleCloseS} >
                     Submit
                   </Button>
+      <Button color="primary" onClick={this.notify} >
+                    Notify
+                  </Button>{'  '}
                 </form>     
             </DialogContent>      
           </Dialog>
@@ -136,3 +155,4 @@ export default class FormDialog extends Component {
   );
 }
 }
+//
