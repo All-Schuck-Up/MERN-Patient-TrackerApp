@@ -179,7 +179,8 @@ return true;
      //if the immediate attention is clicked post request will be sent to the immediate attention cluster
      if (this.state.immediateAttention) {
        axios.post('http://localhost:5000/immediateAttention/add', {
-        patientID : this.props.patientId
+        patientID : this.props.patientId,
+        lastName : this.props.lastName
        }).then(res => console.log(res.data));
      }
 
