@@ -49,6 +49,7 @@ router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
         comment : req.body.comment,
         updateNote : req.body.updateNote,
         immediateAttention : req.body.immediateAttention};
+
     PatientEntry.findById(req.params.id)
     .then(patientEntries => {
         patientEntries.patientEntry.push(formElement)
@@ -62,12 +63,15 @@ router.route('/patientEntry/add/:id').put((req, res) => { //patient Id
 });
 
 
-//update route for the patient to add a note to their entry entered in last 24 hours
-router.route('/patientEntry/update/:id').post((req, res) => {
+//update patient update note by index
+router.route('/patientEntry/update/:id').put((req, res) => {
+    
+    //const dialogInput = {updateNote : req.body.updateNote};
     PatientEntry.findById(req.params.id)
+    //PatientEntry.find({"date": req.params.date})
         .then(entry => {
-            entry.form[5] = req.body.updatedAdditionalNote;
-            entry.save()
+            entry.patientEntry[entry.patientEntry.length-1].updateNote = req.body.updateNote;
+                   entry.save()
                 .then(() => res.json('Patient Entry Note Updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
@@ -98,6 +102,7 @@ router.route('/doctorNotes/:id').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//updates an additional note from the patient to the patient entry
 router.route('/patientEntry/addUpdateNote/:id').put((req, res) => {
     PatientEntry.findById(req.params.id)
         .then(entry => {

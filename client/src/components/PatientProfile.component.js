@@ -3,6 +3,8 @@ import axios from 'axios';
 import CreateSymptoms from './CreateSymptoms.component';
 import { Button } from 'reactstrap';
 import {Link} from 'react-router-dom';
+=======
+
 
 export default class PatientProfile extends Component{ 
    constructor(props){
@@ -48,12 +50,12 @@ componentDidMount(){
 }
 
 render() {
-    const patientS=
-          <ul>{this.state.patientEntry.map((patientEntry) =>
-              <li key={patientEntry._id}>{patientEntry}
-              </li>
-              )}
-         </ul>
+//    const patientS=
+//          <ul>{this.state.patientEntry.map((patientEntry) =>
+//              <li key={patientEntry._id}>{patientEntry}
+//              </li>
+//              )}
+//         </ul>
 
     const patientP =
             <ol>{this.state.patient}</ol>
@@ -77,6 +79,7 @@ render() {
                     
                 </div>
              : null }
+
         </div>
     )
 }

@@ -5,8 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { Card, Button, CardTitle, CardText, Row, Col, UncontrolledCollapse, CardBody } from 'reactstrap';
 
-//import PatientProfile from "./PatientProfile.component";
-
 
 const isFormValid = ({ formErrors, ...rest }) => {
   let valid = true;
@@ -40,6 +38,7 @@ export default class createSympotom extends Component {
       updateNote:'none',
       immediateAttention: false,
       doctorNoteArray: [],
+      updateNote: 'none',
       formErrors: { 
         valid : "Please enter a valid number",
         highTemp : "This is a high temperature. We will create an alert for your doctor",
@@ -98,6 +97,7 @@ export default class createSympotom extends Component {
      if(this.isHighTemp(this.state.temp)) {
       axios.post('http://localhost:5000/alert/add', {
         patientID : this.props.patientId,
+        lastName : this.props.lastName,
 	      alertMessage: "High fever - " + this.state.temp + "F"
       }).then(res => console.log(res.data));
      }
@@ -105,6 +105,7 @@ export default class createSympotom extends Component {
      if(this.state.symptom1 === 'yes' || this.state.symptom2 === 'yes' || this.state.symptom3 === 'yes' || this.state.symptom4 === 'yes') {
       axios.post('http://localhost:5000/alert/add', {
         patientID : this.props.patientId,
+        lastName : this.props.lastName,
 	      alertMessage: "One or more symptoms appeared"
       }).then(res => console.log(res.data));
      }

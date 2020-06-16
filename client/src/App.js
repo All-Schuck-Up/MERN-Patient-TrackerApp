@@ -18,7 +18,6 @@ import Navbar from './components/Nbar.component';
 import CreateSymptom from './components/Create-patient-symptom.component';
 import PatientProfile from './components/PatientProfile.component';
 import ProviderProfile from './components/ProviderProfile';
-import ProviderNote from './components/ProviderNote.component'
 
 // check for token
 if (localStorage.token) {
@@ -63,7 +62,7 @@ function App() {
           <div className='container'>
             <Route exact path='/patient/login/:id'>
               <Navbar />
-              <CreateSymptom patientId="5ecb471af1741b0a4e6b993a"/>
+              <CreateSymptom patientId="5ecaabd07dfcc538bce811fc" lastName="temp user name"/>
             </Route>
           </div>
           <div className='container'>

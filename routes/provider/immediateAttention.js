@@ -12,8 +12,8 @@ router.route('/immediateAttentions').get((req, res) => {
 
 router.route('/immediateAttention/add').post((req, res) => {
     const patientID = req.body.patientID;
-    
-    const newAttn = new ImmediateAttention({patientID});
+    const lastName = req.body.lastName;
+    const newAttn = new ImmediateAttention({patientID, lastName});
 
     newAttn.save()
         .then(() => console.log('Immediate Attention Request Added!'))

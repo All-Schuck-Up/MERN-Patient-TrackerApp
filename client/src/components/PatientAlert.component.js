@@ -32,8 +32,9 @@ class Alert extends React.Component {
 
                 <Row className="rowWarnings">
                 <Col xs="1.5"><li>On: {this.props.date.substring(0,10)}</li></Col>
-                <Col xs="7"><p className="PatientAlertComponent">Alert: {this.props.patientID} has: {this.props.alertMessage}</p></Col>
+                <Col xs="7"><p className="PatientAlertComponent">Alert: {this.props.lastName} has: {this.props.alertMessage}</p></Col>
                 <Col xs="1"><form action={patientPageURL} method="get" >
+
                 <Button className="PatientAlertComponent" color="primary">Check</Button>
                 </form></Col>
                 <Col xs="2.5"><Button className="PatientAlertComponent" color="primary" onClick={() => {this.checkButton(this.props.objectID)}}>Mark as checked</Button></Col>

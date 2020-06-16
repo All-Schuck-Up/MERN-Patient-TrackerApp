@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
 export default class Navbar extends Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+      //firstName:props.firstName,
+        name:props.firstName  //name is in user db while the rest has firstName
+    };
+    
+  }
+    
   render() {
     return (
       
       
       <nav className="navbar navbar-dark bg-primary navbar-expand-lg">
-        <Link to="/" className="navbar-brand">Welcome {this.props.firstName}</Link>
+        <Link to="/" className="navbar-brand">Welcome {this.props.firstName}{this.props.name}{this.state.name}{this.state.firstName}</Link>
         <div className="collpase navbar-collapse">
         <ul className="navbar-nav mr-auto">
           <li className="navbar-item">
