@@ -1,5 +1,6 @@
-import React, { Component }from 'react';
+import React, { Component } from "react";
 //import { Link } from 'react-router-dom';
+
 import axios from 'axios';
 import UpdateDialog from './UpdateDialog.component';
 
@@ -8,24 +9,39 @@ import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure()
 
+
 //implemented as a function React component
-const PatientEntry = props => (
+const PatientEntry = (props) => (
   <tr>
-                <td width="120px"> {props.patientEntry.date.substring(0,10)}</td>
-                <td> {props.patientEntry.symptom1}</td>
-                <td> {props.patientEntry.symptom2}</td>
-                <td> {props.patientEntry.symptom3}</td>
-                <td> {props.patientEntry.symptom4}</td>
-                <td> {props.patientEntry.temp}</td>
-                <td> {props.patientEntry.media}</td>
-                <td> {props.patientEntry.comment}</td>
-                <td> {props.patientEntry.updateNote}</td>
-                <td> {props.patientEntry.immediateAttention.toString()}</td>  
-            
+
+    <td> {props.patientEntry.date.substring(0, 10)}</td>
+    <td> {props.patientEntry.symptom1}</td>
+    <td> {props.patientEntry.symptom2}</td>
+    <td> {props.patientEntry.symptom3}</td>
+    <td> {props.patientEntry.symptom4}</td>
+    <td> {props.patientEntry.temp}</td>
+    <td>
+      {" "}
+      <a
+        style={{ cursor: "pointer" }}
+        href={props.patientEntry.media}
+        onClick={() => this.toggleModal("Media")}
+      >
+        Media...
+      </a>
+    </td>
+    <td> {props.patientEntry.comment}</td>
+      <td> {props.patientEntry.updateNote}</td>
+     <td> {props.patientEntry.immediateAttention.toString()}</td>
+
   </tr>
+
+);
+
   
     
-)
+
+
 //implemented as class component
 export default class createSympotom extends Component {
     constructor() {
@@ -71,28 +87,51 @@ export default class createSympotom extends Component {
                 updateNote: res.data.patientEntry.map(el=>el.updateNote),
                 media:res.data.patientEntry.map(el=>el.media)
 
-            });
-        })
-        .catch((error) => {
-            console.log(error);
-         }) 
+              });
+            })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  psList() {
+    return this.state.patientEntry.map((hi) => {
+      return (
+        <PatientEntry
+          patientEntry={hi}
+          //updatePatientEntry={this.updatePatientEntry}
+          key={hi._id}
+        />
+      );
+    });
+  }
+
+  onDismiss = () => {
+    this.setstate({ visible: false });
+  };
+
+//             });
+//         })
+//         .catch((error) => {
+//             console.log(error);
+//          }) 
        
-    }
-    psList(){
-        return this.state.patientEntry.map(hi => {
-         return <PatientEntry patientEntry={hi} 
-            key={hi._id} />; 
-    })
+//     }
+//     psList(){
+//         return this.state.patientEntry.map(hi => {
+//          return <PatientEntry patientEntry={hi} 
+//             key={hi._id} />; 
+//     })
         
-  }  
+//   }  
  
 
-onDismiss = () => {
-    this.setstate({visible:false})
-};
-notify =() => {
-       toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
-};
+// onDismiss = () => {
+//     this.setstate({visible:false})
+// };
+// notify =() => {
+//        toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
+// };
+
 
     render(){
         return(   
@@ -124,4 +163,5 @@ notify =() => {
         )
     }
 }
-//onSubmit={this.notify(toast.success)}
+
+
