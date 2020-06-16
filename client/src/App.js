@@ -1,17 +1,16 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 // Redux
-import { Provider } from 'react-redux';
+import { connect } from 'react-redux';
 import store from './store';
+import PropTypes from 'prop-types';
 import { loadUser } from './actions/auth';
-import { getCurrentProfile } from './actions/profile';
 import setAuthToken from './utils/setAuthToken';
 
 // Components
 import Landing from './components/Landing.component';
-import Routes from './components/routing/Routes';
 import LoginPatient from './components/auth/LoginPatient.component';
 import RegisterPatient from './components/auth/RegisterPatient.component';
 import LoginProvider from './components/auth/LoginProvider.component';
@@ -27,28 +26,83 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-function App() {
+function App({ user }) {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
 
-  useEffect(() => {
-    store.dispatch(getCurrentProfile());
-  }, [getCurrentProfile]);
+  console.log(user);
 
   return (
-    <Provider store={store}>
-      <Router>
-        <Fragment>
-          <section className='container'>
-            <Switch>
-              <Route exact path='/' component={Landing} />
-              <Route component={Routes} />
-            </Switch>
-          </section>
-        </Fragment>
-      </Router>
-    </Provider>
+    <Router>
+      <div className='mainBody'>
+        <div className='container'>
+          <br />
+          <Route exact path='/'>
+            <Landing />
+          </Route>
+        </div>
+        <div className='container'>
+          <Route exact path='/patient/login'>
+            <LoginPatient />
+          </Route>
+        </div>
+        <div className='container'>
+          <Route exact path='/patient/register'>
+            <RegisterPatient />
+          </Route>
+        </div>
+        <div className='container'>
+          <Route exact path='/provider/login'>
+            <LoginProvider />
+          </Route>
+        </div>
+        <div className='container'>
+          <Route exact path='/provider/register'>
+            <RegisterProvider />
+          </Route>
+        </div>
+        <div className='container'>
+          <Route exact path='/patient/login/:id'>
+            <Navbar />
+            <CreateSymptom
+              patientId='5ecaabd07dfcc538bce811fc'
+              lastName='temp user name'
+            />
+          </Route>
+        </div>
+        <div className='container'>
+          <Route exact path='/patient/:id/profile'>
+            <Navbar name='Patient Name' />
+            <PatientProfile isDoctor={true} />
+          </Route>
+        </div>
+        <div className='container'>
+          <Route exact path='/patient/doctorNotes'>
+            <Navbar name='Provider Name' />
+            <ProviderNote
+              patientID='5ecb471af1741b0a4e6b993a'
+              patientLastName='temp patient name'
+            />
+          </Route>
+        </div>
+        <div className='container'>
+          <Route exact path='/provider/login/:id'>
+            <Navbar name='Provider Name' />
+            <ProviderProfile />
+          </Route>
+        </div>
+      </div>
+    </Router>
   );
 }
-export default App;
+
+App.prototypes = {
+  user: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps)(App);
