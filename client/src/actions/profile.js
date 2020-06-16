@@ -9,7 +9,7 @@ import {
 // Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    const res = await axios.get('/patient/patient/me');
+    const res = await axios.get('/patient/profile/me');
 
     dispatch({
       type: GET_PROFILE,
@@ -26,7 +26,7 @@ export const getCurrentProfile = () => async (dispatch) => {
 // Get profile by ID
 export const getProfileById = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(`/patient/patient/${userId}`);
+    const res = await axios.get(`/patient/profile/${userId}`);
 
     dispatch({
       type: GET_PROFILE,
@@ -45,7 +45,7 @@ export const getProfiles = () => async (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
 
   try {
-    const res = await axios.get('/patient/patient');
+    const res = await axios.get('/patient/profile');
 
     dispatch({
       type: GET_PROFILES,

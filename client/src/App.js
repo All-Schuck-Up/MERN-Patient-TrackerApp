@@ -20,18 +20,24 @@ import CreateSymptom from './components/Create-patient-symptom.component';
 import PatientProfile from './components/PatientProfile.component';
 import ProviderProfile from './components/ProviderProfile';
 import ProviderNote from './components/ProviderNote.component';
+import { getCurrentProfile } from './actions/profile';
 
 // check for token
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-function App({ user }) {
+function App({ user, profile }) {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
 
+  useEffect(() => {
+    store.dispatch(getCurrentProfile());
+  }, [getCurrentProfile]);
+
   console.log(user);
+  console.log(profile);
 
   return (
     <Router>
@@ -66,14 +72,14 @@ function App({ user }) {
           <Route exact path='/patient/login/:id'>
             <Navbar />
             <CreateSymptom
-              patientId='5ecaabd07dfcc538bce811fc'
+              patientId={profile && profile._id}
               lastName='temp user name'
             />
           </Route>
         </div>
         <div className='container'>
           <Route exact path='/patient/:id/profile'>
-            <Navbar name='Patient Name' />
+            <Navbar name={profile && profile.firstName} />
             <PatientProfile isDoctor={true} />
           </Route>
         </div>
@@ -81,8 +87,8 @@ function App({ user }) {
           <Route exact path='/patient/doctorNotes'>
             <Navbar name='Provider Name' />
             <ProviderNote
-              patientID='5ecb471af1741b0a4e6b993a'
-              patientLastName='temp patient name'
+              patientID={profile && profile._id}
+              patientLastName={profile && profile.lastName}
             />
           </Route>
         </div>
@@ -98,11 +104,14 @@ function App({ user }) {
 }
 
 App.prototypes = {
+  getCurrentProfile: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  profile: state.profile.profile,
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { getCurrentProfile })(App);
