@@ -31,9 +31,9 @@ class Landing extends Component {
             </div>
           </form>
         </div>
-        <a href='https://www.vecteezy.com/free-vector/medical-logo'>
+        {/* <a href='https://www.vecteezy.com/free-vector/medical-logo'>
           Medical Logo Vectors by Vecteezy
-        </a>
+        </a> */}
       </div>
     );
   }
