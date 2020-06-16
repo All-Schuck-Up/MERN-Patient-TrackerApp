@@ -106,17 +106,19 @@ validateMediaType = (event) => {
 //media Size validator
   
 validateSize = (event) => {
-  let file = event.target.files[0];
-  let size = 10000000;
-  let err = "";
-  console.log(file.size);
-  if (file.size > size) {
-    err = file.type + "is too large, please pick a smaller file\n";
-    event.target.value = null; // discard selected file
-    toast.error(err);
-    return false;
-  }
-  return true;
+  let files = event.target.files
+  let size = 200000000 
+  let err = []; 
+  for(var x = 0; x<files.length; x++) {
+  if (files[x].size > size) {
+   err[x] = files[x].type+'is too large, please pick a smaller file\n';
+ }
+};
+for(var z = 0; z<err.length; z++) {
+ toast.error(err[z])
+ event.target.value = null
+}
+return true;
 };
 
   onSubmit = async (e) => {
