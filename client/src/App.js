@@ -11,6 +11,7 @@ import setAuthToken from './utils/setAuthToken';
 
 // Components
 import Landing from './components/Landing.component';
+import Spinner from './components/spinner/Spinner';
 import LoginPatient from './components/auth/LoginPatient.component';
 import RegisterPatient from './components/auth/RegisterPatient.component';
 import LoginProvider from './components/auth/LoginProvider.component';
@@ -27,7 +28,7 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-function App({ user, profile }) {
+function App({ auth: { loading, user }, profile }) {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
@@ -39,7 +40,9 @@ function App({ user, profile }) {
   console.log(user);
   console.log(profile);
 
-  return (
+  return loading && profile === null ? (
+    <Spinner />
+  ) : (
     <Router>
       <div className='mainBody'>
         <div className='container'>
@@ -105,13 +108,13 @@ function App({ user, profile }) {
 
 App.prototypes = {
   getCurrentProfile: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   profile: state.profile.profile,
-  user: state.auth.user,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getCurrentProfile })(App);
