@@ -1,34 +1,37 @@
-import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../actions/auth';
 
-export default class Navbar extends Component {
-    constructor(props) {
-    super(props);
-    this.state = {
-      //firstName:props.firstName,
-        name:props.firstName  //name is in user db while the rest has firstName
-    };
-    
-  }
-    
-  render() {
-    return (
-      
-      
-      <nav className="navbar navbar-dark bg-primary navbar-expand-lg">
-        <Link to="/" className="navbar-brand">Welcome {this.props.firstName}{this.props.name}{this.state.name}{this.state.firstName}</Link>
-        <div className="collpase navbar-collapse">
-        <ul className="navbar-nav mr-auto">
-          <li className="navbar-item">
-          <Link to="/patient/:id/profile" className="nav-link">Profile</Link>
+const Navbar = ({ auth: { user }, logout }) => {
+  return (
+    <nav className='navbar navbar-dark bg-primary navbar-expand-lg'>
+      <div className='navbar-brand'>Welcome {user && user.name}</div>
+      <div className='collpase navbar-collapse'>
+        <ul className='navbar-nav mr-auto'>
+          <li className='navbar-item'>
+            <Link to='/patient/:id/profile' className='nav-link'>
+              Profile
+            </Link>
           </li>
-          <li className="navbar-item">
-          <Link to="/" className="nav-link">Logout</Link>
+          <li className='navbar-item'>
+            <Link to='/' className='nav-link' onClick={logout} href='#!'>
+              Logout
+            </Link>
           </li>
-         
         </ul>
-        </div>
-      </nav>
-    );
-  }
-}
+      </div>
+    </nav>
+  );
+};
+
+Navbar.prototypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { logout })(Navbar);
