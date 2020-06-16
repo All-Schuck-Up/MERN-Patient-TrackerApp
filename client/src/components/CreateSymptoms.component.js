@@ -8,7 +8,7 @@ import UpdateDialog from './UpdateDialog.component';
 //implemented as a function React component
 const PatientEntry = props => (
   <tr>
-                <td> {props.patientEntry.date.substring(0,10)}</td>
+                <td width="120px"> {props.patientEntry.date.substring(0,10)}</td>
                 <td> {props.patientEntry.symptom1}</td>
                 <td> {props.patientEntry.symptom2}</td>
                 <td> {props.patientEntry.symptom3}</td>
@@ -16,9 +16,8 @@ const PatientEntry = props => (
                 <td> {props.patientEntry.temp}</td>
                 <td> {props.patientEntry.media}</td>
                 <td> {props.patientEntry.comment}</td>
-                <td> {props.patientEntry.doctorNote}</td>
-                <td> {props.patientEntry.immediateAttention.toString()}</td>
                 <td> {props.patientEntry.updateNote}</td>
+                <td> {props.patientEntry.immediateAttention.toString()}</td>  
             
   </tr>
     
@@ -39,9 +38,8 @@ export default class createSympotom extends Component {
             symptom4:'',
             temp:0,
             comment:'',
-            doctorNote:'',         
+            updateNote:'',         
             immediateAttention:true,
-            updateNote:'',
             entry:'',
             patientEntry:[],
             patient:[],
@@ -67,7 +65,6 @@ export default class createSympotom extends Component {
                 symptom4: res.data.patientEntry.map(el=>el.symptom4),
                 temp: res.data.patientEntry.map(el=>el.temp),
                 comment: res.data.patientEntry.map(el=>el.comment),
-                doctorNote: res.data.patientEntry.map(el=>el.doctorNote),
                 immediateAttention: res.data.patientEntry.map(el=>el.immediateAttention.toString()),
                 updateNote: res.data.patientEntry.map(el=>el.updateNote),
                 media:res.data.patientEntry.map(el=>el.media)
@@ -121,9 +118,8 @@ onDismiss = () => {
                   <th>Temp</th>
                   <th>Media</th>
                   <th>Additional Note</th>
-                  <th>Doctor Note</th>
-                  <th>Immediate Attention</th>
                   <th>Update Note</th>
+                  <th>Immediate Attention</th>
                 </tr>
               </thead>
               <tbody>

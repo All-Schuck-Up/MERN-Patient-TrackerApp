@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, FormGroup, Label, Input, CardText, Button, Alert, Row, Col } from 'reactstrap';
+import {Form, FormGroup, Label, Input, Button, Alert, Row, Col } from 'reactstrap';
 import axios from 'axios';
 
 class PatientSearch extends React.Component {
@@ -27,7 +27,6 @@ class PatientSearch extends React.Component {
           patientFound: true
       })
       console.log(res.data)})
-      const found = this.state.patientFound;
   }
 
   render() {
