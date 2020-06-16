@@ -80,3 +80,13 @@ ol li {
 .pull-right {
   float: right !important;
 }
+.errorMessage {
+  color: red;
+  font-size: 0.99em;
+  display: relative;
+}
+.errorMessageS {
+  color: lawngreen;
+  font-size: 0.99em;
+  display: relative;
+}

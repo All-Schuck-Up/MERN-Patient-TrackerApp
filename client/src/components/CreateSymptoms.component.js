@@ -2,8 +2,11 @@ import React, { Component }from 'react';
 //import { Link } from 'react-router-dom';
 import axios from 'axios';
 import UpdateDialog from './UpdateDialog.component';
-//import { Button } from 'reactstrap';
 
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';	
+
+toast.configure()
 
 //implemented as a function React component
 const PatientEntry = props => (
@@ -20,15 +23,14 @@ const PatientEntry = props => (
                 <td> {props.patientEntry.immediateAttention.toString()}</td>  
             
   </tr>
-    
+  
     
 )
 //implemented as class component
 export default class createSympotom extends Component {
     constructor() {
         super();
-        
-  //      this.updatePatientEntry = this.updatePatientEntry.bind(this)
+
         this.state = {
             _id : '',
             date: '',
@@ -79,32 +81,20 @@ export default class createSympotom extends Component {
     psList(){
         return this.state.patientEntry.map(hi => {
          return <PatientEntry patientEntry={hi} 
-            //updatePatientEntry={this.updatePatientEntry}
-            key={hi._id}/>;
+            key={hi._id} />; 
     })
+        
   }  
  
 
 onDismiss = () => {
     this.setstate({visible:false})
 };
+notify =() => {
+       toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
+};
 
     render(){
-       
-        
-//        const F= 
-//              <tr>
-//                <td> {this.state.date[0]}</td>
-//                <td> {this.state.symptom1[0]}</td>
-//                <td> {this.state.symptom2[0]}</td>
-//                <td> {this.state.symptom3[0]}</td>
-//                <td> {this.state.symptom4[0]}</td>
-//                <td> {this.state.temp[0]}</td>
-//                <td> {this.state.comment[0]}</td>
-//                <td> {this.state.doctorNote[0]}</td>
-//                <td> {this.state.immediateAttention[0]}</td>  
-//              </tr>                        
-           
         return(   
             <div>
              <table className="table">
@@ -127,9 +117,11 @@ onDismiss = () => {
               </tbody>
             </table>  
        <UpdateDialog patientEntry={this.state.patientEntry} patientId={this.props.patientId} />
-         
+           
+          
        </div>
 
         )
     }
 }
+//onSubmit={this.notify(toast.success)}
