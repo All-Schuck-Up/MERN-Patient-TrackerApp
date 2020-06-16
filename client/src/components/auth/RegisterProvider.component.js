@@ -110,7 +110,6 @@ export const RegisterProvider = ({ register, isAuthenticated }) => {
           Create Account
         </button>
         <p className='forgot-password text-right'>
-          {/* Forgot <a href='#'>password?</a> */}
           Already have Account <Link to='/provider/login'>Login</Link>
         </p>
       </form>

@@ -71,7 +71,6 @@ export const LoginProvider = ({ login, isAuthenticated }) => {
           Submit
         </button>
         <p className='forgot-password text-right'>
-          {/* Forgot <a href='#'>password?</a> */}
           Dont have Account <Link to='/provider/register'>Register</Link>
         </p>
       </form>

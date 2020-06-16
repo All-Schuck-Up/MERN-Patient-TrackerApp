@@ -9,11 +9,15 @@ import {
   LOGOUT,
   CLEAR_PROFILE,
 } from './types';
+import setAuthToken from '../utils/setAuthToken';
 
 // Load User upon app render
 // onSuccess: retrieve payload from localStorage
 // onFail: throw err, clear token
 export const loadUser = () => async (dispatch) => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
   try {
     const res = await axios.get('/users/auth');
 

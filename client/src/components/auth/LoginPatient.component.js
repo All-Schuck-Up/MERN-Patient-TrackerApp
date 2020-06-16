@@ -70,7 +70,6 @@ const LoginPatient = ({ login, isAuthenticated }) => {
           Submit
         </button>
         <p className='forgot-password text-right'>
-          {/* Forgot <a href='#'>password?</a> */}
           Dont have Account <Link to='/patient/register'>Register</Link>
         </p>
       </form>

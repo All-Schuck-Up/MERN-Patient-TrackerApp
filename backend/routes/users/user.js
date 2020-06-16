@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 
+// Import Model
 const User = require('../../models/User');
 
 // route    POST /user   TEST: https://localhost:5000/users/user
@@ -56,7 +57,6 @@ router.post(
           accountType: user.accountType,
         },
       };
-
       jwt.sign(
         payload,
         config.get('jwtSecret'),

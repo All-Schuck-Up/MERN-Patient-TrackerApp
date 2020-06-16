@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 
+// Import Model
 const User = require('../../models/User');
 
 // route    GET users/auth
@@ -43,7 +44,7 @@ router.post(
 
       if (!user) {
         return res.status(400).json({
-          errors: [{ msg: 'Invalid Credentials (dev: User is not in found)' }],
+          errors: [{ msg: 'Invalid Credentials' }],
         });
       }
 
@@ -51,9 +52,7 @@ router.post(
 
       if (!isMatch) {
         return res.status(400).json({
-          errors: [
-            { msg: 'Invalid Credentials (dev: passwords are not a match)' },
-          ],
+          errors: [{ msg: 'Invalid Credentials' }],
         });
       }
 
