@@ -21,8 +21,7 @@ toast.configure()
 export default class FormDialog extends Component {
     constructor(props) {
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-       
+        this.handleSubmit = this.handleSubmit.bind(this);        
         this.state = {
             patientEntry:[],
             updateNote:'',
@@ -39,34 +38,16 @@ export default class FormDialog extends Component {
 
    handleClose = () => {
        this.setState({ open: false})
-        toast.error('Ups! There was no update note submitted.', {position:toast.POSITION.TOP_CENTER});
+        toast.error('Ups! There was no update note submitted.', {position:toast.POSITION.TOP_RIGHT});
     };
     
-   handleCloseS = () => {
+   handleCloseDialog = () => {
        this.setState({ open: false})
-       toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
     };
 
-    handleS = () => {
-       toast.success('Success!', {position:toast.POSITION.TOP_LEFT})
-        this.notify(toast.success)
-       toast.success('Success!', {position:toast.POSITION.TOP_CENTER,autoClose:8000000}) 
-        
+   handleSubButton = () => {
+       toast.success('Success!', {position:toast.POSITION.TOP_RIGHT,autoClose:4000})
     };
-//   handleCloseS = () => {
-//       this.notify()
-//       toast.success('Success!', {position:toast.POSITION.TOP_RIGHT,autoClose:8000000})
-//       setTimeout(function () {
-//                window.location.reload(1);
-//            }, 5000);  // the window reloads after 5 secs
-//       this.setState({ open: false})
-//       setTimeout(function () {
-//                window.location.reload(1);
-//            }, 5000);  // the
-//       toast.success('Success!', {position:toast.POSITION.TOP_RIGHT,autoClose:8000000})
-//                       
-//    };
-
 
    notify =() => {
        toast('Basic notification!',{position:toast.POSITION.TOP_RIGHT})
@@ -92,15 +73,12 @@ export default class FormDialog extends Component {
        return date === d1;
    }
     
+componentDidMount() {
+        setTimeout(this.handleSubButton.bind(this),10);
+
+  }
 
     handleSubmit(event) { 
-
-//      toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
-//        setTimeout(function () {
-//                window.location.reload(1);
-//            }, 8000);  // the window reloads after 5 secs
-                     
-
 //      FOR TESTING:
 //        alert('You have submitted following to this entry date: ' + this.state.updateNote + " "+ this.props.patientEntry[this.props.patientEntry.length-1].date.substring(0,10));
          
@@ -109,19 +87,12 @@ export default class FormDialog extends Component {
              {updateNote: this.state.updateNote
              }) 
 
-        .then((res) => {
-                 toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
-                //toast.notify(res.message)
-                //this.notify(toast.success)
-          console.log(res.res.data);
-         
+        .then(() => {
       })
                        
-//        .catch((error) => {
-//            console.log(error);
-//        }) 
-
-
+        .catch((error) => {
+            console.log(error);
+        }) 
     }
     }
        
@@ -132,7 +103,7 @@ export default class FormDialog extends Component {
             Update Last Entry
           </Button>
 
-          <Dialog open={this.state.open} onClose={this.handleS} aria-labelledby="form-dialog-title">
+          <Dialog open={this.state.open} onClose={this.handleCloseDialog} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Update</DialogTitle>
             <DialogContent>
               <DialogContentText>
@@ -155,12 +126,9 @@ export default class FormDialog extends Component {
                   <Button color="primary" onClick={this.handleClose} >
                     Cancel
                   </Button>{'  '}
-                  <Button color="primary" value="Submit" type="submit"    onClick={this.handleCloseS} >
+                  <Button color="primary" value="Submit" type="submit" onClick={this.handleSubButton} >
                     Submit
                   </Button>
-      <Button color="primary" onClick={this.notify} >
-                    Notify
-                  </Button>{'  '}
                 </form>     
             </DialogContent>      
           </Dialog>
