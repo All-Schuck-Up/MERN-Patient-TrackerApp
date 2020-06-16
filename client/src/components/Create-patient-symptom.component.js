@@ -158,11 +158,11 @@ export default class createSympotom extends Component {
       "video/avi",
     ];
     // loop access array
-    for (var x = 0; x < files.length; x++) {
+    for (let num = 0; num < files.length; num++) {
       // compare file type find doesn't matach
-      if (types.every((type) => files[x].type !== type)) {
+      if (types.every((type) => files[num].type !== type)) {
         // create error message and assign to container
-        err += files[x].type + " is not a supported format\n";
+        err += files[num].type + " is not a supported format\n";
       }
     }
 
