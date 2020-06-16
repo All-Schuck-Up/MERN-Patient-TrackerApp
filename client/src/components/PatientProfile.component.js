@@ -23,7 +23,7 @@ export default class PatientProfile extends Component{
     
     
 componentDidMount(){
-     axios.get('http://localhost:5000/patient/' + this.props.patientId)
+     axios.get('http://localhost:5000/patientEntry/' + this.props.patientId)
         .then(res => {
             console.log(res);
            

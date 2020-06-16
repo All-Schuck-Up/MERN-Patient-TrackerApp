@@ -20,7 +20,7 @@ router.route('/patientEntries/:id').get((req, res) => {
 //route for getting entries by patient Id
 router.route('/patientEntry/:id').get((req, res) => {
     PatientEntry
-        .find({"patientId": req.params.id})
+        .findById(req.params.id)
         .then(patientEntries => res.json(patientEntries))
         .catch(err => res.status(400).json('Error: ' + err));
 });
