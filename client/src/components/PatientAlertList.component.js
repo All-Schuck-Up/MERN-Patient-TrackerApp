@@ -4,33 +4,39 @@ import axios from 'axios';
 import { Alert } from 'reactstrap';
 
 class AlertList extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            alertArray: []
-        }
-    }
-    async componentDidMount() {
-        axios.get('http://localhost:5000/alerts')
-            .then(response => {
-                console.log(response);
-                this.setState({alertArray : response.data});
-            });
+  constructor() {
+    super();
+    this.state = {
+      alertArray: [],
     };
-    render() {
-        const alert = this.state.alertArray.map((elem) => {
-            return(<AlertComponent key={elem.date} objectID={elem._id} patientID={elem.patientID} alertMessage={elem.alertMessage} date={elem.date}/>)
-        });
-        return(
-            
-            <div className="alertList">
-                <Alert color="danger">{this.state.alertArray.length === 0 ? 'No Alert' : 'Alerts!!!'}</Alert>
-                <ol>
-                {alert}
-                </ol>
-            </div>
-        )
-    }
+  }
+  async componentDidMount() {
+    axios.get('http://localhost:5000/alerts').then((response) => {
+      console.log(response);
+      this.setState({ alertArray: response.data });
+    });
+  }
+  render() {
+    const alert = this.state.alertArray.map((elem) => {
+      return (
+        <AlertComponent
+          key={elem.date}
+          objectID={elem._id}
+          patientId={elem.patientId}
+          alertMessage={elem.alertMessage}
+          date={elem.date}
+        />
+      );
+    });
+    return (
+      <div className='alertList'>
+        <Alert color='danger'>
+          {this.state.alertArray.length === 0 ? 'No Alert' : 'Alerts!!!'}
+        </Alert>
+        <ol>{alert}</ol>
+      </div>
+    );
+  }
 }
 
-export default AlertList
+export default AlertList;

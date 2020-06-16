@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
@@ -28,80 +28,65 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-function App({ auth: { loading, user }, profile }) {
+function App({ auth: { loading, user }, profile: { profile } }) {
+  useEffect(() => {
+    store.dispatch(getCurrentProfile());
+  }, []);
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
 
-  useEffect(() => {
-    store.dispatch(getCurrentProfile());
-  }, [getCurrentProfile]);
-
   console.log(user);
   console.log(profile);
 
-  return loading && profile === null ? (
+  return loading && profile === null && user === null ? (
     <Spinner />
   ) : (
     <Router>
-      <div className='mainBody'>
-        <div className='container'>
-          <br />
-          <Route exact path='/'>
-            <Landing />
-          </Route>
+      <Fragment>
+        <div className='mainBody'>
+          <div className='container'>
+            <br />
+            <Route exact path='/'>
+              <Landing />
+            </Route>
+            <Route exact path='/patient/login'>
+              <LoginPatient />
+            </Route>
+            <Route exact path='/patient/register'>
+              <RegisterPatient />
+            </Route>
+            <Route exact path='/provider/login'>
+              <LoginProvider />
+            </Route>
+            <Route exact path='/provider/register'>
+              <RegisterProvider />
+            </Route>
+            <Route exact path='/patient/login/:id'>
+              <Navbar />
+              <CreateSymptom
+                patientId={profile && profile._id}
+                lastName={profile && profile.lastName}
+              />
+            </Route>
+            <Route exact path='/patient/:id/profile'>
+              <Navbar name={profile && profile.firstName} />
+              <PatientProfile isDoctor={true} />
+            </Route>
+            <Route exact path='/patient/doctorNotes'>
+              <Navbar name='Provider Name' />
+              <ProviderNote
+                patientId={profile && profile._id}
+                patientLastName={profile && profile.lastName}
+              />
+            </Route>
+            <Route exact path='/provider/login/:id'>
+              <Navbar name='Provider Name' />
+              <ProviderProfile />
+            </Route>
+          </div>
         </div>
-        <div className='container'>
-          <Route exact path='/patient/login'>
-            <LoginPatient />
-          </Route>
-        </div>
-        <div className='container'>
-          <Route exact path='/patient/register'>
-            <RegisterPatient />
-          </Route>
-        </div>
-        <div className='container'>
-          <Route exact path='/provider/login'>
-            <LoginProvider />
-          </Route>
-        </div>
-        <div className='container'>
-          <Route exact path='/provider/register'>
-            <RegisterProvider />
-          </Route>
-        </div>
-        <div className='container'>
-          <Route exact path='/patient/login/:id'>
-            <Navbar />
-            <CreateSymptom
-              patientId={profile && profile._id}
-              lastName='temp user name'
-            />
-          </Route>
-        </div>
-        <div className='container'>
-          <Route exact path='/patient/:id/profile'>
-            <Navbar name={profile && profile.firstName} />
-            <PatientProfile isDoctor={true} />
-          </Route>
-        </div>
-        <div className='container'>
-          <Route exact path='/patient/doctorNotes'>
-            <Navbar name='Provider Name' />
-            <ProviderNote
-              patientID={profile && profile._id}
-              patientLastName={profile && profile.lastName}
-            />
-          </Route>
-        </div>
-        <div className='container'>
-          <Route exact path='/provider/login/:id'>
-            <Navbar name='Provider Name' />
-            <ProviderProfile />
-          </Route>
-        </div>
-      </div>
+      </Fragment>
     </Router>
   );
 }
@@ -113,7 +98,7 @@ App.prototypes = {
 };
 
 const mapStateToProps = (state) => ({
-  profile: state.profile.profile,
+  profile: state.profile,
   auth: state.auth,
 });
 

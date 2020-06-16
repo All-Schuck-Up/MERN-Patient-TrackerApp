@@ -35,7 +35,7 @@ const Routes = ({ user }) => {
         </PrivateRoute>
         <PrivateRoute exact path='/patient/doctorNotes'>
           <Navbar name='Provider Name' />
-          <ProviderNote patientID='' patientLastName='temp patient name' />
+          <ProviderNote patientId='' patientLastName='temp patient name' />
         </PrivateRoute>
         <PrivateRoute exact path='/provider/login/:id'>
           <Navbar name='Provider Name' />
