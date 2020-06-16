@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import CreateSymptoms from './CreateSymptoms.component';
+import { Button, Row, Col } from 'reactstrap';
+import {Link} from 'react-router-dom';
+import DoctorNotes from './ProviderNoteDisplay.component'
 
 export default class PatientProfile extends Component{ 
    constructor(props){
@@ -38,7 +41,7 @@ componentDidMount(){
         .then(res => {
             console.log(res);
         this.setState({
-            patientEntry: res.data.map(el=>el.doctorNote)});
+            patientEntry: res.data.map(el=>el.updateNote)});
         })
         .catch((error) => {
             console.log(error);
@@ -46,18 +49,13 @@ componentDidMount(){
 }
 
 render() {
-//    const patientS=
-//          <ul>{this.state.patientEntry.map((patientEntry) =>
-//              <li key={patientEntry._id}>{patientEntry}
-//              </li>
-//              )}
-//         </ul>
-
     const patientP =
             <ol>{this.state.patient}</ol>
 
-   
     return(
+        <div className="patientProfile">
+        <Row>
+            <Col sm="8">
         <div className = "container">
            <h1>Profile:</h1>
            <h4>Patient name: <i>{this.state.patientname}</i>,
@@ -66,7 +64,23 @@ render() {
            <h2>History:</h2>
                
           <CreateSymptoms patientId='5ecaabd07dfcc538bce811fc'/> 
-        
+             {this.props.isDoctor ? 
+                <div >
+                    <Link to="/patient/doctorNotes" className="nav-link">
+                    <Button>Add a note to this patient's profile</Button>
+                    </Link>
+                    
+                </div>
+             : null }
+
+        </div>
+        </Col>
+        <Col sm="4">
+        <div>
+                <DoctorNotes patientId="5ecaabd07dfcc538bce811fc"/>
+        </div>
+        </Col>
+        </Row>
         </div>
     )
 }

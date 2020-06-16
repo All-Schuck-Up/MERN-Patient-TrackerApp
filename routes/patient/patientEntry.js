@@ -38,6 +38,7 @@ router.route('/patientEntry/').get((req, res) => {
 //File Upload Using muter
 let multer = require("multer");
 
+
 helpIdGenerator = () => {
   const uuidv4 = require("uuid/v4");
 };
@@ -76,7 +77,7 @@ router.put(
       symptom4: req.body.symptom4,
       temp: Number(req.body.temp),
       comment: req.body.comment,
-      doctorNote: req.body.doctorNote,
+      updateNote: req.body.updateNote,
       immediateAttention: req.body.immediateAttention,
       media: url + "/public/" + req.file.filename,
     };
@@ -108,5 +109,44 @@ router.route('/patientEntry/update/:id').put((req, res) => {
         })
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
+
+//adds to the doctor note array in the patient cluster
+router.route('/patientEntry/addDoctorNote/:id').put((req, res) => {
+    PatientEntry.findById(req.params.id)
+        .then(entry => {
+            if(req.body.isDoctor) {
+            entry.doctorNote.push(req.body.doctorNote);
+            entry.save()
+                .then(() => res.json('Doctor Note Updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));}
+            else {
+                res.json("Only providers are allowed to update doctor notes")
+            }
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//retrieves all the doctor notes
+router.route('/doctorNotes/:id').get((req, res) => {
+    PatientEntry
+        .findById(req.params.id)
+        .then(patient => res.json(patient.doctorNote))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//updates an additional note from the patient to the patient entry
+router.route('/patientEntry/addUpdateNote/:id').put((req, res) => {
+    PatientEntry.findById(req.params.id)
+        .then(entry => {
+            entry.patientEntry[entry.patientEntry.length - 1].updateNote = req.body.updateNote;
+            entry.save()
+                .then(() => res.json('Doctor Note Updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));}
+            
+        )
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 
 module.exports = router;

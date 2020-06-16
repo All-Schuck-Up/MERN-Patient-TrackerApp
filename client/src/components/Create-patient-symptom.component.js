@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import axios from "axios";
 
+import React, { Component } from 'react';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import DoctorNotes from './ProviderNoteDisplay.component'
+//import { Card, Button, Row, Col } from 'reactstrap';
 import { Card, Button, CardTitle, CardText, Row, Col } from "reactstrap";
 import { Progress } from "reactstrap";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 const isFormValid = ({ formErrors, ...rest }) => {
   let valid = true;
   // validate form errors being empty
@@ -26,6 +26,7 @@ export default class createSympotom extends Component {
 
     this.onFileChange = this.onFileChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
     //this.resetForm = this.resetForm.bind(this);
 
     this.state = {
@@ -37,7 +38,7 @@ export default class createSympotom extends Component {
       symptom4: "",
       temp: "",
       comment: "",
-      doctorNote: "none",
+    updateNote:'none',
       immediateAttention: false,
       media: "",
       formErrors: {
@@ -73,8 +74,35 @@ export default class createSympotom extends Component {
       this.setState({
         media: file,
       });
-    }
-  };
+
+    this.resetForm = this.resetForm.bind(this);
+    this.immediateAttentionSubmit = this.immediateAttentionSubmit.bind(this);
+//    this.handleChangeTemp = this.handleChangeTemp.bind(this);
+    
+    this.baseState = {
+      symptom1: '',
+      symptom2: '',
+      symptom3: '',
+      symptom4: '',
+      temp: '',
+      comment: '',
+      updateNote:'none',
+      immediateAttention: false}
+  }
+  resetForm() {
+    this.setState(this.baseState)
+    // this.setState({
+    //   symptom1: '',
+    //   symptom2: '',
+    //   symptom3: '',
+    //   symptom4: '',
+    //   temp: '',
+    //   comment: '',
+    //   updateNote:'none',
+    //   immediateAttention: false
+    // })
+  }
+
 
   onSubmit = async (e) => {
     //e.preventDefault();
@@ -88,11 +116,12 @@ export default class createSympotom extends Component {
 
     symptom.append("temp", this.state.temp);
     symptom.append("comment", this.state.comment);
-    symptom.append("doctorNote", this.state.doctorNote);
+    symptom.append("updateNote", this.state.updateNote);
     symptom.append("immediateAttention", this.state.immediateAttention);
     symptom.append("media", this.state.media);
 
-    if (isFormValid(this.state)) {
+    if (isFormValid(this.state)) 
+    {
       axios
         .put(
           "http://localhost:5000/patientEntry/add/" + this.props.patientId,
@@ -111,38 +140,39 @@ export default class createSympotom extends Component {
         .catch((err) => {
           toast.error("upload fail ");
         });
+    
+     //high temperature alert sent to the alert cluster database
+     if(this.isHighTemp(this.state.temp)) {
+      axios.post('http://localhost:5000/alert/add', {
+        patientID : this.props.patientId,
+        lastName : this.props.lastName,
+	      alertMessage: "High fever - " + this.state.temp + "F"
+      }).then(res => console.log(res.data));
+     }
+     //symptoms alert sent to the alert cluster database
+     if(this.state.symptom1 === 'yes' || this.state.symptom2 === 'yes' || this.state.symptom3 === 'yes' || this.state.symptom4 === 'yes') {
+      axios.post('http://localhost:5000/alert/add', {
+        patientID : this.props.patientId,
+        lastName : this.props.lastName,
+	      alertMessage: "One or more symptoms appeared"
+      }).then(res => console.log(res.data));
+     }
+     //if the immediate attention is clicked post request will be sent to the immediate attention cluster
+     if (this.state.immediateAttention) {
+       axios.post('http://localhost:5000/immediateAttention/add', {
+        patientID : this.props.patientId
+       }).then(res => console.log(res.data));
+     }
 
-      if (this.isHighTemp(this.state.temp)) {
-        axios
-          .post("http://localhost:5000/alert/add", {
-            patientID: this.props.patientId,
-            lastName: this.props.lastName,
-            alertMessage: "High fever - " + this.state.temp + "F",
-          })
-          .then((res) => console.log(res.data));
-      }
+      window.location = '/patient/login/:id';
+      
 
-      //high temperature alert sent to the alert cluster database
-      //symptoms alert sent to the alert cluster database
-      if (
-        this.state.symptom1 === "yes" ||
-        this.state.symptom2 === "yes" ||
-        this.state.symptom3 === "yes" ||
-        this.state.symptom4 === "yes"
-      ) {
-        axios
-          .post("http://localhost:5000/alert/add", {
-            patientID: this.props.patientId,
-            lastName: this.props.lastName,
-            alertMessage: "One or more symptoms appeared",
-          })
-          .then((res) => console.log(res.data));
-      }
-      //window.location = "/";
     } else {
       console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+
     }
   };
+     
   //Validate File type
   validateMediaType = (event) => {
     //getting file object
@@ -166,6 +196,7 @@ export default class createSympotom extends Component {
       }
     }
 
+
     if (err !== "") {
       // if message not same old that mean has error
       event.target.value = null; // discard selected file
@@ -174,6 +205,44 @@ export default class createSympotom extends Component {
     }
     return true;
   };
+
+  handleChangeAdditionalNote = (event) => {
+    this.setState({comment: event.target.value});
+  }
+
+  immediateAttentionSubmit = () => {
+    this.setState({ immediateAttention: true });
+    this.notify()
+  }
+  
+  notify = () => toast.warn('Marked as Immediate Attention!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    });
+  //on file select 
+  // onMediaChange = event => {
+  //   // Update the state 
+  //   this.setState({ media: event.target.files[0] });
+  // };
+  // //On file upload (click upload button)
+  // onFileUpload(e) {
+  //   //create an object of form data
+  //   const patientMedia = new FormData();
+  //   //update the formData object
+  //   patientMedia.append(
+  //     "myFile",
+  //     this.state.media,
+  //     this.state.media.name
+  //   );
+  //   //file upload info
+  //   //console.log(this.state.media);
+  //   //axios.post("http://localhost:5000/uploadfile", patientMedia);
+
 
   //Image Size validator
   validateSize = (event) => {
@@ -202,6 +271,7 @@ export default class createSympotom extends Component {
 
     return (
       <div>
+        <ToastContainer />
         <Row>
           <Col sm="8">
             <Card body>
@@ -363,40 +433,28 @@ export default class createSympotom extends Component {
                   </div>
                 </div>
                 <div className="form-group">
+
+
+                  {" "}<Button className="btn btn-primary" onClick={this.immediateAttentionSubmit}>Mark as Immediate Attention</Button>
+                  {" "}<Button className="btn btn-primary" type="submit" >Save Record</Button>
                   {" "}
-                  <Button
-                    className="btn btn-primary"
-                    onClick={() => this.setState({ immediateAttention: true })}
-                  >
-                    Mark as Immediate Attention
-                  </Button>{" "}
-                  <Button className="btn btn-primary" type="submit">
-                    Save Record
-                  </Button>{" "}
-                  <button
+  <button
                     type="reset"
                     className="btn btn-secondary"
                     onClick={() => this.resetForm()}
                   >
                     Cancel
                   </button>
+
                 </div>
               </form>
+            
             </Card>
           </Col>
           <Col sm="4">
-            <Card>
-              <CardTitle>
-                {" "}
-                <h3 className="text-center">Latest Doctor Note</h3>
-              </CardTitle>
-              <CardText>
-                {" "}
-                On click doctors note from patient profile will be displayed On
-                click doctors note from patient profile
-              </CardText>
-              <Button>View</Button>
-            </Card>
+
+            <DoctorNotes patientId={this.props.patientId}/>
+
           </Col>
         </Row>
       </div>
