@@ -41,16 +41,32 @@ export default class FormDialog extends Component {
        this.setState({ open: false})
         toast.error('Ups! There was no update note submitted.', {position:toast.POSITION.TOP_CENTER});
     };
-    handleS = () => {
-       //toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
-        this.state.notify()
-       toast.success('Success!', {position:toast.POSITION.TOP_CENTER,autoClose:8000000}) 
-        
-    };
+    
    handleCloseS = () => {
        this.setState({ open: false})
        toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
     };
+
+    handleS = () => {
+       toast.success('Success!', {position:toast.POSITION.TOP_LEFT})
+        this.notify(toast.success)
+       toast.success('Success!', {position:toast.POSITION.TOP_CENTER,autoClose:8000000}) 
+        
+    };
+//   handleCloseS = () => {
+//       this.notify()
+//       toast.success('Success!', {position:toast.POSITION.TOP_RIGHT,autoClose:8000000})
+//       setTimeout(function () {
+//                window.location.reload(1);
+//            }, 5000);  // the window reloads after 5 secs
+//       this.setState({ open: false})
+//       setTimeout(function () {
+//                window.location.reload(1);
+//            }, 5000);  // the
+//       toast.success('Success!', {position:toast.POSITION.TOP_RIGHT,autoClose:8000000})
+//                       
+//    };
+
 
    notify =() => {
        toast('Basic notification!',{position:toast.POSITION.TOP_RIGHT})
@@ -68,8 +84,7 @@ export default class FormDialog extends Component {
    handleChangeUpdateNote = (e) => {
     this.setState({
            updateNote: e.target.value})
-           //updateNote: this.state.updateNote})
-         console.log(this.res);
+           console.log(this.res);
     };
 
    isToday(date){
@@ -79,7 +94,13 @@ export default class FormDialog extends Component {
     
 
     handleSubmit(event) { 
-       //  toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
+
+//      toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
+//        setTimeout(function () {
+//                window.location.reload(1);
+//            }, 8000);  // the window reloads after 5 secs
+                     
+
 //      FOR TESTING:
 //        alert('You have submitted following to this entry date: ' + this.state.updateNote + " "+ this.props.patientEntry[this.props.patientEntry.length-1].date.substring(0,10));
          
@@ -87,6 +108,7 @@ export default class FormDialog extends Component {
       axios.put('http://localhost:5000/patientEntry/update/'+this.props.patientId,
              {updateNote: this.state.updateNote
              }) 
+
         .then((res) => {
                  toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
                 //toast.notify(res.message)
@@ -94,9 +116,11 @@ export default class FormDialog extends Component {
           console.log(res.res.data);
          
       })
-        .catch((errors) => {
-            console.log(errors);
-        }) 
+                       
+//        .catch((error) => {
+//            console.log(error);
+//        }) 
+
 
     }
     }
@@ -107,7 +131,7 @@ export default class FormDialog extends Component {
           <Button variant="outlined" className="pull-right" color="primary" size="sm" border="5em" onClick={this.handleClickOpen}>
             Update Last Entry
           </Button>
-      
+
           <Dialog open={this.state.open} onClose={this.handleS} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Update</DialogTitle>
             <DialogContent>
