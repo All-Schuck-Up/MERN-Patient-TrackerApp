@@ -29,7 +29,7 @@ Rest of the branches - Feature branches <br  />
 		(now you will have "client" and "client0" directories) <br />
 	4.  copy the "public" and "src" directories from the "client0" replace the files into "client" <br />
 	5.  From your terminal run "npm install" to install all the dependencies needed <br />
-		<strong>(Repeat step 5 for both the root directory and client directory)</strong>
+		<strong>(Repeat step 5 for both the root directory and client directory)</strong><br />
 	6.  Install "reactstrap" and "bootstrap" manually from your terminal "npm i reactstrap" and "npm i bootstrap" <br />
 	7.  Last but not least, from your terminal run <strong> npm run dev </strong> (we made a concurrent script to run both the server and the react) <br />
 
