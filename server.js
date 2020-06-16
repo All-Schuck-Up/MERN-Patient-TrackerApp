@@ -12,18 +12,12 @@ app.use(cors());
 app.use(express.json());
 
 // Routes (making app modular)
-// const mainRoutes = require('./backend/routes/routes');
-// const patientRoutes = require('./routes/patient/patient');
 const patientEntryRoutes = require('./backend/routes/patient/patientEntry');
-// const providerRoutes = require('./routes/provider/provider');
 const immediateAttnRoutes = require('./backend/routes/provider/immediateAttention');
 const alert = require('./backend/routes/provider/alert');
 
 // middleware for all routes
-// app.use('/', mainRoutes);
-// app.use('/', patientRoutes);
 app.use('/', patientEntryRoutes);
-// app.use('/', providerRoutes);
 app.use('/', immediateAttnRoutes);
 app.use('/', alert);
 app.use('/patient/profile', require('./backend/routes/patient/patient'));
