@@ -18,7 +18,7 @@ class ProviderNote extends React.Component {
     }
     async componentDidMount() {
         //retrieves all the doctor notes
-        axios.get('http://localhost:5000/doctorNotes/' + this.props.patientID)
+        axios.get('http://localhost:5000/doctorNotes/' + this.props.patientId)
             .then(response => {
                 console.log(response);
                 this.setState({doctorNoteArray : response.data});
@@ -43,7 +43,7 @@ class ProviderNote extends React.Component {
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var dateTime = date+' '+time;
-        axios.put('http://localhost:5000/patientEntry/addDoctorNote/5ecaabd07dfcc538bce811fc', {
+        axios.put('http://localhost:5000/patientEntry/addDoctorNote/' + this.props.patientId, {
             isDoctor: true,
             doctorNote: 'On ' + dateTime + ' :  ' + this.state.doctorNote
         })
@@ -77,7 +77,7 @@ class ProviderNote extends React.Component {
                    
                     <Button className="btn btn-primary" onClick={this.scheduleMeeting} style={{ marginBottom: '1rem' }}>Schedule a Zoom Meeting</Button>
                 </Form>
-                <Alert color="success">Past Notes for {this.props.patientLastName}</Alert>
+                <Alert color="success">Past Notes for {this.props.lastName}</Alert>
                 </div>
                 <div className="mainDoctorNote">
                 {notes}

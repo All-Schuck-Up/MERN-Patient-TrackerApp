@@ -163,7 +163,7 @@ return true;
      //high temperature alert sent to the alert cluster database
      if(this.isHighTemp(this.state.temp)) {
       axios.post('http://localhost:5000/alert/add', {
-        patientID : this.props.patientId,
+        patientId : this.props.patientId,
         lastName : this.props.lastName,
 	      alertMessage: "High fever - " + this.state.temp + "F"
       }).then(res => console.log(res.data));
@@ -171,7 +171,7 @@ return true;
      //symptoms alert sent to the alert cluster database
      if(this.state.symptom1 === 'yes' || this.state.symptom2 === 'yes' || this.state.symptom3 === 'yes' || this.state.symptom4 === 'yes') {
       axios.post('http://localhost:5000/alert/add', {
-        patientID : this.props.patientId,
+        patientId : this.props.patientId,
         lastName : this.props.lastName,
 	      alertMessage: "One or more symptoms appeared"
       }).then(res => console.log(res.data));
@@ -179,7 +179,7 @@ return true;
      //if the immediate attention is clicked post request will be sent to the immediate attention cluster
      if (this.state.immediateAttention) {
        axios.post('http://localhost:5000/immediateAttention/add', {
-        patientID : this.props.patientId,
+        patientId : this.props.patientId,
         lastName : this.props.lastName
        }).then(res => console.log(res.data));
      }

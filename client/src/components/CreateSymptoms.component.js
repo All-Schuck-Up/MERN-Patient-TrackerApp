@@ -68,7 +68,6 @@ export default class createSympotom extends Component {
     }
     componentDidMount() {
         axios.get('http://localhost:5000/patient/' + this.props.patientId)
-       //axios.get('http://localhost:5000/patient/' + this.props.match.params.patientId)
         
         .then(res => {
             console.log(res);
@@ -109,31 +108,7 @@ export default class createSympotom extends Component {
     this.setstate({ visible: false });
   };
 
-//             });
-//         })
-//         .catch((error) => {
-//             console.log(error);
-//          }) 
-       
-//     }
-//     psList(){
-//         return this.state.patientEntry.map(hi => {
-//          return <PatientEntry patientEntry={hi} 
-//             key={hi._id} />; 
-//     })
-        
-//   }  
- 
-
-// onDismiss = () => {
-//     this.setstate({visible:false})
-// };
-// notify =() => {
-//        toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
-// };
-
-
-    render(){
+  render(){
         return(   
             <div>
              <table className="table">
@@ -155,7 +130,7 @@ export default class createSympotom extends Component {
                 {this.psList()}
               </tbody>
             </table>  
-       <UpdateDialog patientEntry={this.state.patientEntry} patientId={this.props.patientId} />
+       <UpdateDialog patientEntry={this.state.patientEntry} patientId={this.props.patientId} accountType={this.props.accountType} />
            
           
        </div>

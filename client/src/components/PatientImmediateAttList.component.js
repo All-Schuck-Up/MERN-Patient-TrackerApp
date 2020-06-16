@@ -19,7 +19,7 @@ class PatientImmediateAttList extends React.Component {
     };
     render() {
         const immediateAtt = this.state.immediateAttArray.map((elem) => {
-            return(<PatientImmediateAtt key={elem} objectID={elem._id} patientID={elem.patientID} date={elem.date} lastName={elem.lastName}/>)
+            return(<PatientImmediateAtt key={elem} objectID={elem._id} patientId={elem.patientId} date={elem.date} lastName={elem.lastName}/>)
         });
         return(
             

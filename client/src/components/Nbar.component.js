@@ -16,7 +16,7 @@ export default class Navbar extends Component {
       
       
       <nav className="navbar navbar-dark bg-primary navbar-expand-lg">
-        <Link to="/" className="navbar-brand">Welcome {this.props.firstName}{this.props.name}{this.state.name}{this.state.firstName}</Link>
+        <Link to="/" className="navbar-brand">Welcome {this.props.lastName}</Link>
         <div className="collpase navbar-collapse">
         <ul className="navbar-nav mr-auto">
           <li className="navbar-item">

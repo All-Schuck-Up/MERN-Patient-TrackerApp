@@ -62,25 +62,25 @@ function App() {
           </div>
           <div className='container'>
             <Route exact path='/patient/login/:id'>
-              <Navbar />
+              <Navbar lastName="temp user name"/>
               <CreateSymptom patientId="5ecaabd07dfcc538bce811fc" lastName="temp user name"/>
             </Route>
           </div>
           <div className='container'>
             <Route exact path='/patient/:id/profile'>
-              <Navbar name="Patient Name"/>
-              <PatientProfile isDoctor={true} />
+              <Navbar lastName="temp user name"/>
+              <PatientProfile patientId="5ecaabd07dfcc538bce811fc" accountType="patient"/>
             </Route>
           </div>
           <div className='container'>
             <Route exact path='/patient/doctorNotes'>
-              <Navbar name="Provider Name"/>
-              <ProviderNote patientID="5ecaabd07dfcc538bce811fc" patientLastName="temp patient name"/>
+              <Navbar lastName="temp user name"/>
+              <ProviderNote patientId="5ecaabd07dfcc538bce811fc" lastName="temp patient name"/>
             </Route>
           </div>
           <div className='container'>
             <Route exact path='/provider/login/:id'>
-              <Navbar name="Provider Name"/>
+              <Navbar lastName="temp user name"/>
               <ProviderProfile />
             </Route>
           </div>

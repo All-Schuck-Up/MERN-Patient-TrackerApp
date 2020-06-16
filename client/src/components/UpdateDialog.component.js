@@ -98,10 +98,11 @@ componentDidMount() {
        
  render() {
   return (
-        <> 
-          <Button variant="outlined" className="pull-right" color="primary" size="sm" border="5em" onClick={this.handleClickOpen}>
-            Update Last Entry
-          </Button>
+                <> {this.props.accountType === "patient" ?
+                <Button variant="outlined" className="pull-right" color="primary" size="sm" border="5em" onClick={this.handleClickOpen}>
+                Update Last Entry
+              </Button> 
+            : null }  {/*update last note entry is only rendered when accountType is patient*/}
 
           <Dialog open={this.state.open} onClose={this.handleCloseDialog} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Update</DialogTitle>
