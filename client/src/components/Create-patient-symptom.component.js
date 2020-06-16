@@ -27,6 +27,7 @@ export default class createSympotom extends Component {
 
     this.onSubmit = this.onSubmit.bind(this);
     this.resetForm = this.resetForm.bind(this);
+    this.immediateAttentionSubmit = this.immediateAttentionSubmit.bind(this);
 //    this.handleChangeTemp = this.handleChangeTemp.bind(this);
     
     this.state = {
@@ -162,7 +163,11 @@ export default class createSympotom extends Component {
 
   handleChangeAdditionalNote = (event) => {
     this.setState({comment: event.target.value});
-    this.notify();
+  }
+
+  immediateAttentionSubmit = () => {
+    this.setState({ immediateAttention: true });
+    this.notify()
   }
   
   notify = () => toast.warn('Marked as Immediate Attention!', {
@@ -287,7 +292,7 @@ export default class createSympotom extends Component {
 
                 </div>
                 <div className="form-group">
-                  {" "}<Button className="btn btn-primary" onClick={() => this.setState({ immediateAttention: true })}>Mark as Immediate Attention</Button>
+                  {" "}<Button className="btn btn-primary" onClick={this.immediateAttentionSubmit}>Mark as Immediate Attention</Button>
                   {" "}<Button className="btn btn-primary" type="submit" >Save Record</Button>
                   {" "}
 
