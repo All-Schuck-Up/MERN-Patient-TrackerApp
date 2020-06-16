@@ -23,13 +23,15 @@
         "express-validator": "^6.4.1",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.9.12",
+        "multer": "^1.4.2",
         "react-redux": "^7.2.0",
         "react-router-dom": "^5.1.2",
         "react-toastify": "^6.0.5",
         "reactstrap": "^8.4.1",
         "redux": "^4.0.5",
         "redux-devtools-extension": "^2.13.8",
-        "redux-thunk": "^2.3.0"
+        "redux-thunk": "^2.3.0",
+        "uuid": "^8.1.0"
     },
     "devDependencies": {
         "concurrently": "^5.2.0",

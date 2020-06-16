@@ -376,8 +376,8 @@ return true;
                   {"      "}
                   <input type="file" onChange={this.onFileChange} />
                 </div>
-                <div class="form-group">
-                  <div class="form-group">
+                <div className="form-group">
+                  <div className="form-group">
                     <Progress
                       max="100"
                       color="success"
