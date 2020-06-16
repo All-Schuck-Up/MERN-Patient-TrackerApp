@@ -19,13 +19,15 @@ class AlertList extends React.Component {
     };
     render() {
         const alert = this.state.alertArray.map((elem) => {
-            return(<AlertComponent key={elem.date} objectID={elem._id} patientID={elem.patientID} alertMessage={elem.alertMessage} lastName={elem.lastName}/>)
+            return(<AlertComponent key={elem.date} objectID={elem._id} patientID={elem.patientID} alertMessage={elem.alertMessage} date={elem.date} lastName={elem.lastName}/>)
         });
         return(
             
             <div className="alertList">
                 <Alert color="danger">{this.state.alertArray.length === 0 ? 'No Alert' : 'Alerts!!!'}</Alert>
+                <ol>
                 {alert}
+                </ol>
             </div>
         )
     }

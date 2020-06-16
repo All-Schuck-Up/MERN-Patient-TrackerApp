@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
-import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
-
-//import PatientProfile from "./PatientProfile.component";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import DoctorNotes from './ProviderNoteDisplay.component'
+import { Card, Button, Row, Col } from 'reactstrap';
 
 
 const isFormValid = ({ formErrors, ...rest }) => {
@@ -24,6 +24,8 @@ export default class createSympotom extends Component {
     super(props);
 
     this.onSubmit = this.onSubmit.bind(this);
+    this.resetForm = this.resetForm.bind(this);
+    this.immediateAttentionSubmit = this.immediateAttentionSubmit.bind(this);
 //    this.handleChangeTemp = this.handleChangeTemp.bind(this);
     
     this.state = {
@@ -33,7 +35,7 @@ export default class createSympotom extends Component {
       symptom4: '',
       temp: '',
       comment: '',
-      doctorNote:'none',
+      updateNote:'none',
       immediateAttention: false,
       formErrors: { 
         valid : "Please enter a valid number",
@@ -41,11 +43,28 @@ export default class createSympotom extends Component {
         tooHighTemp: "too high! the highest recorded temperature is 115F by 52yo Willie Jones, maybe typo?"
       }
     };
-    this.baseState = this.state
+    this.baseState = {
+      symptom1: '',
+      symptom2: '',
+      symptom3: '',
+      symptom4: '',
+      temp: '',
+      comment: '',
+      updateNote:'none',
+      immediateAttention: false}
   }
-
-  resetForm = () => {
+  resetForm() {
     this.setState(this.baseState)
+    // this.setState({
+    //   symptom1: '',
+    //   symptom2: '',
+    //   symptom3: '',
+    //   symptom4: '',
+    //   temp: '',
+    //   comment: '',
+    //   updateNote:'none',
+    //   immediateAttention: false
+    // })
   }
 
 
@@ -58,7 +77,7 @@ export default class createSympotom extends Component {
       symptom4: this.state.symptom4,
       temp: this.state.temp,
       comment: this.state.comment,
-      doctorNote:this.state.doctorNote,
+      updateNote:this.state.updateNote,
       immediateAttention: this.state.immediateAttention})
      .then(res => console.log(res.data));
     
@@ -78,8 +97,14 @@ export default class createSympotom extends Component {
 	      alertMessage: "One or more symptoms appeared"
       }).then(res => console.log(res.data));
      }
+     //if the immediate attention is clicked post request will be sent to the immediate attention cluster
+     if (this.state.immediateAttention) {
+       axios.post('http://localhost:5000/immediateAttention/add', {
+        patientID : this.props.patientId
+       }).then(res => console.log(res.data));
+     }
 
-      window.location = '/';
+      window.location = '/patient/login/:id';
       
 
     } else {
@@ -128,6 +153,21 @@ export default class createSympotom extends Component {
   handleChangeAdditionalNote = (event) => {
     this.setState({comment: event.target.value});
   }
+
+  immediateAttentionSubmit = () => {
+    this.setState({ immediateAttention: true });
+    this.notify()
+  }
+  
+  notify = () => toast.warn('Marked as Immediate Attention!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    });
   //on file select 
   // onMediaChange = event => {
   //   // Update the state 
@@ -157,6 +197,7 @@ export default class createSympotom extends Component {
     return (
 
       <div>
+        <ToastContainer />
         <Row>
           <Col sm="8">
             <Card body>
@@ -232,23 +273,17 @@ export default class createSympotom extends Component {
 
                 </div>
                 <div className="form-group">
-                  {" "}<Button className="btn btn-primary" onClick={() => this.setState({ immediateAttention: true })}>Mark as Immediate Attention</Button>
+                  {" "}<Button className="btn btn-primary" onClick={this.immediateAttentionSubmit}>Mark as Immediate Attention</Button>
                   {" "}<Button className="btn btn-primary" type="submit" >Save Record</Button>
-                  {" "}<Button className="btn btn-primary" type="button" name="cancel" onClick={this.resetForm}>Cancel</Button>
+                  {" "}
 
                 </div>
               </form>
+              <Button className="btn btn-primary" type="button" name="cancel" onClick={this.resetForm}>Cancel</Button>
             </Card>
           </Col>
           <Col sm="4">
-            <Card >
-              <CardTitle > <h3 className="text-center">Latest Doctor Note</h3></CardTitle>
-              <CardText> On click doctors note from patient profile will be displayed
-              On click doctors note from patient profile
-              </CardText>
-              <Button >View</Button>
-
-            </Card>
+            <DoctorNotes patientId={this.props.patientId}/>
           </Col>
         </Row>
       </div>

@@ -27,13 +27,11 @@ const PatientSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
-//NO need for date here    
-//    date: {
-//        type: Date,
-//        default: Date.now
-//    },
   assignedDoctor: {
         type: String
+    },
+  doctorNote: {
+      type: Array
     },
   patientEntry: [
     {
@@ -64,11 +62,14 @@ const PatientSchema = new mongoose.Schema({
       comment: {
         type: String,
       },
-      doctorNote: {
+      updateNote: {
         type: String,
       },
       immediateAttention: {
         type: Boolean,
+      },
+      updateNote: {
+        type: String, 
       },
     },
   ],

@@ -46,7 +46,7 @@
   margin: 0 auto;
 }
 
-.rowImmediateAtt {
+.rowWarnings {
   margin: 10px;
 }
 
@@ -57,11 +57,26 @@
 }
 
 .spaceInputNote {
-  width: 90%;
+  margin-top: 10px;
+  width: 100%;
+  word-wrap: break-word;
 }
 .inputSearch {
   width : 70%
 }
 .patientSearch {
   display:inline-block;
+}
+.viewAllDoctorNotesButton {
+  width: 100%
+}
+ol li {
+  color: blue;
+  font-weight: bold;
+}
+.pull-left {
+  float: left !important;
+}
+.pull-right {
+  float: right !important;
 }

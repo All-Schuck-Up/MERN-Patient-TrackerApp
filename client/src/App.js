@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
@@ -18,10 +18,7 @@ import Navbar from './components/Nbar.component';
 import CreateSymptom from './components/Create-patient-symptom.component';
 import PatientProfile from './components/PatientProfile.component';
 import ProviderProfile from './components/ProviderProfile';
-import WelcomeProvider from './components/WelcomeProvider.component';
-import PatientSearch from './components/PatientSearch.component';
-import PatientAlertList from './components/PatientAlertList.component';
-import PatientImmediateAttList from './components/PatientImmediateAttList.component';
+import ProviderNote from './components/ProviderNote.component'
 
 // check for token
 if (localStorage.token) {
@@ -66,13 +63,19 @@ function App() {
           <div className='container'>
             <Route exact path='/patient/login/:id'>
               <Navbar />
-              <CreateSymptom patientId="5ecb471af1741b0a4e6b993a" lastName="temp user name"/>
+              <CreateSymptom patientId="5ecaabd07dfcc538bce811fc" lastName="temp user name"/>
             </Route>
           </div>
           <div className='container'>
             <Route exact path='/patient/:id/profile'>
               <Navbar name="Patient Name"/>
-              <PatientProfile />
+              <PatientProfile isDoctor={true} />
+            </Route>
+          </div>
+          <div className='container'>
+            <Route exact path='/patient/doctorNotes'>
+              <Navbar name="Provider Name"/>
+              <ProviderNote patientID="5ecaabd07dfcc538bce811fc" patientLastName="temp patient name"/>
             </Route>
           </div>
           <div className='container'>
