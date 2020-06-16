@@ -79,7 +79,7 @@ router.put(
       comment: req.body.comment,
       updateNote: req.body.updateNote,
       immediateAttention: req.body.immediateAttention,
-      media: url + "/public/" + req.file.filename,
+      media: url + "/public/" + req.file.media,
     };
     PatientEntry.findById(req.params.id)
       .then((patientEntries) => {
