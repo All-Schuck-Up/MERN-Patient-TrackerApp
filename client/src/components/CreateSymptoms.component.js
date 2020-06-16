@@ -76,7 +76,8 @@ export default class createSympotom extends Component {
                 updateNote: res.data.patientEntry.map(el=>el.updateNote),
                 media:res.data.patientEntry.map(el=>el.media)
 
-     })
+              });
+            })
       .catch((error) => {
         console.log(error);
       });

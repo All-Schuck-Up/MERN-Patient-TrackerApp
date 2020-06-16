@@ -4,9 +4,9 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DoctorNotes from './ProviderNoteDisplay.component'
-//import { Card, Button, Row, Col } from 'reactstrap';
-import { Card, Button, CardTitle, CardText, Row, Col } from "reactstrap";
+import { Card, Button, Row, Col } from 'reactstrap';
 import { Progress } from "reactstrap";
+
 const isFormValid = ({ formErrors, ...rest }) => {
   let valid = true;
   // validate form errors being empty
@@ -19,19 +19,15 @@ const isFormValid = ({ formErrors, ...rest }) => {
   });
   return valid;
 };
-
 export default class createSympotom extends Component {
   constructor(props) {
     super(props);
-
     this.onFileChange = this.onFileChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
-    //this.resetForm = this.resetForm.bind(this);
-
+    this.resetForm = this.resetForm.bind(this);
+    this.immediateAttentionSubmit = this.immediateAttentionSubmit.bind(this);
     this.state = {
       loaded: 0,
-
       symptom1: "",
       symptom2: "",
       symptom3: "",
@@ -74,35 +70,54 @@ export default class createSympotom extends Component {
       this.setState({
         media: file,
       });
-
-    this.resetForm = this.resetForm.bind(this);
-    this.immediateAttentionSubmit = this.immediateAttentionSubmit.bind(this);
-//    this.handleChangeTemp = this.handleChangeTemp.bind(this);
-    
-    this.baseState = {
-      symptom1: '',
-      symptom2: '',
-      symptom3: '',
-      symptom4: '',
-      temp: '',
-      comment: '',
-      updateNote:'none',
-      immediateAttention: false}
-  }
-  resetForm() {
-    this.setState(this.baseState)
-    // this.setState({
-    //   symptom1: '',
-    //   symptom2: '',
-    //   symptom3: '',
-    //   symptom4: '',
-    //   temp: '',
-    //   comment: '',
-    //   updateNote:'none',
-    //   immediateAttention: false
-    // })
+    }
+  };
+//Validate File type
+validateMediaType = (event) => {
+  //getting file object
+  let files = event.target.files;
+  //define message container
+  let err = "";
+  // list allow mime type
+  const types = [
+    "image/png",
+    "image/jpeg",
+    "image/gif",
+    "video/mp4",
+    "video/avi",
+  ];
+  // loop access array
+  for (let num = 0; num < files.length; num++) {
+    // compare file type find doesn't matach
+    if (types.every((type) => files[num].type !== type)) {
+      // create error message and assign to container
+      err += files[num].type + " is not a supported format\n";
+    }
   }
 
+  if (err !== "") {
+    // if message not same old that mean has error
+    event.target.value = null; // discard selected file
+    toast.error(err);
+    return false;
+  }
+  return true;
+};
+//media Size validator
+  
+validateSize = (event) => {
+  let file = event.target.files[0];
+  let size = 10000000;
+  let err = "";
+  console.log(file.size);
+  if (file.size > size) {
+    err = file.type + "is too large, please pick a smaller file\n";
+    event.target.value = null; // discard selected file
+    toast.error(err);
+    return false;
+  }
+  return true;
+};
 
   onSubmit = async (e) => {
     //e.preventDefault();
@@ -140,7 +155,9 @@ export default class createSympotom extends Component {
         .catch((err) => {
           toast.error("upload fail ");
         });
-    
+        setTimeout(function () {
+          window.location.reload(1);
+      }, 5000); 
      //high temperature alert sent to the alert cluster database
      if(this.isHighTemp(this.state.temp)) {
       axios.post('http://localhost:5000/alert/add', {
@@ -173,39 +190,7 @@ export default class createSympotom extends Component {
     }
   };
      
-  //Validate File type
-  validateMediaType = (event) => {
-    //getting file object
-    let files = event.target.files;
-    //define message container
-    let err = "";
-    // list allow mime type
-    const types = [
-      "image/png",
-      "image/jpeg",
-      "image/gif",
-      "video/mp4",
-      "video/avi",
-    ];
-    // loop access array
-    for (let num = 0; num < files.length; num++) {
-      // compare file type find doesn't matach
-      if (types.every((type) => files[num].type !== type)) {
-        // create error message and assign to container
-        err += files[num].type + " is not a supported format\n";
-      }
-    }
-
-
-    if (err !== "") {
-      // if message not same old that mean has error
-      event.target.value = null; // discard selected file
-      toast.error(err);
-      return false;
-    }
-    return true;
-  };
-
+  
   handleChangeAdditionalNote = (event) => {
     this.setState({comment: event.target.value});
   }
@@ -224,40 +209,8 @@ export default class createSympotom extends Component {
     draggable: true,
     progress: undefined,
     });
-  //on file select 
-  // onMediaChange = event => {
-  //   // Update the state 
-  //   this.setState({ media: event.target.files[0] });
-  // };
-  // //On file upload (click upload button)
-  // onFileUpload(e) {
-  //   //create an object of form data
-  //   const patientMedia = new FormData();
-  //   //update the formData object
-  //   patientMedia.append(
-  //     "myFile",
-  //     this.state.media,
-  //     this.state.media.name
-  //   );
-  //   //file upload info
-  //   //console.log(this.state.media);
-  //   //axios.post("http://localhost:5000/uploadfile", patientMedia);
 
 
-  //Image Size validator
-  validateSize = (event) => {
-    let file = event.target.files[0];
-    let size = 1030000;
-    let err = "";
-    console.log(file.size);
-    if (file.size > size) {
-      err = file.type + "is too large, please pick a smaller file\n";
-      event.target.value = null; // discard selected file
-      toast.error(err);
-      return false;
-    }
-    return true;
-  };
   resetForm(e) {
     // e.preventDefault();
     this.props.resetForm();
@@ -278,7 +231,7 @@ export default class createSympotom extends Component {
               <form className="form-horizontal" onSubmit={this.onSubmit}>
                 {
                   <ToastContainer
-                    position="top-center"
+                    position="top-right"
                     autoClose={10000000}
                     hideProgressBar={false}
                     newestOnTop={false}
@@ -287,7 +240,7 @@ export default class createSympotom extends Component {
                     pauseOnFocusLoss
                     draggable
                     pauseOnHover
-                    autoDismiss={false}
+                    autoDismiss={true}
                   />
                 }
                 <h3 className="text-center">Patient Symptom Entry</h3>
