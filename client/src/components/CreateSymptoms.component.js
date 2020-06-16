@@ -65,7 +65,6 @@ export default class createSympotom extends Component {
                 symptom4: res.data.patientEntry.map(el=>el.symptom4),
                 temp: res.data.patientEntry.map(el=>el.temp),
                 comment: res.data.patientEntry.map(el=>el.comment),
-                doctorNote: res.data.patientEntry.map(el=>el.doctorNote),
                 immediateAttention: res.data.patientEntry.map(el=>el.immediateAttention.toString()),
                 updateNote: res.data.patientEntry.map(el=>el.updateNote),
                 media:res.data.patientEntry.map(el=>el.media)
@@ -119,9 +118,8 @@ onDismiss = () => {
                   <th>Temp</th>
                   <th>Media</th>
                   <th>Additional Note</th>
-                  <th>Doctor Note</th>
-                  <th>Immediate Attention</th>
                   <th>Update Note</th>
+                  <th>Immediate Attention</th>
                 </tr>
               </thead>
               <tbody>

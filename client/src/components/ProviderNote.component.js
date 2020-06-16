@@ -43,7 +43,7 @@ class ProviderNote extends React.Component {
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var dateTime = date+' '+time;
-        axios.put('http://localhost:5000/patientEntry/addDoctorNote/5ecb471af1741b0a4e6b993a', {
+        axios.put('http://localhost:5000/patientEntry/addDoctorNote/5ecaabd07dfcc538bce811fc', {
             isDoctor: true,
             doctorNote: 'On ' + dateTime + ' :  ' + this.state.doctorNote
         })

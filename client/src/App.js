@@ -75,7 +75,7 @@ function App() {
           <div className='container'>
             <Route exact path='/patient/doctorNotes'>
               <Navbar name="Provider Name"/>
-              <ProviderNote patientID="5ecb471af1741b0a4e6b993a" patientLastName="temp patient name"/>
+              <ProviderNote patientID="5ecaabd07dfcc538bce811fc" patientLastName="temp patient name"/>
             </Route>
           </div>
           <div className='container'>
