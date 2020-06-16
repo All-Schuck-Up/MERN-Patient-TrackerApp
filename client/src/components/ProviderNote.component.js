@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Card, CardText, Alert, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Card, CardText, Alert, Button, Form, FormGroup, Input } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

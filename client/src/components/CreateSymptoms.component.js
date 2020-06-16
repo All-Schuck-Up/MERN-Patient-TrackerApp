@@ -40,7 +40,6 @@ export default class createSympotom extends Component {
             comment:'',
             updateNote:'',         
             immediateAttention:true,
-            updateNote:'',
             entry:'',
             patientEntry:[],
             patient:[],
