@@ -1,5 +1,7 @@
 <h1 align="center">
-![](client/public/favicon.ico)   Symptom Tracking App   ![](client/public/favicon.ico)
+![](client/public/favicon.ico)   
+	Symptom Tracking App   
+![](client/public/favicon.ico)
 MERN App for Group-F
 </h1>
 <br  />
