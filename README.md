@@ -1,6 +1,8 @@
 <h1 align="center">
-![image](https://user-images.githubusercontent.com/55608123/84925995-9841b680-b07f-11ea-9669-99c4f4dacf0d.png)  Symptom Tracking App
-MERN App for Group-F <br  />
+![](client/public/favicon.ico)   Symptom Tracking App   ![](client/public/favicon.ico)
+MERN App for Group-F
+</h1>
+<br  />
 <br  />
 ## Patient Symptom Tracking Web Application <br  />
 The idea behind our app was to provide a service/ resource for individuals who
