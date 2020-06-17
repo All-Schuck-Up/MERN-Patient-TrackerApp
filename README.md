@@ -71,21 +71,18 @@ $ npm run dev
 <br />
 
 ### Dependencies
-| Backend                               | Client                         | Dev                      |
-|---------------------------------------|--------------------------------|--------------------------|
-| "axios": "^0.19.2"                    | "axios": "^0.19.2"             | "concurrently": "^5.2.0" |
-| "bcrypt": "^4.0.1"                    | "bootstrap": "^4.5.0"          | "nodemon": "^2.0.3"      |
-| "bcryptjs": "^2.4.3"                  | "multer": "^1.4.2"             |                          |
-| "body-parser": "^1.19.0"              | "react": "^16.13.1"            |                          |
-| "bootstrap": "^4.5.0"                 | "react-dom": "^16.13.1"        |                          |
-| "cors": "^2.8.5"                      | "react-redux": "^7.2.0"        |                          |
-| "config": "^3.3.1"                    | "react-scripts": "3.4.1"       |                          |
-| "dotenv": "^8.2.0"                    | "reactstrap": "^8.4.1"         |                          |
-| "express": "^4.17.1"                  | "redux": "^4.0.5"              |                          |
-| "express-validator": "^6.4.1"         | "redux-thunk": "^2.3.0"        |                          |
-| "jsonwebtoken": "^8.5.1"              | "semantic-ui-react": "^0.88.2" |                          |
-| "mongoose": "^5.9.12"                 | "uuid": "^8.1.0"               |                          |
-| "multer": "^1.4.2"                    |                                |                          |
-| "redux-devtools-extension": "^2.13.8" |                                |                          |
-| "uuid": "^8.1.0"                      |                                |                          |
-
+| Backend                       | Client                   | Dev                      |
+|-------------------------------|--------------------------|--------------------------|
+| "axios": "^0.19.2"            | "axios": "^0.19.2"       | "concurrently": "^5.2.0" |
+| "bcrypt": "^4.0.1"            | "bootstrap": "^4.5.0"    | "nodemon": "^2.0.3"      |
+| "bcryptjs": "^2.4.3"          | "multer": "^1.4.2"       |                          |
+| "body-parser": "^1.19.0"      | "react": "^16.13.1"      |                          |
+| "multer": "^1.4.2"            | "react-dom": "^16.13.1"  |                          |
+| "cors": "^2.8.5"              | "react-redux": "^7.2.0"  |                          |
+| "config": "^3.3.1"            | "react-scripts": "3.4.1" |                          |
+| "dotenv": "^8.2.0"            | "reactstrap": "^8.4.1"   |                          |
+| "express": "^4.17.1"          | "redux": "^4.0.5"        |                          |
+| "express-validator": "^6.4.1" | "redux-thunk": "^2.3.0"  |                          |
+| "jsonwebtoken": "^8.5.1"      |                          |                          |
+| "mongoose": "^5.9.12"         |                          |                          |
+| "multer": "^1.4.2"            |                          |                          |
