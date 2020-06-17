@@ -27,7 +27,7 @@ the dreaded wait times and added inconvinience.
 - Connect your MongoDB to app:
    - Navigate to /backend/config/default.json
    - Replace placeholder string with your connect string
-   ![image](https://user-images.githubusercontent.com/55608123/84935861-35a3e700-b08e-11ea-8e0a-adb863e23e43.png)
+   - ![image](https://user-images.githubusercontent.com/55608123/84935861-35a3e700-b08e-11ea-8e0a-adb863e23e43.png)
 
 - Clone Repo: 
 
