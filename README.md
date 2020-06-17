@@ -1,6 +1,9 @@
-# AD-410-F
-MERN App for Group-F <br  />
-<br  />
+<h1 align="center">
+🌐 Symptom Tracking App 🌐
+</h1>
+<h3 align="center">
+	A group-F production
+</h3>
 ## Patient Symptom Tracking Web Application <br  />
 The idea behind our app was to provide a service/ resource for individuals who
 were expieriencing symptoms similar to ones related to covid-19.  We thought of an app that extends
