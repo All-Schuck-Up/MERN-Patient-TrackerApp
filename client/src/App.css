@@ -90,3 +90,9 @@ ol li {
   font-size: 0.99em;
   display: relative;
 }
+.doctorPicture {
+  width: 100%;
+  height: 300px;
+  background-color: cadetblue;
+  margin-top: 30px;
+}

@@ -11,10 +11,10 @@ router.route('/alerts').get((req, res) => {
 });
 
 router.route('/alert/add').post((req, res) => {
-    const patientID = req.body.patientID;
+    const patientId = req.body.patientId;
     const lastName = req.body.lastName;
     const alertMessage = req.body.alertMessage;
-    const newAlert = new Alert({patientID, lastName, alertMessage});
+    const newAlert = new Alert({patientId, lastName, alertMessage});
 
     newAlert.save()
         .then(res => res.json('Alert Request Added!'))

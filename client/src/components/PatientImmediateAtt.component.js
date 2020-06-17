@@ -25,7 +25,7 @@ class PatientImmediateAtt extends React.Component {
         progress: undefined,
         });
     render() {
-        let patientPageURL = "/patient/" + this.props.patientID + '/profile';
+        let patientPageURL = "/patient/" + this.props.patientId + '/profile';
         return(
             <div className="PatientImmediateAtt">
                 <ToastContainer />

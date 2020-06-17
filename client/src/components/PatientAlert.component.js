@@ -25,14 +25,14 @@ class Alert extends React.Component {
         progress: undefined,
         });
     render() {
-        let patientPageURL = "/patient/" + this.props.patientID + '/profile';
+        let patientPageURL = "/patient/" + this.props.patientId + '/profile';
         return(
             <div className="PatientAlert">
                 <ToastContainer />
 
                 <Row className="rowWarnings">
                 <Col xs="1.5"><li>On: {this.props.date.substring(0,10)}</li></Col>
-                <Col xs="7"><p className="PatientAlertComponent">Alert: {this.props.lastName} has: {this.props.alertMessage}</p></Col>
+                <Col xs="7"><p className="PatientAlertComponent">Alert: <strong>{this.props.lastName}</strong> has: {this.props.alertMessage}</p></Col>
                 <Col xs="1"><form action={patientPageURL} method="get" >
 
                 <Button className="PatientAlertComponent" color="primary">Check</Button>

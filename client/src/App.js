@@ -60,25 +60,25 @@ function App({ auth: { loading, user }, profile: { profile } }) {
               <RegisterProvider />
             </Route>
             <Route exact path='/patient/login/:id'>
-              <Navbar />
+              <Navbar lastName={profile && profile.firstName}/>
               <CreateSymptom
                 patientId={profile && profile._id}
                 lastName={profile && profile.lastName}
               />
             </Route>
             <Route exact path='/patient/:id/profile'>
-              <Navbar name={profile && profile.firstName} />
-              <PatientProfile isDoctor={true} />
+              <Navbar lastName={profile && profile.firstName} />
+              <PatientProfile patientId={profile && profile._id} accountType={user && user.accountType} />
             </Route>
             <Route exact path='/patient/doctorNotes'>
-              <Navbar name='Provider Name' />
+              <Navbar lastName={profile && profile.firstName}/>
               <ProviderNote
                 patientId={profile && profile._id}
-                patientLastName={profile && profile.lastName}
+                lastName={profile && profile.lastName}
               />
             </Route>
             <Route exact path='/provider/login/:id'>
-              <Navbar name='Provider Name' />
+              <Navbar lastName={profile && profile.firstName}/>
               <ProviderProfile />
             </Route>
           </div>

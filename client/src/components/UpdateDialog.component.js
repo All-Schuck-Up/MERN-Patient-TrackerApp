@@ -45,16 +45,6 @@ export default class FormDialog extends Component {
        this.setState({ open: false})
     };
 
-   handleSubButton = () => {
-       toast.success('Success!', {position:toast.POSITION.TOP_RIGHT,autoClose:4000})
-    };
-
-   notify =() => {
-       toast('Basic notification!',{position:toast.POSITION.TOP_RIGHT})
-       toast.success('Success!', {position:toast.POSITION.TOP_CENTER})
-       toast.error('Error!', {position:toast.POSITION.TOP_LEFT})
-};
-
 
    handleChange= (e) => {
         this.setState({updateNote: e.target.value});
@@ -74,7 +64,7 @@ export default class FormDialog extends Component {
    }
     
 componentDidMount() {
-        setTimeout(this.handleSubButton.bind(this),10);
+        //setTimeout(this.handleSubButton.bind(this),10);
 
   }
 
@@ -88,6 +78,7 @@ componentDidMount() {
              }) 
 
         .then(() => {
+          this.notify()
       })
                        
         .catch((error) => {
@@ -95,13 +86,24 @@ componentDidMount() {
         }) 
     }
     }
+    
+    notify = () => toast.success('Note Added to the Patient\'s Profile!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
        
  render() {
   return (
-        <> 
-          <Button variant="outlined" className="pull-right" color="primary" size="sm" border="5em" onClick={this.handleClickOpen}>
-            Update Last Entry
-          </Button>
+                <> {this.props.accountType === "patient" ?
+                <Button variant="outlined" className="pull-right" color="primary" size="sm" border="5em" onClick={this.handleClickOpen}>
+                Update Last Entry
+              </Button> 
+            : null }  {/*update last note entry is only rendered when accountType is patient*/}
 
           <Dialog open={this.state.open} onClose={this.handleCloseDialog} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Update</DialogTitle>
@@ -126,7 +128,7 @@ componentDidMount() {
                   <Button color="primary" onClick={this.handleClose} >
                     Cancel
                   </Button>{'  '}
-                  <Button color="primary" value="Submit" type="submit" onClick={this.handleSubButton} >
+                  <Button color="primary" value="Submit" type="submit" >
                     Submit
                   </Button>
                 </form>     

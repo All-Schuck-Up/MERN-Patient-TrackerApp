@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const ImmediateAttention = new mongoose.Schema({
-    patientID: {
+    patientId: {
         type: String,
         required: true
     },
