@@ -4,7 +4,7 @@ MERN App for Group-F <br  />
 ## Patient Symptom Tracking Web Application <br  />
 The idea behind our app was to provide a service/ resource for individuals who
 were expieriencing symptoms similar to ones related to covid-19.  We thought of an app that extends
-the provider interaction, allowing for real-time patient monoriting for providers and quick response for providers without
+the provider interaction, allowing for real-time patient monoriting for providers and quick response for patients without
 the dreaded wait times and added inconvinience.
 
 ## The UI/UX
