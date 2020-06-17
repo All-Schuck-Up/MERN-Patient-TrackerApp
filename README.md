@@ -4,18 +4,22 @@
 <h3 align="center">
 	A group-F production
 </h3>
-## Patient Symptom Tracking Web Application <br  />
+
 The idea behind our app was to provide a service/ resource for individuals who
 were expieriencing symptoms similar to ones related to covid-19.  We thought of an app that extends
 the provider interaction, allowing for real-time patient monoriting for providers and quick response for patients without
 the dreaded wait times and added inconvinience.
 
+---
+
 ## The UI/UX
-![image](https://user-images.githubusercontent.com/55608123/84739172-05f6c100-af60-11ea-9194-0bd47746a038.png)
-![image](https://user-images.githubusercontent.com/55608123/84739291-2e7ebb00-af60-11ea-8c67-c06c689921d6.png) 
-![image](https://user-images.githubusercontent.com/55608123/84739505-9cc37d80-af60-11ea-8f0d-38c8da3b68db.png)
+### LogIn/ Auth
+![image](https://user-images.githubusercontent.com/55608123/84931706-08543a80-b088-11ea-8278-fcfa2d07c226.png)
+### Patient Symptom Entry/ Profile
 ![image](https://user-images.githubusercontent.com/55608123/84739632-d0060c80-af60-11ea-9d5e-43ac104795f7.png)
 ![image](https://user-images.githubusercontent.com/55608123/84739704-fb88f700-af60-11ea-9fcc-4e1e74311bd1.png)
+
+---
 
 ## Branch structure
 Master - Ready to install and run version of the application <br  />
