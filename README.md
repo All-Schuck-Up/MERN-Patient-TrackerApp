@@ -1,7 +1,5 @@
 <h1 align="center">
-![](client/public/favicon.ico)   
-	Symptom Tracking App   
-![](client/public/favicon.ico)
+![logo](AD-410-F/client/public/logo192.png)   
 MERN App for Group-F
 </h1>
 <br  />
