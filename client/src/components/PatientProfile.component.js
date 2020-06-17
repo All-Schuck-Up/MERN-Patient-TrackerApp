@@ -61,7 +61,7 @@ export default class PatientProfile extends Component {
               <h1>Profile:</h1>
               <h4>
                 Patient name: <i>{this.state.patientname}</i>, Age:{' '}
-                <i>{this.state.age}</i>, <br /> Underline condition:{' '}
+                <i>{this.state.age}</i>, <br /> Underlying Condition:{' '}
                 <i>{this.state.underlying.toString()}</i>
               </h4>
               <br />
