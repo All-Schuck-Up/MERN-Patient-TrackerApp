@@ -1,4 +1,5 @@
-# AD-410-F
+<h1 align="center">
+![image](https://user-images.githubusercontent.com/55608123/84925995-9841b680-b07f-11ea-9669-99c4f4dacf0d.png)  Symptom Tracking App
 MERN App for Group-F <br  />
 <br  />
 ## Patient Symptom Tracking Web Application <br  />
