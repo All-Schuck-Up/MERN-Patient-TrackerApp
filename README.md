@@ -38,6 +38,7 @@ $ git clone https://github.com/All-Schuck-Up/AD-410-F.git
 
 ``` terminal
 $ cd backend
+$ npm i 
 $ npm i -D
 $ cd ..
 ```
