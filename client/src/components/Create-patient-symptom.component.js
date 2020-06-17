@@ -253,8 +253,8 @@ export default class createSympotom extends Component {
                 }
                 <h3 className='text-center'>Patient Symptom Entry</h3>
 
-                <div class='form-group'>
-                  <div class='form-group'></div>
+                <div className='form-group'>
+                  <div className='form-group'></div>
                 </div>
                 <div className='form-group'>
                   <label>Trouble breathing? </label>
