@@ -1,5 +1,4 @@
-<h1 align="center">
-![logo](AD-410-F/client/public/logo192.png)   
+<h1 align="center">   
 MERN App for Group-F
 </h1>
 <br  />
