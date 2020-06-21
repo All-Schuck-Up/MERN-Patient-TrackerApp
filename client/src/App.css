@@ -45,3 +45,59 @@
   width: 40%;
   margin: 0 auto;
 }
+
+.rowWarnings {
+  margin: 10px;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 0.99em;
+  display: relative;
+}
+
+.spaceInputNote {
+  margin-top: 10px;
+  width: 100%;
+  word-wrap: break-word;
+}
+.inputSearch {
+  width : 70%
+}
+.patientSearch {
+  display:inline-block;
+}
+.viewAllDoctorNotesButton {
+  width: 100%
+}
+ol li {
+  color: blue;
+  font-weight: bold;
+}
+.pull-left {
+  float: left !important;
+}
+.pull-right {
+  float: right !important;
+}
+.errorMessage {
+  color: red;
+  font-size: 0.99em;
+  display: relative;
+}
+.errorMessageS {
+  color: lawngreen;
+  font-size: 0.99em;
+  display: relative;
+}
+.doctorPicture {
+  width: 100%;
+  height: 200px;
+  background-color: cadetblue;
+    font-size: 60px;
+    color: aliceblue;
+    font-style: italic;
+    padding-left: 40px;
+    padding-top: 60px;
+  margin-top: 50px;
+}

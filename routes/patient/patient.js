@@ -1,93 +1,110 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../../middleware/auth');
+const checkObjectId = require('../../middleware/checkObjectId');
 const { check, validationResult } = require('express-validator');
-const bcrypt = require('bcrypt');
 
 const Patient = require('../../models/Patient');
+const Provider = require('../../models/Provider');
 
-router.get('/patient/login', (req, res) => {
-});
-// POST request: This route takes in user login input and compares it to database in order to login user. TEST WITH: => postman post to http://localhost:5000/patient/login
-router.post('/patient/login', [
-      check('email', 'Enter a valid email').isEmail(),
-      check('password', 'Password is required').exists(),
-    ],
-    async (req, res) => {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+// ROUTE  GET patients/profile/me
+// DESC   Get logged in users profile
+// RETURN
+router.get('/me', auth, async (req, res) => {
+  try {
+    const accountType = req.user.accountType;
+    if (accountType == 'patient') {
+      const profile = await Patient.findOne({ user: req.user.id });
+
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ msg: 'There is no such profile for user' });
       }
-  
-      const { email, password } = req.body;
-  
-      try {
-        let patient = await Patient.findOne({ email });
-  
-        if (!patient) {
-          res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
-        }
+      res.json(profile);
+    } else {
+      const profile = await Provider.findOne({ user: req.user.id });
 
-        const isMatch = await bcrypt.compare(req.body.password, patient.password);
-
-        if(!isMatch) {
-            res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
-        }
-
-        const payload = {
-            patient: {
-                id: patient.id
-            }
-        };
-        res.status(400).send('Logged in');
-
-      } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+      if (!profile) {
+        return res
+          .status(400)
+          .json({ msg: 'There is no such profile for user' });
       }
+      res.json(profile);
     }
-  );
-
-router.get('/patient/:_id', (req, res) => {
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
-router.post('/patient/:_id', (req, res) => {
+
+// ROUTE  GET patients/profile/:id
+// DESC   Get profile by id
+// RETURN onSuccess: target profile, onFail: err.msg
+router.get('/:user_id', checkObjectId('user_id'), async (req, res) => {
+  try {
+    const profile = await Patient.findOne({
+      user: req.params.user_id,
+    }).populate('user');
+
+    if (!profile) {
+      return res.status(400).json({ msg: 'Profile not found' });
+    }
+
+    return res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
-// Post req, This route registers user unless already exists TEST => POSTMAN POST to http://localhost:5000/patient/
+// ROUTE    POST patients/profile (dev purposes)
+// DESC     Create or update patient profile
+// RETURN   patient profile
 router.post(
-  '/patient/',
+  '/',
   [
-    check('name', 'Name is required').not().isEmpty(),
-    check('email', 'Enter a valid email').isEmail(),
-    check('password', 'Please enter password with atleast 4 characters').isLength({ min: 4 }),
+    auth,
+    [
+      check('firstName', 'firstName is required').not().isEmpty(),
+      check('lastName', 'lastName is required').not().isEmpty(),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    const { email, firstName, lastName, age, underlying } = req.body;
 
-    const { name, email, password } = req.body;
+    const profileFields = {
+      user: req.user.id,
+      email,
+      firstName,
+      lastName,
+      age,
+      underlying,
+    };
 
     try {
-      let patient = await Patient.findOne({ email });
+      let profile = await Patient.findOne({ user: req.user.id });
 
-      if (patient) {
-        res.status(400).json({ errors: [{ msg: 'Patient alread in system' }] });
+      if (profile) {
+        // Using upsert option (creates new doc if no match is found):
+        let profile = await Patient.findOneAndUpdate(
+          { user: req.user.id },
+          { $set: profileFields },
+          { new: true, upsert: true }
+        );
+        return res.json(profile);
       }
 
-      patient = new Patient({
-        name,
-        email,
-        password,
-      });
+      // create profile
+      profile = new Patient(profileFields);
 
-      // encrypt password
-      patient.password = await bcrypt.hash(req.body.password, 10);
-      console.log(patient.password);
-      // End encryption
+      await profile.save();
 
-      await patient.save();
-      res.send('Patient added');
+      res.json(profile);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -95,8 +112,20 @@ router.post(
   }
 );
 
-router.get('/patient/logout', (req, res) => {
-  // TO DO --
+// ROUTE    GET patient/profile
+// DESC     Get all profiles
+// RETURN   onSuccess: returns all profiles onFail: err.msg
+router.get('/', async (req, res) => {
+  try {
+    const profiles = await Patient.find().populate('user', [
+      'email',
+      'accountType',
+    ]);
+    res.json(profiles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
 module.exports = router;
