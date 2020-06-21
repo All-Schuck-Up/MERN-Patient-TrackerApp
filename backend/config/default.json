@@ -1,0 +1,5 @@
+{
+  "mongoURI": "<MongoDB connect strings goes here>",
+
+  "jwtSecret": "secret"
+}
